@@ -1,0 +1,3 @@
+_site
+*.sublime*
+node_modules

@@ -1,0 +1,4 @@
+name: Nathan Woods
+markdown: redcarpet
+pygments: true
+exclude: ['bign8.github.io.sublime-project', 'bign8.github.io.sublime-workspace', node_modules, gruntfile.js, package.json]
