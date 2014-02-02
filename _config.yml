@@ -1,4 +1,5 @@
 name: Nathan Woods
 markdown: redcarpet
 pygments: true
-exclude: ['bign8.github.io.sublime-project', 'bign8.github.io.sublime-workspace', node_modules, gruntfile.js, package.json]
+permalink: /blog/:year/:month/:day/:title/
+exclude: [node_modules, gruntfile.js, package.json, CNAME, README.md]
