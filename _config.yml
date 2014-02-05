@@ -1,5 +1,5 @@
 name: Nathan Woods
 markdown: redcarpet
 pygments: true
-permalink: /blog/:year/:month/:day/:title/
+permalink: /blog/:year/:month/:day/:title.html
 exclude: [node_modules, gruntfile.js, package.json, CNAME, README.md]
