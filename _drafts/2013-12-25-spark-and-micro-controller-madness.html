@@ -1,0 +1,36 @@
+---
+layout: post
+title: Spark and micro-controller madness
+categories: []
+tags: []
+published: false
+---
+# post img is of spark chip
+
+I just received my first two Spark chips in the mail and am very excited about them.  For those of you that don't know, the guys over at <a title="Spark - Wi--Fi for Everything" href="https://www.spark.io/" target="_blank">Spark</a> designed an Arduino compatible micro-controller that is completely cloud based.  You can bind function handles and variables to a web accessible REST API (basically, its an Arduino that talks over the internet, rather than some USB serial connection or something like it).
+
+# image of spark chip or logo
+
+Anyway, I found a few example Arduino and Spark sketches that allowed me to conjure a few ideas.  The first sketch I found was SaraJo's example of a <a title="Spark Tweets" href="https://github.com/SaraJo/spark-tweets" target="_blank">tweeting Spark</a>, so whatever I was going to build, I was going to make it tweet about it.
+
+# Screenshot of the tweet I sent / or a vine of the process / code?
+
+The second sketch I found was more a <a title="DHT11Lib" href="http://playground.arduino.cc/main/DHT11Lib/" target="_blank">library for Arduino</a> that I had to convert to Spark it order to get it to run over the web based programming interface.  Basically, I just borrowed the operating functions and variables, threw it in a single file and it worked.
+
+# code to be inserted from library
+
+Now came to putting it together.  The first thing I learned was all about timing.  Instead of attempting to attach some sort of serial monitor on the chip, I decided to have it "Flash" me a few different status codes.  So I should be able to watch the flashes and see the status of the program.  At first it seemed simple, turn LED on, delay x milliseconds, turn LED off, delay y milliseconds.
+
+# code sample
+
+While this worked just fine, I noticed that while the chip was in a delayed state, it couldn't do anything else.  That's when I discovered a few articles about avoiding the delay function.  After some reworking and rethinking of the code, I came back with the following non-blocking function call that could be called on every <span class="lang:default decode:true  crayon-inline ">loop()</span>  call.
+
+# better code
+
+Another thing I learned was how to handle integers and strings.  LENGTHEN WITH WORKS
+
+# string formatting code
+
+Summary paragraph
+
+# final code

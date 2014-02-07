@@ -1,0 +1,166 @@
+---
+layout: post
+title: Sweet db class (PDO baby)
+categories: []
+tags: []
+published: false
+---
+<a href="http://net.tutsplus.com/tutorials/php/why-you-should-be-using-phps-pdo-for-database-access/">http://net.tutsplus.com/tutorials/php/why-you-should-be-using-phps-pdo-for-database-access/</a>
+
+<a href="http://net.tutsplus.com/tutorials/php/php-database-access-are-you-doing-it-correctly/">http://net.tutsplus.com/tutorials/php/php-database-access-are-you-doing-it-correctly/</a>
+
+// older stuff
+
+<a href="http://www.happycode.info/php-and-mysql-extending-mysqli/">http://www.happycode.info/php-and-mysql-extending-mysqli/</a>
+
+<a href="http://www.happycode.info/php-json-response/">http://www.happycode.info/php-json-response/</a>
+
+// update to 2.4 and 5.4
+
+<a href="http://www.codingsteps.com/install-apache-2-4-php-5-4-php-apc-on-amazon-ec2-with-amazon-linux/">http://www.codingsteps.com/install-apache-2-4-php-5-4-php-apc-on-amazon-ec2-with-amazon-linux/</a>
+
+// Streamline apache
+
+<a href="http://imperialwicket.com/tuning-apache-for-a-low-memory-server-like-aws-micro-ec2-instances">http://imperialwicket.com/tuning-apache-for-a-low-memory-server-like-aws-micro-ec2-instances</a>
+
+// to watch
+
+<a href="https://aws.amazon.com/amazon-linux-ami/security-bulletins/">https://aws.amazon.com/amazon-linux-ami/security-bulletins/</a>
+<pre class="lang:php decode:true" title="Sweet DB class">&lt;?php
+
+// Defines format for extending database options
+// Defines format for extending database options
+abstract class DbOptions {
+	public $svr;
+	public $host;
+	public $user;
+	public $pass;
+	public $dbname;
+	public $type = 'mysql';
+
+	function __construct($dbname) {
+		$this-&gt;dbname = $dbname;
+	}
+}
+
+// Here is a list of possible diatabase server connections
+class ExternalDbOptions extends DbOptions {
+	public $svr 		= 'www';
+	public $host 		= coreClass::mysql_Host;
+	public $user 		= coreClass::mysql_UserName;
+	public $pass 		= coreClass::mysql_Password;
+}
+class InternalDbOptions extends DbOptions {
+	public $svr 		= 'www6';
+	public $host 		= coreClass::mysql_internal_Host;
+	public $user 		= coreClass::mysql_internal_UserName;
+	public $pass 		= coreClass::mysql_internal_Password;
+}
+
+// Defines static connection function
+class dbConnect {
+	public static function connect( DbOptions $options ){
+/*$obj = new mysqli(
+$options-&gt;host,
+$options-&gt;user,
+$options-&gt;pass,
+$options-&gt;dbname
+);//*/
+		try{
+			$conStr = $options-&gt;type . ":host=" . $options-&gt;host . ";dbname=" . $options-&gt;dbname ;
+			$obj = new PDO($conStr, $options-&gt;user, $options-&gt;pass);
+			return $obj;
+		} catch(PDOException $e){
+			if( $_SERVER['REQUEST_URI'] != '/dbError.cc' ) {
+				dbError::sendDBConnError( // Haults execution
+					$options-&gt;svr,
+					$options-&gt;host . '; Database: ' . $options-&gt;dbname,
+					date("Y-m-d h:i a"),
+					HostConfig::app,
+					$e-&gt;getMessage(),
+					HostConfig::subject
+				);
+			}
+		}
+
+	}
+}</pre>
+&nbsp;
+<pre class="lang:php decode:true">class dbConnect extends PDO {
+	public function __construct() {
+		try {
+			parent::__construct( config::db_dsn, config::db_user, config::db_pass, config::$db_opt );
+		} catch (PDOException $e) {
+			if( $_SERVER['REQUEST_URI'] != '/db404' ) { // to be implemented
+				die($e-&gt;getMessage());
+			}
+		}
+	}
+	/*
+	// another way to handle query errors
+	public function query($params) { // may need more parameters
+		return parent::query($params);
+		// handle error
+	}
+
+	public function execute( $params ) { // may need more parameters
+		parent::execute( $params );
+		// handle error
+	}
+	//*/
+}</pre>
+&nbsp;
+<pre class="lang:php decode:true">/**
+* Class: myPDO
+* Purpose: To simplify the PDO connection process and accuratly report database connection issues
+* Notes:
+* 	1. Constructor takes a DbOptions class to accurately build a Database Source Name (DSN) and connect to a database
+*	2. Sets the Statement_Class attribute to use our myPDOStatement rather than the built in PDOStatement
+*	3. On error, a report is sent via dbError to the webadmin's email as defined in CoreClass.php (a redirect to /dbError.cc is also fired)
+*/
+// Defines static connection function
+class myPDO extends PDO {
+	function __construct( DbOptions $options ){
+		try{
+			$DSN = $options-&gt;type . ":host=" . $options-&gt;host . ";dbname=" . $options-&gt;dbname ;
+			parent::__construct($DSN, $options-&gt;user, $options-&gt;pass);
+			$this-&gt;setAttribute( PDO::ATTR_STATEMENT_CLASS,  array('myPDOStatement')); // Set Statement_Class
+		} catch(PDOException $e){
+			if( $_SERVER['REQUEST_URI'] != '/dbError.cc' ) {
+				dbError::sendDBConnError( // Haults execution
+					$options-&gt;svr,
+					$options-&gt;host . '; Database: ' . $options-&gt;dbname,
+					date("Y-m-d h:i a"),
+					HostConfig::app,
+					$e-&gt;getMessage(),
+					HostConfig::subject
+				);
+			}
+		}
+
+	}
+}
+
+/**
+* Class: myPDOStatement
+* Purpose: To extend the features of the default PDOStatement class
+* Notes:
+*	1. execute now allows us to pass multiple parameters and it will automatically wrap them as an array.
+*		a. any single variable that is not an array will be wrapped as an array
+*		b. default functionality is acceptable as well (both passing an array or passing no parameters)
+*		c. Usage: $STH-&gt;execute($single_param) OR $STH-&gt;execute($first, $second, ...) OR $STH-&gt;execute(array($first, $second, ...)) OR $STH-&gt;execute()
+*/
+class myPDOStatement extends PDOStatement
+{
+	public function execute ()
+	{
+		$arr = func_get_args();
+		if (count($arr) == 0) {
+			return parent::execute();
+		} else {
+			$input_parameters = is_array($arr[0]) ? $arr[0] : $arr ;
+			return parent::execute($input_parameters);
+		}
+	}
+}</pre>
+&nbsp;

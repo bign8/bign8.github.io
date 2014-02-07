@@ -1,0 +1,43 @@
+---
+layout: post
+title: Smarty re-directs
+categories: []
+tags: []
+published: false
+---
+function.forceSSL.php
+
+Smart plugin!
+
+&nbsp;
+
+&lt;?php
+
+function smarty_function_forceSSL(){
+function toSecure() {
+//header("Location: https://www.carroll.edu".$_SERVER['REQUEST_URI']);
+//echo "matched";
+}
+
+function dirMatch($dir) { // call this for matching directories
+return fileMatch($dir . "(index.cc)?");
+}
+
+function fileMatch($file) { // call this for matching a specific file
+$regex = str_replace("/", "\/", $file); // clean slashes
+$regex = str_replace(".", "\.", $regex); // clean periods
+$regex = "/^" . $regex . "(\?.*)?$/"; // add front and tail (tail allows query strings)
+//echo $regex;
+return preg_match( $regex, $_SERVER['REQUEST_URI'] );
+}
+if ( $_SERVER['SERVER_PORT'] == 80 ) {
+
+if (dirMatch("/admin/")) return toSecure();
+if (dirMatch("/athletics/inside/questionnaire/")) return toSecure();
+if (fileMatch("/login.cc")) return toSecure();
+if (fileMatch("/contact.cc")) return toSecure();
+
+}
+}
+
+?&gt;

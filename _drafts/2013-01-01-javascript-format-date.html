@@ -1,0 +1,46 @@
+---
+layout: post
+title: JavaScript format date
+categories: []
+tags: []
+published: false
+---
+<a title="Real Time Web Traffic Visualization" href="http://hummingbirdstats.com/" target="_blank">Humminbird</a> and their <a title="Found on Github" href="https://github.com/mnutt/hummingbird/blob/master/public/js/helpers.js" target="_blank">helpers.js</a> file, where they add a simple time formatting function to their Date object.
+<pre class="lang:js decode:true" title="Hummingbird's formatted time for JavaScript Date object">Date.prototype.formattedTime = function() {
+  var formattedDate = this.getHours();
+
+  var minutes = this.getMinutes();
+  if(minutes &gt; 9) {
+    formattedDate += ":" + minutes;
+  } else {
+    formattedDate += ":0" + minutes;
+  }
+
+  var seconds = this.getSeconds();
+  if(seconds &gt; 9) {
+    formattedDate += ":" + seconds;
+  } else {
+    formattedDate += ":0" + seconds;
+  }
+
+  return formattedDate;
+};</pre>
+Now this is nice for simply formatting time, but I was looking for something a little more elegant; closer to <a title="PhP's Date Formatting is nice!" href="http://php.net/manual/en/function.date.php" target="_blank">PhP's date formatting</a>.  I've looked around a few places and <a title="See 'formatDate' under 'Utility functions'" href="http://api.jqueryui.com/datepicker/#utility-functions" target="_blank">jQuery UI has a nice option</a> along with <a title="Date Format" href="http://blog.stevenlevithan.com/archives/date-time-format" target="_blank">this guy's nice encapsulated design</a>, but I'm looking for something sleeker and a little slimmer. Currently I am <a title="jsFiddle" href="http://jsfiddle.net/bign8/XeRhD/" target="_blank">Fiddling</a>
+
+Open tabs at last development
+
+http://www.w3schools.com/jsref/jsref_obj_date.asp
+
+http://blog.stevenlevithan.com/archives/date-time-format
+
+http://php.net/manual/en/function.date.php
+
+http://stackoverflow.com/questions/64003/how-do-i-use-php-to-get-the-current-year
+
+http://jsfiddle.net/bign8/XeRhD/6/
+
+http://www.timeanddate.com/library/abbreviations/timezones/
+
+http://stackoverflow.com/questions/2853474/can-i-get-the-browser-time-zone-in-asp-net-or-do-i-have-to-rely-on-js-operations
+
+http://techblog.procurios.nl/k/news/view/33796/14863/Calculate-ISO-8601-week-and-year-in-javascript.html

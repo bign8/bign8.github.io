@@ -1,0 +1,30 @@
+---
+layout: post
+title: redirect timeout
+categories: []
+tags: []
+published: false
+---
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><?php echo $title; ?></title>
+		<meta charset="UTF-8">
+		<!--<meta http-equiv="Refresh" content="5; url=." />-->
+		<script>
+		var timeout = 5;
+		var x = setInterval(function() {
+			if (timeout < 1) {
+				//window.location = ".";
+				clearInterval(x);
+			}
+			document.getElementById('count').innerHTML = timeout + ' second' + ((1 < timeout--)?'s':'');
+		}, 1000);
+		</script>
+    </head>
+    <body>
+        <h2><?php echo $title; ?></h2>
+        <p><?php echo $text; ?> <a href="."><?php echo $link; ?></a></p>
+		<p>If you are not redirected after <span id="count">a few seconds</span>, please click on the link above!</p>
+    </body>
+</html>

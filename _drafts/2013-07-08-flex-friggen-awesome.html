@@ -1,0 +1,147 @@
+---
+layout: post
+title: Flex friggen awesome
+categories: []
+tags: []
+published: false
+---
+saving tab information along with haulting datagrid changed with inteceptors
+
+<!--?xml version="1.0" encoding="utf-8"?-->
+xmlns:s="library://ns.adobe.com/flex/spark"
+xmlns:mx="library://ns.adobe.com/flex/mx"
+xmlns:mbumainclass="services.mbumainclass.*"
+xmlns:n8="n8.*"
+width="100%" height="100%" label="{'My Scouts' + ((isDirty)?' *':'')}" hide="hideHandler(event)"&gt;
+<![CDATA[<br /]]> import flexed.widgets.alerts.alert;
+
+import mx.controls.Alert;
+import mx.core.FlexGlobals;
+import mx.events.CloseEvent;
+import mx.events.FlexEvent;
+import mx.core.FlexGlobals;
+import mx.managers.PopUpManager;
+
+import pages.wdws.RequiremntsView;
+import pages.wdws.ScoutEditor;
+
+import spark.components.TitleWindow;
+import spark.events.GridEvent;
+import spark.events.GridSelectionEvent;
+
+import valueObjects.UserObject;
+
+[Bindable(event="myFlagChanged")] private var user:UserObject;
+[Bindable(event="myFlagChanged2")] private var scoutEditDate:Date = null;
+[Bindable] public var isDirty:Boolean = false;
+[Bindable] public var scoutIsDirty:Boolean = false;
+
+public function setUser(inUser:UserObject):void {
+user=inUser;
+dispatchEvent(new Event("myFlagChanged"));
+
+loadTroopScoutsResult.token = mBUmainClass.loadTroopScouts(parseInt(inUser.troop));
+}
+
+protected function button1_clickHandler(event:MouseEvent, edit:Boolean):void {
+// TODO Auto-generated method stub
+try {
+var wdw:RequiremntsView = new RequiremntsView;
+wdw.initRequirements(1, 1, edit);
+PopUpManager.addPopUp(wdw, FlexGlobals.topLevelApplication as DisplayObject, true);
+PopUpManager.centerPopUp(wdw);
+
+} catch (e:Error) {
+alert.error(e.toString(), e.message);
+}
+}
+
+protected function scoutList_gridClickHandler(event:GridEvent=null):void {
+scoutEditDate = new Date();
+scoutEditDate.time = parseInt(scoutList.selectedItem.cleanDOB);
+dispatchEvent(new Event("myFlagChanged2"));
+}
+
+protected function hideHandler(event:FlexEvent):void {
+scoutList.selectedItem = null;
+scoutEditDate = null;
+scoutDOB.src['selectedDate'] = null;
+scoutIsDirty = false;
+}
+
+protected function cancelScoutEdit(event:MouseEvent):void {
+alert.confirm('Canceling now will cause you to lose any changes you have made.', 'Are you sure you would like to cancel?', function(event:CloseEvent):void {
+if (event.detail == Alert.YES) {
+scoutIsDirty = false;
+isDirty = false;
+scoutList.dispatchEvent(new GridSelectionEvent(GridSelectionEvent.SELECTION_CHANGE)); // reload data bindings
+scoutList_gridClickHandler(); // reset date and rank
+}
+});
+}
+
+protected function saveScoutEdit(event:MouseEvent):void {
+// TODO Auto-generated method stub
+alert.error('not implemented yet','nope');
+}
+
+protected function dirty():void { isDirty = true; }
+protected function sdirty():void { isDirty = true; scoutIsDirty = true; }
+
+protected function scoutList_selectionChangingHandler(event:GridSelectionEvent):void {
+if (scoutIsDirty) {
+event.preventDefault();
+
+alert.confirm('Changing Scouts now will cause you to lose changes you have. ', 'Are you sure you would like to change Scouts and lose changed information?', function(event2:CloseEvent):void {
+if (event2.detail == Alert.YES) {
+scoutIsDirty = false;
+scoutList.selectedIndex = event.selectionChange.rowIndex;
+}
+});
+}
+}
+
+protected function button2_clickHandler(event:MouseEvent):void {
+// TODO Auto-generated method stub
+
+}
+
+protected function scoutList_gridDoubleClickHandler(event:GridEvent):void {
+// TODO Auto-generated method stub
+var scoutWin:ScoutEditor = PopUpManager.createPopUp(FlexGlobals.topLevelApplication as DisplayObject, ScoutEditor, true) as ScoutEditor;
+PopUpManager.centerPopUp(scoutWin);
+scoutWin.scoutEditor.setUser(scoutList.selectedItem as UserObject, scoutWin);
+}
+
+]]&gt;
+
+fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+showBusyCursor="true"/&gt;
+<!-- Place non-visual elements (e.g., services, value objects) here -->
+
+verticalAlign="middle"&gt;
+
+verticalAlign="middle"/&gt;
+dataProvider="{loadTroopScoutsResult.lastResult}" gridClick="scoutList_gridClickHandler(event)"
+selectionChanging="scoutList_selectionChangingHandler(event)"
+gridDoubleClick="scoutList_gridDoubleClickHandler(event)"&gt;
+
+itemRenderer="pages.renderers.nameRenderer" resizable="false"
+sortable="false"/&gt;
+resizable="false" sortable="false"&gt;
+
+title="{'Scout Account Properties' + ((scoutIsDirty)?' *':'')}" defaultButton="{cancelBtn}"&gt;
+
+text="{scoutList.selectedItem.firstName}" change="sdirty()"/&gt;
+
+text="{scoutList.selectedItem.mi}" change="sdirty()"/&gt;
+
+text="{scoutList.selectedItem.lastName}" change="sdirty()"/&gt;
+
+dataProvider="{parentApplication.loadRanksResult.lastResult}" /&gt;
+
+verticalAlign="middle"/&gt;
+
+sortable="false"&gt;
+itemRenderer="pages.renderers.badgeEditRenderer"
+resizable="false" sortable="false"&gt;

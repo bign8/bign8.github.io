@@ -1,0 +1,451 @@
+---
+layout: post
+title: New Page Class (see edit date)
+categories: []
+tags: []
+published: false
+---
+&lt;?php
+ini_set('display_errors', '1');
+require_once('c:/www/www.carroll.edu/libinc/Mobile_Detect.php');
+class PageClass{
+
+public static $header;
+public static $footer;
+public static $template;
+public static $keywords;
+public static $desc;
+public static $title;
+public static $shortTitle;
+public static $vfsID;
+public static $fullPath;
+
+public static $isMobile;
+
+//Page content arrays
+public static $location1Data = array();
+public static $location2Data = array();
+public static $navigationData = array();
+public static $resourceData = array();
+public static $zone3Data = array();
+//public static $navData = array();
+public static $customNavData = array();
+public static $blockInclude = array();
+
+//Data base
+private static $dbConn;
+
+public function __construct(){
+self::$dbConn = new mysqlClass();
+}
+
+public function Run(){
+$detect = new Mobile_Detect();
+$page = $_SERVER['REQUEST_URI'];
+if(strpos($page, "?") &gt; 0) { $page = substr($page, 0, strpos($page, "?")); }
+self::getPage($page);
+
+$smarty = new SmartyConfig();
+$smarty-&gt;assign('header', self::$header);
+$smarty-&gt;assign('footer', self::$footer);
+$smarty-&gt;assign('template', self::$template);
+$smarty-&gt;assign('keywords', self::$keywords);
+$smarty-&gt;assign('editKeywords', explode(',', self::$keywords));
+$smarty-&gt;assign('desc', self::$desc);
+$smarty-&gt;assign('title', self::$title);
+$smarty-&gt;assign('shortTitle', self::$shortTitle);
+$smarty-&gt;assign('fullPath', self::$fullPath);
+$smarty-&gt;assign('host', HostConfig::hostURI);
+
+$smarty-&gt;assign('isMobile', $detect-&gt;isMobile());
+
+//Assign smarty variables to page content arrays
+$smarty-&gt;assign('vfsID', self::$vfsID);
+$smarty-&gt;assign('location1Data', self::$location1Data);
+$smarty-&gt;assign('location2Data', self::$location2Data);
+$smarty-&gt;assign('navigationData', self::$navigationData); //NEEDED?
+$smarty-&gt;assign('resourceData', self::$resourceData);
+$smarty-&gt;assign('zone3Data', self::$zone3Data);
+$smarty-&gt;assign('blockArray', self::$blockInclude);
+
+//Assign full location names (small names set in smarty configuration file)
+$smarty-&gt;assign('locations', array(
+"location1" =&gt; "Main Section",
+"location2" =&gt; "Column 2",
+"resNav" =&gt; "Resource Navigation",
+"zone3" =&gt; "Zone 3"
+));
+
+$smarty-&gt;assign('pageNav', self::genNav($page));
+$smarty-&gt;assign('sliderData', self::getSliderData());
+
+// template color assign
+$temp = array('Bro');//'Yel','Ora','Red','Pea','Gre','Blu',
+$smarty-&gt;assign('color', $temp[array_rand($temp)] );
+
+$smarty-&gt;display(self::$template);
+}
+
+private function errorHandler(){
+}
+
+public function redirect(){
+}
+
+public function redirect403(){
+}
+
+public function rediret404(){
+if(!headers_sent()) {
+// Headers aren't sent yet, we can do a cool redirect
+header("HTTP/1.0 404 Not Found");
+header("Location: ".HostConfig::hostURI."404.cc");
+}
+
+if(isset($_SERVER['HTTP_REFERER'])){
+ReportClass::send404Error($_SERVER['REQUEST_URI'], $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_REFERER']);
+} else {
+ReportClass::send404Error($_SERVER['REQUEST_URI'], $_SERVER['REMOTE_ADDR'], 'No Referer');
+}
+exit();
+}
+
+private function getPage($url){
+if(strrchr($url, "/") == "/") { $url .= "index.cc"; } // add index.cc to url's ending in /
+
+if($url != '/dbError.cc'){
+$q = "SELECT vfsID, fullPath, webvfs.name, title, shortTitle, keywords, description, fileName, headerFile, footerFile, shortpath, secure FROM webvfs, webtemplate WHERE webvfs.templateID=webtemplate.templateID &amp;&amp; (fullPath='".$url."' || shortpath='".$url."');"; // webvfs.templateID, contentTemplateID, themeID,
+
+$recSet = self::$dbConn-&gt;runQuery($q);
+$numRows = mysql_num_rows($recSet);
+
+if($numRows != 0){
+$rec = mysql_fetch_assoc($recSet);
+
+// re-direct short url's
+if ($url != $rec['fullPath']) {
+header("Location: ".$rec['fullPath']);
+exit();
+}
+
+// redirect secure and insecure
+if(stripos($_SERVER['REQUEST_URI'], '?mode=edit') &gt; -1 &amp;&amp; $_SERVER['SERVER_PORT'] != 80){
+header("Location: http://www.carroll.edu".$_SERVER['REQUEST_URI']);
+} else {
+if ($rec['secure'] == 'yes' &amp;&amp; $_SERVER['SERVER_PORT'] != 443) {
+header("Location: https://www.carroll.edu".$_SERVER['REQUEST_URI']);
+}
+if ($rec['secure'] == 'no' &amp;&amp; $_SERVER['SERVER_PORT'] != 80) {
+header("Location: http://www.carroll.edu".$_SERVER['REQUEST_URI']);
+}
+}
+
+// Assign page vars
+self::$header = $rec["headerFile"];
+self::$footer = $rec["footerFile"];
+self::$template = $rec["fileName"];
+self::$keywords = $rec["keywords"];
+self::$desc = $rec["description"];
+self::$shortTitle = $rec["shortTitle"];
+self::$fullPath = $rec["fullPath"];
+self::$vfsID = $rec["vfsID"];
+self::$title = $rec["title"];
+} else {
+
+// Check if page is a directory, if it is, go to it!, else 404 &lt;- new server update [9/14/2012]
+$recSet = self::$dbConn-&gt;runQuery("SELECT * FROM `webvfs` WHERE `fullpath` = '$url/index.cc'");
+if (mysql_num_rows($recSet) != 0) {
+header("Location: ".$url.'/index.cc');
+exit();
+} else {
+self::rediret404();
+}
+}
+
+$prefix = "SELECT `contentID`,`title`,`content`,`order`,`location` FROM webcontent WHERE vfsID = '".$rec["vfsID"]."' &amp;&amp; location='";
+$suffix = "' ORDER BY `order` ASC";
+
+self::$location1Data = self::getContent($prefix."location1".$suffix);
+self::$location2Data = self::getContent($prefix."location2".$suffix);
+self::$navigationData = self::getContent($prefix."pageNav".$suffix);
+self::$resourceData = self::getContent($prefix."resNav".$suffix);
+self::$zone3Data = self::getContent($prefix."zone3".$suffix);
+
+// Block Managing
+$data = self::$dbConn-&gt;runQuery("SELECT * FROM `vblocks` WHERE `vfsID` = ".$rec["vfsID"]);
+while($arr = mysql_fetch_assoc($data)) {
+$arr["filePath"] = "file:".HostConfig::hostDir."public_html".$arr["filePath"];
+self::$blockInclude[] = $arr;
+}
+
+} else {
+self::$template = 'stdErrorTemplate.tpl';
+self::$shortTitle = 'Database Connection Error';
+}
+}
+
+//Get and return page content based on location
+private function getContent($qwery){
+$content = array();
+$data = self::$dbConn-&gt;runQuery($qwery);
+
+while($arr = mysql_fetch_array($data)) {
+$content[] = array(
+"contentID" =&gt; $arr["contentID"],
+"content" =&gt; $arr["content"],
+"order" =&gt; $arr["order"],
+"title" =&gt; html_entity_decode($arr["title"], ENT_QUOTES),
+"location" =&gt; $arr["location"]
+);
+}
+return $content;
+}
+
+// grab dynamic slider data from db
+private function getSliderData(){
+$data = self::$dbConn-&gt;runQuery("SELECT * FROM `webslider` WHERE `vfsID` = " . self::$vfsID);
+return mysql_fetch_array($data);
+}
+
+/* --------------------------------------------------------------------------------------- *
+* NAVIGATION *
+* --------------------------------------------------------------------------------------- */
+
+//Get the auto build menu structure for the page
+private function getMenu($url){
+// pull directories and pages
+$navData = array();
+$data = self::$dbConn-&gt;runQuery("SELECT shortTitle, fullpath FROM webvfs WHERE fullpath REGEXP '^".substr($url, 0, strrpos($url, "/") + 1)."[a-zA-Z0-9_-]+(/{1}index){0,1}.cc$' AND properties LIKE 'public%' ORDER BY shortTitle");
+while($row = mysql_fetch_array($data)) {
+array_push($navData, $row);
+}
+// pull custom navigation
+if($url != '/dbError.cc') {
+$data = self::$dbConn-&gt;runQuery("SELECT title AS shortTitle, link AS fullpath FROM webnav WHERE vfsID=".self::$vfsID." AND viewState='true' ORDER BY title");
+while($row = mysql_fetch_array($data)) {
+array_push($navData, $row);
+}
+}
+usort($navData, 'self::SortMenu');
+
+// generate Parent Item
+$custNav = '&lt;ul&gt;';
+for($i = 0; $i &lt; count($navData); $i++){
+if($navData[$i]['fullpath'] == substr($url, 0, strrpos($url, "/") + 1)."index.cc"){
+$custNav .= "&lt;li&gt;&lt;a".self::active($navData[$i]['fullpath'])." href='".$navData[$i]['fullpath']."'&gt;".$navData[$i]['shortTitle']."&lt;/a&gt;";
+$i = count($navData);
+}
+}
+// generate Children Items
+$custNav .= '&lt;ul&gt;';
+for($i = 0; $i &lt; count($navData); $i++){
+if($navData[$i]['fullpath'] != substr($url, 0, strrpos($url, "/") + 1)."index.cc"){
+$custNav .= "&lt;li&gt;&lt;a".self::active($navData[$i]['fullpath'])." href='".$navData[$i]['fullpath']."'&gt;".$navData[$i]['shortTitle']."&lt;/a&gt;";
+}
+}
+// close up shop
+$custNav .= '&lt;/ul&gt;';
+$custNav .= '&lt;/li&gt;&lt;/ul&gt;';
+return $custNav;
+}
+/*Get the custom menu structure for the page
+private function getCustomMenu(){
+$data = self::$dbConn-&gt;runQuery("SELECT * FROM webnav WHERE vfsID=".self::$vfsID." AND viewState='true' ORDER BY orderNum");
+while($row = mysql_fetch_array($data)) {
+self::$customNavData[] = array("title" =&gt; $row["title"], "link" =&gt; $row["link"]);
+}
+}//*/
+
+private function genNav($page){
+$nav = '';
+switch(substr(self::$fullPath, 0, strrpos(self::$fullPath, '/') + 1)){
+case '/':
+case '/about/':
+case '/finaid/':
+case '/academics/':
+case '/students/':
+case '/athletics/':
+case '/resources/':
+case '/giving/':
+break;
+default:
+$nav .= self::getMenu(self::$fullPath);
+}
+$nav .= self::BuildBaseNav();
+
+// add custom links to home page
+if(self::$fullPath == '/index.cc'){
+$nav .= "&lt;ul class='last-child'&gt;";
+$nav .= "&lt;li&gt;&lt;a href='https://explore.carroll.edu/admission/'&gt;Future Students&lt;/a&gt;&lt;/li&gt;";
+$nav .= "&lt;li&gt;&lt;a href='/students/'&gt;Current Students&lt;/a&gt;&lt;/li&gt;";
+$nav .= "&lt;li&gt;&lt;a href='/parents/'&gt;Parents&lt;/a&gt;&lt;/li&gt;";
+$nav .= "&lt;li&gt;&lt;a href='/alumni/'&gt;Alumni &amp;amp; Friends&lt;/a&gt;&lt;/li&gt;";
+$nav .= "&lt;/ul&gt;";
+}
+return $nav;
+}
+private function BuildBaseNav(){
+$q = "SELECT * FROM `webvfs` WHERE properties LIKE 'public%' AND (fullpath REGEXP '^/about/[a-zA-Z0-9]+(/{1}index){0,1}.cc$' OR fullpath REGEXP '^/finaid/[a-zA-Z0-9]+(/{1}index){0,1}.cc$' OR fullpath REGEXP '^/academics/[a-zA-Z0-9]+(/{1}index){0,1}.cc$' OR fullpath REGEXP '^/students/[a-zA-Z0-9]+(/{1}index){0,1}.cc$' OR fullpath REGEXP '^/athletics/[a-zA-Z0-9]+(/{1}index){0,1}.cc$' OR fullpath REGEXP '^/resources/[a-zA-Z0-9]+(/{1}index){0,1}.cc$' OR fullpath REGEXP '^/giving/[a-zA-Z0-9]+(/{1}index){0,1}.cc$' OR fullpath REGEXP '^/alumni/[a-zA-Z0-9]+(/{1}index){0,1}.cc$') GROUP BY fullpath ORDER BY shortTitle";
+$result = mysql_query($q);
+$numRows = mysql_num_rows($result);
+
+$menu = array();
+$topMenu = array();
+$stop = false;
+$baseNav = '';
+
+while($row = mysql_fetch_assoc($result)) array_push($topMenu, $row);
+mysql_data_seek($result, 0);
+
+// generate navigation in order (non-alphabetical)
+for($i = 0; $i &lt; $numRows; $i++){ // about
+$row = mysql_fetch_assoc($result);
+if($row['fullpath'] == '/about/index.cc'){
+array_push($menu, $row);
+$i = $numRows;
+mysql_data_seek($result, 0);
+}
+}
+for($i = 0; $i &lt; $numRows; $i++){ // academics
+$row = mysql_fetch_assoc($result);
+if($row['fullpath'] == '/academics/index.cc'){
+array_push($menu, $row);
+$i = $numRows;
+mysql_data_seek($result, 0);
+}
+}
+for($i = 0; $i &lt; $numRows; $i++){ // alumni
+$row = mysql_fetch_assoc($result);
+if($row['fullpath'] == '/alumni/index.cc'){
+array_push($menu, $row);
+$i = $numRows;
+mysql_data_seek($result, 0);
+}
+}
+for($i = 0; $i &lt; $numRows; $i++){ // athletics
+$row = mysql_fetch_assoc($result);
+if($row['fullpath'] == '/athletics/index.cc'){
+array_push($menu, $row);
+$i = $numRows;
+mysql_data_seek($result, 0);
+}
+}
+for($i = 0; $i &lt; $numRows; $i++){ // resources
+$row = mysql_fetch_assoc($result);
+if($row['fullpath'] == '/resources/index.cc'){
+array_push($menu, $row);
+$i = $numRows;
+mysql_data_seek($result, 0);
+}
+}
+for($i = 0; $i &lt; $numRows; $i++){ // giving
+$row = mysql_fetch_assoc($result);
+if($row['fullpath'] == '/giving/index.cc'){
+array_push($menu, $row);
+$i = $numRows;
+mysql_data_seek($result, 0);
+}
+}
+for($i = 0; $i &lt; $numRows; $i++){ // finaid
+$row = mysql_fetch_assoc($result);
+if($row['fullpath'] == '/finaid/index.cc'){
+array_push($menu, $row);
+$i = $numRows;
+mysql_data_seek($result, 0);
+}
+}
+for($i = 0; $i &lt; $numRows; $i++){ // students
+$row = mysql_fetch_assoc($result);
+if($row['fullpath'] == '/students/index.cc'){
+array_push($menu, $row);
+$i = $numRows;
+mysql_data_seek($result, 0);
+}
+}
+mysql_data_seek($result, 0);
+$baseNav .= '&lt;ul' . ((self::$fullPath != '/index.cc') ? ' class="last-child"&gt;' : '&gt;') ;
+
+// loop through top level directories
+for($i = 0; $i &lt; count($menu); $i++){
+
+// build array of subdirectories
+$tmp = array();
+while($row = mysql_fetch_assoc($result)){
+if(substr($row['fullpath'], 0, strrpos($menu[$i]['fullpath'], '/')) == substr($menu[$i]['fullpath'], 0, strrpos($menu[$i]['fullpath'], '/'))){
+array_push($tmp, $row);
+}
+}
+// build array of custom navigation
+$subQ = "SELECT title AS shortTitle, link AS fullpath FROM webnav WHERE vfsID=".$menu[$i]['vfsID']." AND viewState='true'";
+$subResult = mysql_query($subQ);
+while($rec = mysql_fetch_assoc($subResult)){
+array_push($tmp, $rec);
+}
+// pretty print top level
+$baseNav .= '&lt;li&gt;&lt;a'.self::activeTL($menu[$i]['fullpath'], $tmp).' href="'.$menu[$i]['fullpath'].'"&gt;'.$menu[$i]['shortTitle'].'&lt;/a&gt;';
+$baseNav .= '&lt;ul '.self::activeUL($menu[$i]['fullpath']).'&gt;';
+
+// pretty print home page
+$baseNav .= '&lt;li&gt;&lt;a'.self::activeTL($menu[$i]['fullpath'], $tmp).' href="'.$menu[$i]['fullpath'].'"&gt;'.$menu[$i]['shortTitle'].' Home&lt;/a&gt;';
+
+// pretty print sub menu
+usort($tmp, 'self::SortMenu');
+for($z = 0; $z &lt; count($tmp); $z++){
+if ($tmp[$z]['fullpath']!=$menu[$i]['fullpath']) // eliminate double index.cc for root seven pages
+$baseNav .= "&lt;li&gt;&lt;a".self::active($tmp[$z]['fullpath'])." href='".$tmp[$z]['fullpath']."'&gt;".$tmp[$z]['shortTitle']."&lt;/a&gt;&lt;/li&gt;";
+}
+$baseNav .= '&lt;/ul&gt;&lt;/li&gt;';
+// add admissions
+if($menu[$i]['fullpath'] == '/academics/index.cc'){
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/" title="Admission"&gt;Admission&lt;/a&gt;';
+/* $baseNav .= '&lt;ul style="display:none"&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/finaid"&gt;Financial Aid &amp;amp; Scholarships&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/FAQs.aspx"&gt;FAQs&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/gettingStarted"&gt;Getting Started&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/visit"&gt;Visiting Carroll&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/applying"&gt;Applying to Carroll&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/life"&gt;Life @ Carroll&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/admissionCounselors"&gt;Admissions Counselors &amp;amp; Staff&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/admitted"&gt;Admitted Students&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/secure/requestMoreInformation.aspx"&gt;Request More Information&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/forms.aspx"&gt;Admission Forms&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/ontheroad.aspx"&gt;Carroll on the Road&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;li&gt;&lt;a href="https://explore.carroll.edu/admission/transfer"&gt;Transfer Students&lt;/a&gt;&lt;/li&gt;';
+$baseNav .= '&lt;/ul&gt;&lt;/li&gt;'; */
+$baseNav .= '&lt;/li&gt;';
+}
+mysql_data_seek($result, 0);
+}
+$baseNav .= "&lt;/ul&gt;";
+return $baseNav;
+}
+private function SortMenu($a, $b){ // sorting associative arrays
+return strnatcmp($a['shortTitle'], $b['shortTitle']);
+}
+private function active($url){ // general active
+return ($url == self::$fullPath) ? ' class="active"' : '' ;
+}
+private function activeTL($url, $subPaths){ // top level
+if ($url == self::$fullPath) { // top level match
+return ' class="active"';
+}
+while ($temp = array_pop($subPaths)) { // check sub levels
+if ($temp['fullpath'] == self::$fullPath) { // sub level match
+return ' class="active"';
+}
+}
+return ''; // no match
+}
+private function activeUL($category){ // unordered list
+$dirCheck = substr(self::$fullPath, 0, strrpos(self::$fullPath, '/') + 1);
+$dir = substr($category, 0, strrpos($category, '/') + 1);
+return ($dir == $dirCheck)? '' : ' style="display: none;"' ;
+}
+
+//Send email when an error connecting to the database occurs (Nate note: do we still need this function?)
+private function sendErrMsg(){ // N8 - unused
+dbError::sendDBConnError(HostConfig::server, HostConfig::db, date("Y-m-d H:i"), HostConfig::app, mysql_error(self::$dbConn), HostConfig::subject);
+}
+
+}
+?&gt;

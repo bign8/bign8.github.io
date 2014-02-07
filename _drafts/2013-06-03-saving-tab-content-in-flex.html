@@ -1,0 +1,86 @@
+---
+layout: post
+title: Saving tab content in FLEX
+categories: []
+tags: []
+published: false
+---
+http://durej.com/?p=91
+
+and how i did it differently
+
+&nbsp;
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:NavigatorContent xmlns:fx="http://ns.adobe.com/mxml/2009"
+xmlns:s="library://ns.adobe.com/flex/spark"
+xmlns:mx="library://ns.adobe.com/flex/mx"
+xmlns:n8="n8.*"
+width="100%" height="10%" xmlns:pages="pages.*" xmlns:tabs="pages.tabs.*" xmlns:wdws="pages.wdws.*"&gt;
+&lt;fx:Script&gt;
+&lt;![CDATA[
+import flexed.widgets.alerts.alert;
+
+import mx.controls.Alert;
+import mx.controls.tabBarClasses.*;
+import mx.core.FlexGlobals;
+import mx.events.FlexEvent;
+import mx.events.IndexChangedEvent;
+import mx.events.CloseEvent;
+
+import valueObjects.UserObject;
+
+private var user:UserObject;
+
+public function loadData(inUser:UserObject):void {
+user = inUser;
+welcome.text = 'Welcome ' + user.firstName + ' ' + user.mi + ' ' + user.lastName + '!';
+acctSettings.setUser(inUser);
+smScouts.setUser(inUser);
+}
+
+// Handling dirty tabs (ish)
+protected function initHandlers(event:FlexEvent):void {
+tabNav.addEventListener(MouseEvent.CLICK, onTabNavClicked, true);
+}
+protected function onTabNavClicked(event:MouseEvent):void {
+try {
+if (event.target is mx.controls.tabBarClasses.Tab ) {
+var curTab:* = tabNav.getChildAt(tabNav.selectedIndex);
+if (curTab.isDirty) {
+event.stopImmediatePropagation();
+alert.confirm('Changing tabs now will cause you to lose changes you have. ', 'Are you sure you would like to change tabs and lose changed information?', function(event2:CloseEvent):void {
+if (event2.detail == Alert.YES) {
+curTab.isDirty = false;
+event.target.dispatchEvent(event.clone());
+}
+});
+}
+}
+} catch (e:Error) {
+
+}
+}
+protected function resetIsDirty(event:IndexChangedEvent):void {
+try {
+var nexTab:* = tabNav.getChildAt(tabNav.selectedIndex);
+nexTab.isDirty = false;
+} catch (e:Error) {
+
+}
+}
+
+]]&gt;
+&lt;/fx:Script&gt;
+&lt;fx:Declarations&gt;
+&lt;!-- Place non-visual elements (e.g., services, value objects) here --&gt;
+&lt;/fx:Declarations&gt;
+&lt;s:Label x="10" y="10" fontSize="20" text="Scoutmaster Management"/&gt;
+&lt;s:Label x="10" y="30" text="Welcome Nameless" id="welcome"/&gt;
+&lt;mx:TabNavigator left="10" right="10" top="25" bottom="10" horizontalAlign="right"
+creationComplete="initHandlers(event)" id="tabNav" change="resetIsDirty(event)"&gt;
+&lt;tabs:AccountSettings id="acctSettings" /&gt;
+&lt;tabs:smScouts id="smScouts" /&gt;
+&lt;/mx:TabNavigator&gt;
+&lt;mx:LinkButton right="10" top="2" label="Logout" click="FlexGlobals.topLevelApplication.logout();"/&gt;
+&lt;/s:NavigatorContent&gt;

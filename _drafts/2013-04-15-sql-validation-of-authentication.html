@@ -1,0 +1,52 @@
+---
+layout: post
+title: sql validation of authentication
+categories: []
+tags: []
+published: false
+---
+<?php
+	require_once('c:/www/www.carroll.edu/libinc/coreClass/site_inc.php');
+
+	$conn = mysqli_connect(CoreClass::mysql_internal_Host, CoreClass::mysql_internal_UserName, CoreClass::mysql_internal_Password);
+	mysqli_select_db($conn, CoreClass::mysql_internal_mbu);
+
+	$q = "UPDATE `person` SET `verified` = 'valid' WHERE `email` = '".mysqli_real_escape_string($conn,$_REQUEST['email'])."';";
+	mysqli_query($conn, $q);
+	if (mysqli_error($conn)) {
+		$title = 'Database Error';
+		$text = 'There appears to have been a problem with your submission, please';
+		$link = 'have the link resent to your email';
+	} elseif (mysqli_affected_rows($conn) < 1) {
+		$title = 'Already Authenticated';
+		$text = 'Your account has previously been enabled, please try';
+		$link = 'resetting your password or logging in';
+	} else {
+		$title = 'Account verification successfull!';
+		$text = 'Your account has successfully been enabled, you may now';
+		$link = 'login';
+	}
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><?php echo $title; ?></title>
+		<meta charset="UTF-8">
+		<!--<meta http-equiv="Refresh" content="5; url=." />-->
+		<script>
+		var timeout = 5;
+		var x = setInterval(function() {
+			if (timeout < 1) {
+				//window.location = ".";
+				clearInterval(x);
+			}
+			document.getElementById('count').innerHTML = timeout + ' second' + ((1 < timeout--)?'s':'');
+		}, 1000);
+		</script>
+    </head>
+    <body>
+        <h2><?php echo $title; ?></h2>
+        <p><?php echo $text; ?> <a href="."><?php echo $link; ?></a></p>
+		<p>If you are not redirected after <span id="count">a few seconds</span>, please click on the link above!</p>
+    </body>
+</html>
