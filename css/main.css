@@ -30,6 +30,11 @@ a:hover   { color: #000; }
 a:visited { color: #a0a; }
 img {max-width: 42em;}
 
+table { 
+  width: 100%;
+  table-layout: fixed;
+}
+
 /*****************************************************************************/
 /*
 /* Home
