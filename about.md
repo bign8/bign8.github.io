@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  "About Nate"
-permalink: /about-nate/
+permalink: /about/
 ---
 # About Nathan J. Woods
 
