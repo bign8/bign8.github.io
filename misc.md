@@ -1,7 +1,6 @@
 ---
 layout: default
 title:  Miscellaneous
-date:   2014-02-01 08:22:38
 permalink: /misc/
 ---
 # Miscellaneous
