@@ -10,7 +10,7 @@
   padding: 0;
 }*/
 
-html, body { height: 100%; }
+/*html, body { height: 100%; }*/
 
 body {
   background-color: #FFF;
@@ -65,8 +65,14 @@ table {
   /*font-size: 115%;*/
   text-align: justify;
   width: 42em;
-  margin: 3em auto 2em;
+  margin: 1em auto;
+  padding: 1em 2em;
   line-height: 1.5em;
+  /*border: 4px solid #eee;*/
+}
+
+.header {
+  border-bottom: 4px solid #eee;
 }
 
 .header a {
@@ -76,7 +82,6 @@ table {
 
 .title {
   display: inline-block;
-  margin-bottom: 2em;
 }
 
 .title a {
