@@ -1,7 +1,17 @@
 name: Nathan Woods
 markdown: redcarpet
 pygments: true
-permalink: /blog/:year/:month/:day/:title.html
-exclude: [node_modules, gruntfile.js, package.json, CNAME, README.md]
+permalink: /blog/:year/:month/:title.html
+exclude: 
+    - node_modules
+    - gruntfile.js
+    - package.json
+    - CNAME
+    - README.md
 redcarpet:
-    extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
+    extensions: 
+        - no_intra_emphasis
+        - fenced_code_blocks
+        - autolink
+        - tables
+        - with_toc_data

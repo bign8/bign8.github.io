@@ -16,13 +16,7 @@ module.exports = function (grunt) {
         watch: {
           livereload: {
             files: [
-                '_config.yml',
-                'index.html',
-                '_layouts/**',
-                '_posts/**',
-                '_includes/**',
-                '*.md',
-                'css/main.css',
+                '**/*', '!_site/**/*'
             ],
             tasks: ['shell:jekyllBuild'],
             options: {
