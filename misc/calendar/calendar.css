@@ -1,0 +1,23 @@
+/*****************************************************************************/
+/*
+/* Calendar
+/*
+/*****************************************************************************/
+
+.calendar {
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+  text-align: center;
+  width: auto;
+  margin: 0 auto;
+}
+.calendar .regen {
+  padding-top: 0; 
+  -moz-user-select: none; 
+  -khtml-user-select: none; 
+  -webkit-user-select: none; 
+  -o-user-select: none;
+}
+.calendar, .calendar th, .calendar td { border: 1px solid rgba(0, 0, 0, 0.1); }
+.calendar th, .calendar .header { background-color: rgba(0, 0, 0, 0.02); }
+.calendar td { width: 20px; }

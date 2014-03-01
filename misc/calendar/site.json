@@ -1,0 +1,23 @@
+---
+layout: nil
+"content"  : "{{ post.content | strip_html | escape | strip_newlines }}"
+"content"  : "{{ post.content | expand_urls: site.url }}"
+source:
+- "http://jekyllsnippets.com/excluding-jsonify-your-site/"
+- "https://gist.github.com/mersy/7033839"
+- "https://gist.github.com/alswl/2767610"
+- "https://gist.github.com/kinlane/6573061"
+- "https://github.com/Shopify/liquid/wiki/Liquid-for-Designers"
+- "http://jekyllrb.com/docs/templates/"
+---
+
+[
+  {% for post in site.posts %}{
+    "title"      : "{{ post.title }}",
+    "url"        : "{{ post.url }}",
+    "date"       : "{{ post.date | date: "%B %d, %Y" }}",
+    "date2"      : "{{ post.date | date_to_string }}",
+    "categories" : [{% if post.categories.size > 0 %}"{{ post.categories | join:'","' }}"{% endif %}],
+    "tags"       : [{% if post.tags.size > 0 %}"{{ post.tags | join:'","' }}"{% endif %}]
+  }{% unless forloop.last %},{% endunless %}{% endfor %}
+] 
