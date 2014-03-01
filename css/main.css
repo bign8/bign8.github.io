@@ -143,6 +143,8 @@ table {
   border: 1px solid #ddd;
   background-color: #eef;
   padding: 0 .4em;
+  overflow: auto;
+  max-height: 300px;
 }
 
 .post ul, .post ol {
