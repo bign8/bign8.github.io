@@ -31,19 +31,21 @@ Calendar.prototype.getHTML = function(){
 	var endingDate = new Date(this.year, this.month + 1, 0);
 	var monthLength = endingDate.getDate();
 	var inLastRow = 6 - endingDate.getDay();
+	var nextLink = ' class="btn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month+1) + ', ' + this.year + ').draw();" title="Next Month"';
+	var pastLink = ' class="btn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month-1) + ', ' + this.year + ').draw();" title="Past Month"';
 	
 	// generate header
 	var html = '<table class="calendar"><tr>';
-	html += '<th class="btn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month-1) + ', ' + this.year + ').draw();">&laquo;</th>'
+	html += '<th' + pastLink + '>&laquo;</th>'
 	html += '<th colspan="5">' + this.month_labels[this.month] + "&nbsp;" + this.year + '</th>';
-	html += '<th class="btn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month+1) + ', ' + this.year + ').draw();">&raquo;</th>'
+	html += '<th' + nextLink + '>&raquo;</th>'
 	html += '</tr><tr class="header">';
 	for (var i = 0; i <= 6; i++ )
 		html += '<td title="' + this.day_labels[i] + '">' + this.day_labels[i].charAt() + '</td>';
 	html += '</tr><tr>';
 
 	// generate calendar
-	if ( startingDay ) html += '<td colspan="' + startingDay + '"></td>';
+	if ( startingDay ) html += '<td colspan="' + startingDay + '"' + pastLink + '></td>';
 	var index, has;
 	for (var day = 1; day <= monthLength; day++) {
 		index = this.year + '-' + this.month + '-' + day ;
@@ -51,7 +53,7 @@ Calendar.prototype.getHTML = function(){
 		html += '<td' + has + '>' + day + '</td>';
 		if ( (day + startingDay) % 7 == 0 && day != monthLength ) html += '</tr><tr>';
 	}
-	if ( inLastRow ) html += '<td colspan="' + inLastRow + '"></td>';
+	if ( inLastRow ) html += '<td colspan="' + inLastRow + '"' + nextLink + '></td>';
 	return html + '</tr></table>';
 };
 Calendar.prototype.fetch = function(url) {

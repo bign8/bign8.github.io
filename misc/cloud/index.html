@@ -30,39 +30,78 @@ title:  Tag Cloud
 	</canvas>
 </div>
 
-<div id="tags">
-	<ul>
-		{% for tag in site.tags %}
-			{% if tag | last | size > 0 %}
-				<li>
-					<a href="#tag" title="{{tag | last | size}} Post(s)">{{ tag | first | capitalize }}</a>
-					<small>({{tag | last | size}} Post(s))</small>
-				</li>
-			{% endif %}
-		{% endfor %}
-		{% for category in site.categories %}
-			{% if category | last | size > 0 %}
-				<li>
-					<a href="#category" title="{{category | last | size}} Post(s)">{{ category | first | capitalize }}</a>
-					<small>({{category | last | size}} Post(s))</small>
-				</li>
-			{% endif %}
-		{% endfor %}
-	</ul>
-</div>
+<ul id="tags">
+	{% for tag in site.tags %}
+		{% if tag | last | size > 0 %}
+			<li>
+				<a href="#tag" title="{{tag | last | size}} Post(s)" onClick="Cloud.print(event, 'tag', '{{ tag | first | capitalize }}')">{{ tag | first | capitalize }}</a>
+				<small>({{tag | last | size}} Post(s))</small>
+			</li>
+		{% endif %}
+	{% endfor %}
+	{% for category in site.categories %}
+		{% if category | last | size > 0 %}
+			<li>
+				<a href="#category" title="{{category | last | size}} Post(s)" onClick="Cloud.print(event, 'cat', '{{ category | first | capitalize }}')">{{ category | first | capitalize }}</a>
+				<small>({{category | last | size}} Post(s))</small>
+			</li>
+		{% endif %}
+	{% endfor %}
+</ul>
+
+<div id="cloudStories"></div>
 
 <!--[if lt IE 9]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 <script src="tagcanvas.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+var Cloud = function (url, ele) {
+	this.get(url);
+	Cloud.ele = ele;
+};
+Cloud.data = {};
+Cloud.print = function (e, type, name) {
+	e.preventDefault();
+	if ( !Cloud.data.hasOwnProperty(type) || !Cloud.data[type].hasOwnProperty( name.toLowerCase() ) ) return;
+	var html = '<ul class="posts">', obj = Cloud.data[ type ][ name.toLowerCase() ];
+	for (var i = 0; i < obj.length; i++) 
+		html += '<li><span>' + obj[i].date2 + '</span> &raquo; <a href="' + obj[i].url + '">' + obj[i].title + '</a></li>';
+	document.getElementById(Cloud.ele).innerHTML = '<h3>Posts for "' + name + '"</h3>' + html + '</ul>';
+};
+Cloud.prototype.get = function (url) {
+	function prepare(type, data) {
+		var sType = type.substr(0,3), index;
+		Cloud.data[sType] = Cloud.data[sType] || {};
+		for (var i = 0; i < data[type].length; i++) {
+			index = data[type][i].toLowerCase();
+			if (Cloud.data[ sType ].hasOwnProperty( index )) 
+				Cloud.data[ sType ][ index ].push( data );
+			else 
+				Cloud.data[ sType ][ index ] = [ data ];
+		};
+	};
+	var xmlhttp = ( window.XMLHttpRequest ) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP") ;
+	xmlhttp.onreadystatechange=function() {
+		if ( xmlhttp.readyState == 4 && xmlhttp.status == 200 ) {
+			var data = JSON.parse( xmlhttp.responseText );
+			for (var i = 0; i < data.length; i++) {
+				prepare('tags', data[i]);
+				prepare('categories', data[i]);
+			};
+		}
+	};
+	xmlhttp.open('GET', url, true);
+	xmlhttp.send();
+};
+
 window.onload = function() {
+	var myCloud = new Cloud('/misc/site.json', 'cloudStories');
+
 	try { // http://www.goat1000.com/tagcanvas-options.php
 		TagCanvas.Start('myCanvas', 'tags', {
 			textColour: '#0000aa',
 			outlineColour: '#eeeeee',
 			reverse: true,
 			depth: 0.8,
-			freezeActive: true,
-			freezeDecel: true,
 			wheelZoom: false,
 			imageScale: null,
 			maxSpeed: 0.035,
