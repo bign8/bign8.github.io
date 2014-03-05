@@ -1,0 +1,64 @@
+- 
+  link: "https://www.facebook.com/NathanJKWoods"
+  name: Facebook
+  slug: facebook
+-
+  link: "https://twitter.com/bignatewoods"
+  name: Twitter
+  slug: twitter
+-
+  link: "https://github.com/bign8/"
+  name: GitHub
+  slug: github
+-
+  link: "http://www.youtube.com/user/NathanW2009"
+  name: YouTube
+  slug: youtube
+-
+  link: "http://jsfiddle.net/user/bign8/"
+  name: jsFiddle
+  slug: jsfiddle
+-
+  link: "https://plus.google.com/113404491327587080494"
+  name: Google+
+  slug: googleplus
+-
+  link: "http://www.linkedin.com/in/nathanjkwoods/"
+  name: LinkedIn
+  slug: linkedin
+-
+  link: "http://stackoverflow.com/users/3220865/bign8"
+  name: Stack Overflow
+  slug: stackoverflow
+-
+  link: "http://disqus.com/bign8/"
+  name: Disqus
+  slug: disqus
+-
+  link: "https://www.dropbox.com/sh/d2q84ko8hyqe7rt/qZCPFjqp6a"
+  name: Dropbox
+  slug: dropbox
+-
+  link: "mailto:Nathan.J.K.Woods@gmail.com"
+  name: Email
+  slug: email
+-
+  link: "mailto:Nathan.J.K.Woods@gmail.com"
+  name: Gmail
+  slug: gmail
+-
+  link: "https://en.gravatar.com/bignatew"
+  name: Gravatar
+  slug: gravatar
+-
+  link: "https://www.kickstarter.com/profile/2055576200"
+  name: Kickstarter
+  slug: kickstarter
+-
+  link: "https://myspace.com/natetec"
+  name: Myspace
+  slug: myspace
+-
+  link: "skype:bignatewoods?chat"
+  name: Skype
+  slug: skype

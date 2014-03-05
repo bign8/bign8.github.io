@@ -14,4 +14,3 @@ redcarpet:
         - fenced_code_blocks
         - autolink
         - tables
-        - with_toc_data
