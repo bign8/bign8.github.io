@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: resume
 title:  "About Nate"
 permalink: /about/
 ---
@@ -10,7 +10,7 @@ permalink: /about/
 	<br/>Nathan J. Woods
 </div>
 
-To be completely honest, I am just another average person (with a blog). But unlike other people who go home to relax at night, I choose to go home and tinker, program, design, and break. Ever since I was young, I’ve taken things apart, attempted to understand how they work and possibly improve upon them. To be honest, I have no idea what I want to do, I just know what I’m good at and enjoy doing. And when it comes down to it, I pretty much enjoy anything to do with computers (hardware/software). Through my undergraduate education, I have touched on every abstraction layer of the computer, from transistors to the human layer, and haven’t found a layer yet that doesn’t excite me.
+To be completely honest, I am just another average person (with a blog). But unlike other people who go home to relax at night, I choose to go home and tinker, program, design, and break. Ever since I was young, I've taken things apart, attempted to understand how they work and possibly improve upon them. To be honest, I have no idea what I want to do, I just know what I'm good at and enjoy doing. And when it comes down to it, I pretty much enjoy anything to do with computers (hardware, firmware, or software). Through my undergraduate education, I have touched on every abstraction layer of the computer, from transistors to the human layer, and haven't found a layer yet that doesn't excite me.
 
 --------
 
@@ -45,29 +45,24 @@ Bachelor of Arts in Mathematics
 
 
 ## Extra Course Work
-### [Introduction to Artificial Intelligence](http://www.ai-class.com/ "Introduction to Artificial Intelligence")
-[Statement of Accomplishment](/assets/doc/ai-class-intro-to-ai.pdf)
+### [Introduction to Artificial Intelligencee](http://www.ai-class.com/ "Introduction to Artificial Intelligence") <small>[*Statement of Accomplishment*](/assets/doc/ai-class-intro-to-ai.pdf)</small>
+> Based on Stanford's CS-221,
+> introduced basics of Artificial intelligence which includes machine learning,
+> probabilistic reasoning, robotics and natural language processing
 
-Based on Stanford’s CS-221, introduced basics of Artificial intelligence which includes machine learning, probabilistic reasoning, robotics and natural language processing
+### [Building a Search Engine](http://www.udacity.com/overview/Course/cs101/ "Building a Search Engine") <small>[*Statement of Accomplishment*](/assets/doc/udacity-101-intro-to-cs.pdf)</small>
+> Designed and built a search engine with a web crawler and way of ranking popular pages
 
-### [Building a Search Engine](http://www.udacity.com/overview/Course/cs101/ "Building a Search Engine")
-[Statement of Accomplishment](/assets/doc/udacity-101-intro-to-cs.pdf)
-
-Designed and built a search engine with a web crawler and way of ranking popular pages
-
-### [Programming a Robotic Car](http://www.udacity.com/overview/Course/cs373/ "Programming a Robotic Car")
-[Statement of Accomplishment](/assets/doc/udacity-373-programming-a-robotic-car.pdf)
-
-Applied basic methods in Artificial Intelligence to a ‘virtual’ self driving vehicle
+### [Programming a Robotic Car](http://www.udacity.com/overview/Course/cs373/ "Programming a Robotic Car") <small>[*Statement of Accomplishment*](/assets/doc/udacity-373-programming-a-robotic-car.pdf)</small>
+> Applied basic methods in Artificial Intelligence to a 'virtual' self driving vehicle
 
 --------
 
-## Skills/Languages
-### Scripting Languages
-<table>
+## Know Scripting Languages / Protocols
+<table class="bubble-holder">
 	<thead>
 		<tr>
-			<td style="text-align: center; width: 50%;">Experience/working knowledge</td>
+			<td style="text-align: center; width: 50%;">Working knowledge</td>
 			<td style="text-align: center; width: 50%;">Basic knowledge</td>
 		</tr>
 	</thead>
@@ -75,37 +70,35 @@ Applied basic methods in Artificial Intelligence to a ‘virtual’ self driving
 		<tr>
 			<td>
 				<ul class="bubbles">
-					<li><a title="HTML enhanced for web apps" href="http://angularjs.org/" target="_blank">Angular.js</a></li>
-					<li>Bash</li>
-					<li>CSS</li>
-					<li>Flex</li>
-					<li>Git</li>
-					<li>HTML</li>
-					<li>Java</li>
-					<li>JavaScript
-						<ul>
-							<li><a title="by Google" href="http://angularjs.org/" target="_blank">Angular JS</a></li>
-							<li><a href="http://jquery.com/" target="_blank">jQuery</a></li>
-							<li><a href="http://nodejs.org/" target="_blank">Node.js</a></li>
-						</ul>
-					</li>
-					<li>MySQL</li>
-					<li>PHP</li>
-					<li>Python</li>
+					<li><a title="by Google" href="http://angularjs.org/" target="_blank">Angular JS</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="_blank">Bash</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Css" target="_blank">CSS</a></li>
+					<li><a href="http://www.adobe.com/products/flex.html" target="_blank">Flex</a></li>
+					<li><a href="http://git-scm.com/" target="_blank">Git</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Html" target="_blank">HTML</a></li>
+					<li><a href="http://www.java.com/" target="_blank">Java</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a></li>
+					<li><a href="http://jquery.com/" target="_blank">jQuery</a></li>
+					<li><a href="http://www.mysql.com/" target="_blank">MySQL</a></li>
+					<li><a href="http://nodejs.org/" target="_blank">Node.js</a></li>
+					<li><a href="http://www.php.net/" target="_blank">PHP</a></li>
+					<li><a href="http://www.python.org/" target="_blank">Python</a></li>
+					<li><a href="http://sqlite.org/" target="_blank">SQLite</a></li>
 				</ul>
 			</td>
 			<td>
 				<ul class="bubbles">
-					<li>Assembly</li>
-					<li>Auto LISP</li>
-					<li>Batch</li>
-					<li>C++</li>
-					<li>CGI</li>
+					<li><a href="http://en.wikipedia.org/wiki/Assembly_language" target="_blank">Assembly</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Autolisp" target="_blank">AutoLISP</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Batch_file" target="_blank">Batch</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/C%2B%2B" target="_blank">C++</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/C_Sharp_(programming_language)" target="_blank">C#</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Cgi-bin" target="_blank">CGI</a></li>
 					<li><a title="The JavaScript Task Runner" href="http://gruntjs.com/" target="_blank">Grunt</a></li>
 					<li><a title="Blog aware static sites" href="http://jekyllrb.com/" target="_blank">Jekyll</a></li>
-					<li>Perl</li>
-					<li>PL/SQL</li>
-					<li>Visual Basic</li>
+					<li><a href="http://en.wikipedia.org/wiki/Perl" target="_blank">Perl</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/PL/SQL" target="_blank">PL/SQL</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Visual_basic" target="_blank">Visual Basic</a></li>
 				</ul>
 			</td>
 		</tr>
@@ -132,21 +125,21 @@ Applied basic methods in Artificial Intelligence to a ‘virtual’ self driving
 
 ## CS Experience
 
-### Adjunct Professor @ [University of Montana – Helena](http://umhelena.edu/)
+### Adjunct Professor @ [University of Montana - Helena](http://umhelena.edu/)
 Spring 2014
 
-- Teaching CSCI 100 – Intro to Programming
+- Teaching CSCI 100 - Intro to Programming
 - Using Flowcharts, Visual Logic and C#.
 
 ### Intern @ [Anderson ZurMuehlen](http://www.azworld.com/ "Certified Public Accountants & Business Advisors")
-Fall 2013 – Present
+Fall 2013 - Present
 
 - Designed a purchasing system from the ground up based around an organizations needs
 - With constant feedback and development changes, an agile development process was implemented early
 - Tech: Angular.JS, Git, Grunt, PHP and related
 
 ### Web Developer @ [Carroll College](http://www.carroll.edu "Carroll College")
-Fall 2010 – Dec 2013
+Fall 2010 - Dec 2013
 
 - Assisted with the development of a custom content management system
 - Dealt with corporate environment problems such as communication issues
@@ -158,8 +151,8 @@ Summer 2010
 - Researched license place recognition, focus: license plate localization
 - Implemented a system that was 80% accurate using haar-like features
 
-### Webmaster and Systems Administrator @ [Outside Media](http://outsidemedia.com/ "Outside Media")
-2007 – 2012
+### Web-master and Systems Administrator @ [Outside Media](http://outsidemedia.com/ "Outside Media")
+2007 - 2012
 
 - Side design and implementation x2
 - Managed systems and corporate network
@@ -188,25 +181,25 @@ Fall 2011/2
 - Coached two teams to second and fifth place the following year in the local competition
 
 ### [Community Advisor](http://www.carroll.edu/students/community/ca/index.cc "Community Advisors")
-Fall 2010 – 2012
+Fall 2010 - 2012
 
 - Responsible for building a community within a floor and representing the college in a positive way
 - Tamed 3 years of sophomores
 
 ### [Mathematical Contest in Modeling](http://www.comap.com/undergraduate/contests/mcm/ "MCM")
-Spring 2010 – Present
+Spring 2010 - Present
 
 - Worked 96 hours with two other students to produce a paper
-- Completed 3 years, Achieving Meritorius Rank in 2010 (top 18% worldwide)
+- Completed 3 years, Achieving Meritorious Rank in 2010 (top 18% worldwide)
 
 ### Member, [Fighting Saints Football Team](http://www.carroll.edu/athletics/football/index.cc "Fighting Saints Football")
-Fall 2009 – Fall 2013
+Fall 2009 - Fall 2013
 
 - 6 time NAIA National Championship winners, once while attending
 - Team focus on teamwork, work ethic and goal setting
 
 ### [Assistant Scout Master](http://troop1941.org/ "Troop 1941")
-Jan 2008 – Jul 2009
+Jan 2008 - Jul 2009
 
 - Led more than 20 through wilderness training and ethical teaching
 - Achieved the rank of Eagle Scout
@@ -215,10 +208,11 @@ Jan 2008 – Jul 2009
 ## Projects
 
 - N8Stats
-- Webworks questions for cline
+- Web-works questions for Cline
 - upstream academy (purchasing system)
-- sleepdiag.com 
+- sleepDiag.com 
 - NateCMS
 - Robots Senior Project
 - Small Personal Projects
+- submitCoin.com
 - ...
