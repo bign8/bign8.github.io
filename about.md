@@ -214,5 +214,5 @@ Jan 2008 - Jul 2009
 - NateCMS
 - Robots Senior Project
 - Small Personal Projects
-- submitCoin.com
+- [submitCoin.com](http://submitCoin.com/)
 - ...
