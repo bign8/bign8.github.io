@@ -1,0 +1,163 @@
+/*****************************************************************************/
+/*
+/* Notebook
+/*
+/* Sources:
+/*		http://cssdeck.com/labs/css3-notebook-paper
+/*
+/*****************************************************************************/
+
+@import url('fonts/stylesheet.css');
+
+body {
+	background: #E3B773 url(bak.jpg) repeat center top;
+}
+.site:before {
+	content: '';
+	height: 157px;
+	width: 157px;
+	position: absolute;
+	top: -33px;
+	right: -10px;
+	background-image: url(paperclip.png);
+}
+.site:after {
+	content: '';
+	height: 250px;
+	width: 310px;
+	position: absolute;
+	top: -10px;
+	left: -250px;
+	background-image: url(coffee-cup.png);
+	background-size: 310px 250px;
+}
+.site {
+	margin: 2em auto;
+	width: 56em;
+	padding: 0;
+	line-height: 2em;
+	background: #fff;
+	box-shadow: 0 0 25px black;
+
+	/* gradients - second red border, first red border, top white space, blue lines */
+	background-image: 
+		-webkit-linear-gradient(left, rgba(255,85,91, .2), rgba(255,85,91, .2)), 
+		-webkit-linear-gradient(left, rgba(255,85,91, .8), rgba(255,85,91, .8)), 
+		-webkit-linear-gradient(top, white 0px, white 6em, rgba(255,255,255,0) 6em), 
+		-webkit-linear-gradient(white 0px, white .8em, #A6FFED .9em, white 1em);
+	background-image:  
+		-moz-linear-gradient(left, rgba(255,85,91, .2), rgba(255,85,91, .2)), 
+		-moz-linear-gradient(left, rgba(255,85,91, .8), rgba(255,85,91, .8)), 
+		-moz-linear-gradient(top, white 0px, white 6em, rgba(255,255,255,0) 6em), 
+		-moz-linear-gradient(white 0px, white .8em, #A6FFED .9em, white 1em);
+	background-image:  
+		-ms-linear-gradient(left, rgba(255,85,91, .2), rgba(255,85,91, .2)), 
+		-ms-linear-gradient(left, rgba(255,85,91, .8), rgba(255,85,91, .8)), 
+		-ms-linear-gradient(top, white 0px, white 6em, rgba(255,255,255,0) 6em), 
+		-ms-linear-gradient(white 0px, white .8em, #A6FFED .9em, white 1em);
+	background-image:
+		-o-linear-gradient(left, rgba(255,85,91, .2), rgba(255,85,91, .2)), 
+		-o-linear-gradient(left, rgba(255,85,91, .8), rgba(255,85,91, .8)), 
+		-o-linear-gradient(top, white 0px, white 6em, rgba(255,255,255,0) 6em), 
+		-o-linear-gradient(white 0px, white .8em, #A6FFED .9em, white 1em);
+	background-image:
+		linear-gradient(left, rgba(255,85,91, .2), rgba(255,85,91, .2)), 
+		linear-gradient(left, rgba(255,85,91, .8), rgba(255,85,91, .8)), 
+		linear-gradient(top, white 0px, white 6em, rgba(255,255,255,0) 6em), 
+		linear-gradient(white 0px, white .8em, #A6FFED .9em, white 1em);
+	background-size: 2px, 2px, auto, auto 2em;
+	background-repeat: repeat-y, repeat-y, no-repeat, repeat;
+	background-position: 90% 0px, 10% 0px, 0px 0px, 0px 0px;
+	position: relative;
+}
+.site > .header {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding: 5em 7em 0;
+	line-height: 21px;
+	font-family: pencilpete_fontregular;
+}
+.site > .header .title {
+	font-size: 40px;
+}
+.site > .header h1 a {
+	font-weight: normal;
+}
+.site > .header a.extra {
+	font-size: 20px;
+}
+.site > .content {
+	padding: 0 7em 1em;
+}
+.site > .footer {
+	border-top: none;
+	padding: 1em 9em 0;
+	margin-top: 0;
+	background: transparent url('coffee_stain_0.png') no-repeat right -18px;
+	background-size: 40%;
+}
+.site > .footer p {
+	margin-bottom: 0;
+}
+
+.posts {
+	margin-top: 0;
+}
+.posts li {
+	line-height: 1.9em;
+}
+
+.contacts li {
+	width: auto;
+	height: 9em;
+}
+
+.resume .bubbles {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+.resume .bubbles li {
+	border: .1em solid black;
+	padding: 0 .5em;
+	margin: .4em .5em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 0em;
+	margin-bottom: 0em;
+}
+.content h1 {
+	font-family: cheveuxdangemedium;
+	font-weight: normal;
+	font-size: 4em;
+	line-height: 1em;
+	margin-top: .5em;
+}
+p {
+	margin: 0 0 2em;
+	text-align: left;
+}
+ul {
+	margin-top: 0;
+	margin-bottom: 2em;
+}
+p + ul {
+	margin-top: -2em;
+}
+p + hr, ul + hr {
+	margin-top: -1em;
+}
+hr {
+	margin-bottom: .9em;
+	border-width: .1em;
+}
+blockquote {
+	background: white;
+	padding: 1em;
+	margin: 1em 3em;
+	border-radius: .5em;
+	box-shadow: .1em .1em .5em black;
+}
+blockquote p:last-child {
+	margin-bottom: 0;
+}

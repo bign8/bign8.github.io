@@ -3,7 +3,7 @@ layout: default
 title: bign8.info
 ---
 
-## Elevator Speech
+# Who am I?
 
 I am a freelance web developer, with hopes and aspirations of moving into the field of robotics.  Put simply, I'm a code monkey.  It's what I'm good at and I enjoy doing it.  Additionally, I have been told that I communicate complex ideas well with others, including the non-technical members of society.  Because of this, I work closely with my user base so they receive the best product / service possible.
 
