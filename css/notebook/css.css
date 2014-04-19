@@ -10,7 +10,7 @@
 @import url('fonts/stylesheet.css');
 
 body {
-	background: #E3B773 url(bak.jpg) repeat center top;
+	background: #E3B773 url(img/bak.jpg) repeat center top;
 }
 .site:before {
 	content: '';
@@ -19,7 +19,7 @@ body {
 	position: absolute;
 	top: -33px;
 	right: -10px;
-	background-image: url(paperclip.png);
+	background-image: url(img/paperclip.png);
 }
 .site:after {
 	content: '';
@@ -28,7 +28,7 @@ body {
 	position: absolute;
 	top: -10px;
 	left: -250px;
-	background-image: url(coffee-cup.png);
+	background-image: url(img/coffee-cup.png);
 	background-size: 310px 250px;
 }
 .site {
@@ -93,7 +93,7 @@ body {
 	border-top: none;
 	padding: 1em 9em 0;
 	margin-top: 0;
-	background: transparent url('coffee_stain_0.png') no-repeat right -18px;
+	background: transparent url(img/coffee_stain_0.png) no-repeat right -18px;
 	background-size: 40%;
 }
 .site > .footer p {
