@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<meta name="description" content="Awesome!!!">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.js"></script>
+</head>
+<body>
+	Link: <span id="url">Loading...</span><br/>
+	Title: <span id="title"></span><br/>
+	Desc: <span id="desc"></span><br/>
+	Img: <span id="img"></span>
+
+<script type="text/javascript">
+
+var N8 = N8 || {}; // Global namespace
+
+// Helper functions / library
+N8.lib = (function () {
+
+	// JSONP helper function
+	var jsonp_cb = {};
+	var jsonp_cnt = 0;
+	function jsonp(url, cb) {
+		if (cb) {
+			var cb_key = 'cb_' + base_convert( jsonp_cnt++, 10, BASE_CONVERT_MAX ); // change base
+			jsonp_cb[cb_key] = function (data) {
+				cb(data);
+				delete jsonp_cb[cb_key];
+			};
+			url = url.replace('CALLBACK', 'N8.lib.jsonp_cb.' + cb_key);
+		}
+
+		var script = document.createElement('script');
+		script.src = url;
+		script.type = 'text/javascript';
+		script.async = true;
+		script.onload = script.remove;
+		document.getElementsByTagName('body')[0].appendChild(script);
+	}
+
+	// NEW BASE CONVERT
+	var alphalbet = [ // JS (function name) and URL safe please!!!
+		'0','1','2','3','4','5','6','7','8','9',
+		'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+		'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+	];
+	var BASE_CONVERT_MAX = alphalbet.length;
+	var parseInt2 = function(string, radix) {
+		var number = 0;
+		for (var i = 0, length = string.length - 1; i < string.length; i++)  
+			number += alphalbet.indexOf(string[length - i]) * Math.pow(radix, i);
+		return number;
+	};
+	var toString2 = function(integer, radix) {
+		var out = '';
+		while (integer >= radix) {
+			out = alphalbet[integer % radix] + out;
+			integer = Math.floor(integer / radix);
+		};
+		return alphalbet[integer] + out;
+	};
+	function base_convert(number, frombase, tobase) {
+		// return parseInt(number + '', frombase | 0).toString(tobase | 0); // max radix = 36
+		return toString2(parseInt2(number + '', frombase | 0), tobase | 0);
+	}
+
+	return {
+		jsonp: jsonp,
+		jsonp_cb: jsonp_cb,
+		base_convert: base_convert,
+		BASE_CONVERT_MAX: BASE_CONVERT_MAX,
+	};
+})();
+
+// Short URL object
+N8.surl = (function () {
+	var links = [];
+
+	// Promises so this is possible (http://www.html5rocks.com/en/tutorials/es6/promises/)
+	function lookup (key) {
+		var index = N8.lib.base_convert( key, N8.lib.BASE_CONVERT_MAX, 10 );
+		if (index >= links.length || index < 0) throw new Error('Key out of range');
+
+		var promise = new Promise(function (resolve) {
+			var link = links[ index ];
+			N8.lib.jsonp(
+				'http://anyorigin.com/get/?url=' + encodeURIComponent(link) + '&callback=CALLBACK', 
+				page_meta_obj.bind(undefined, resolve, {
+					link: link,
+					img: 'http://api.webthumbnail.org?width=300&screen=1280&format=png&url=' + encodeURIComponent(link)
+				})
+			);
+		});
+
+		return promise;
+	}
+	function page_meta_obj (resolve, result, data) {
+
+		var titles = /<title>([^<]*)<\/title>/gi.exec(data.contents);
+		if (titles) result.title = titles[1];
+
+		var descs = /meta content="([^"]*)" name="description"/gi.exec(data.contents);
+		    descs = descs || /meta name="description" content="([^"]*)"/gi.exec(data.contents);
+		if (descs) result.desc = descs[1];
+
+		resolve(result);
+	}
+
+	// Usability functions
+	function index (num) {
+		return N8.lib.base_convert( num, 10, N8.lib.BASE_CONVERT_MAX );
+	}
+
+	// Main
+	N8.lib.jsonp('https://gist.githubusercontent.com/bign8/12ca258d3fee92c2e307/raw/links.js'); // callback=N8.surl.store_links
+	function store_links(data) {
+		links = data;
+		delete N8.surl.store_links;
+		var hash = document.location.search.substr(1);
+
+		// Generate page html
+		if (hash.length > 0) lookup(hash).then(function (res) {
+			document.getElementById('url').innerHTML = '<a href="' + res.link + '" target="_blank">' + res.link + '</a>';
+			document.getElementById('img').innerHTML = '<img src="' + res.img + '">';
+			if (res.title) document.getElementById('title').innerHTML = res.title;
+			if (res.desc) document.getElementById('desc').innerHTML = res.desc;
+		});
+	}
+
+	return {
+		store_links: store_links, // destroyed after initial use
+		lookup: lookup,
+		index: index,
+	};
+})();
+
+</script>
+
+</body>
+</html>
