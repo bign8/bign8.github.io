@@ -8,10 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-	Link: <span id="url">Loading...</span><br/>
-	Title: <span id="title"></span><br/>
-	Desc: <span id="desc"></span><br/>
-	Img: <span id="img"></span>
+	<div id="content">To Be Seen...</div>
 
 <script type="text/javascript">
 
@@ -34,120 +31,10 @@ N8.links = [
 	"http://bign8.disqus.com/",
 ];
 
-// Custom Bace Convert
-N8.bc = (function () {
+N8.tpl = 'Link: <a href="{link}" target="_blank">{link}</a><br/>Title: {title}<br/>Desc: {desc}<br/>Img: <img src="{img}">';
 
-	var alphalbet = [ // JS (function name) and URL safe please!!!
-		'0','1','2','3','4','5','6','7','8','9',
-		'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-		'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-	];
-	var MAX = alphalbet.length;
-	var parseInt2 = function(string, radix) {
-		var number = 0;
-		for (var i = 0, length = string.length - 1; i < string.length; i++)  
-			number += alphalbet.indexOf(string[length - i]) * Math.pow(radix, i);
-		return number;
-	};
-	var toString2 = function(integer, radix) {
-		var out = '';
-		while (integer >= radix) {
-			out = alphalbet[integer % radix] + out;
-			integer = Math.floor(integer / radix);
-		};
-		return alphalbet[integer] + out;
-	};
-	var convert = function (number, frombase, tobase) {
-		// return parseInt(number + '', frombase | 0).toString(tobase | 0); // max radix = 36
-		return toString2(parseInt2(number + '', frombase | 0), tobase | 0);
-	}
-
-	return {
-		convert: convert,
-		MAX: MAX,
-	};
-})();
-
-// JSONP helper
-N8.jsonp = (function (bc) {
-	if (!bc) throw "Missing N8.bc Library";
-
-	var count = 0;
-	var callbacks = {};
-
-	var get = function(url, cb) {
-		if (cb) {
-			var key = 'cb_' + bc.convert( count++, 10, bc.MAX );
-			callbacks[key] = function (data) {
-				delete callbacks[key]; // cleanup
-				cb(data);
-			};
-			url = url.replace('CALLBACK', 'N8.jsonp.cb.' + key);
-		}
-
-		var script = document.createElement('script');
-		script.src = url;
-		script.type = 'text/javascript';
-		script.async = true;
-		script.onload = script.remove;
-		document.getElementsByTagName('body')[0].appendChild(script);
-	};
-
-	return {
-		cb: callbacks,
-		get: get,
-	};
-})(N8.bc); // manual dependency injection
-
-// URL shortener
-N8.url = (function (links, bc, jsonp) {
-	var lookup = function (key) {
-		var index = bc.convert( key, bc.MAX, 10 );
-		if (index >= links.length || index < 0) throw "Key out of range";
-		return new Promise( gather_meta.bind(undefined, index) );
-	};
-
-	var gather_meta = function (index, resolve) {
-		var link = links[ index ];
-		jsonp.get( 'http://anyorigin.com/get/?url=' + encodeURIComponent(link) + '&callback=CALLBACK', function (data) {
-			var obj = parse_dom(data);
-			obj.link = link;
-			obj.img = 'http://api.webthumbnail.org?width=300&screen=1280&format=png&url=' + encodeURIComponent(link);
-			resolve(obj);
-		});
-	};
-
-	var parse_dom = function (data) {
-		var result = {};
-		var titles = /<title>([^<]*)<\/title>/gi.exec(data.contents);
-		if (titles) result.title = titles[1];
-
-		var descs = /meta content="([^"]*)" name="description"/gi.exec(data.contents);
-			descs = descs || /meta name="description" content="([^"]*)"/gi.exec(data.contents);
-		if (descs) result.desc = descs[1];
-		return result;
-	};
-
-	return lookup;
-})(N8.links, N8.bc, N8.jsonp); // manual dependency injection
-
-window.onload = function () {
-	var hash = document.location.pathname.substr(1);
-	try {
-		// Generate page html
-		if (hash.length > 0) N8.url(hash).then(function (res) {
-			document.getElementById('url').innerHTML = '<a href="' + res.link + '" target="_blank">' + res.link + '</a>';
-			document.getElementById('img').innerHTML = '<img src="' + res.img + '">';
-			if (res.title) document.getElementById('title').innerHTML = res.title;
-			if (res.desc) document.getElementById('desc').innerHTML = res.desc;
-		});
-	} catch (e) {
-		console.log('catched');
-		setTimeout(function () {
-			document.location = '/real-404.html';
-		}, 5000);
-	}
-};
+// UN-compressed in 404.js
+N8.bc=function(){var a="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""),b=a.length,c=function(b,c){for(var d=0,e=0,f=b.length-1;e<b.length;e++)d+=a.indexOf(b[f-e])*Math.pow(c,e);return d},d=function(b,c){for(var d="";b>=c;)d=a[b%c]+d,b=Math.floor(b/c);return a[b]+d},e=function(a,b,e){return d(c(a+"",0|b),0|e)};return{convert:e,MAX:b}}(),N8.jsonp=function(a){if(!a)throw"Missing N8.bc Library";var b=0,c={},d=function(d,e){if(e){var f="cb_"+a.convert(b++,10,a.MAX);c[f]=function(a){delete c[f],e(a)},d=d.replace("CALLBACK","N8.jsonp.cb."+f)}var g=document.createElement("script");g.src=d,g.type="text/javascript",g.async=!0,g.onload=g.remove,document.getElementsByTagName("body")[0].appendChild(g)};return{cb:c,get:d}}(N8.bc),N8.url=function(a,b,c){var d=function(c){var d=b.convert(c,b.MAX,10);if(d>=a.length||0>d)throw"Key out of range";return new Promise(e.bind(void 0,d))},e=function(b,d){var e=a[b];c.get("http://anyorigin.com/get/?url="+encodeURIComponent(e)+"&callback=CALLBACK",function(a){var b=f(a);b.link=e,b.img="http://api.webthumbnail.org?width=300&screen=1280&format=png&url="+encodeURIComponent(e),d(b)})},f=function(a){var b={},c=/<title>([^<]*)<\/title>/gi.exec(a.contents);c&&(b.title=c[1]);var d=/meta content="([^"]*)" name="description"/gi.exec(a.contents);return d=d||/meta name="description" content="([^"]*)"/gi.exec(a.contents),d&&(b.desc=d[1]),b};return d}(N8.links,N8.bc,N8.jsonp),String.prototype.supplant=function(a){return this.replace(/{([^{}]*)}/g,function(b,c){var d=a[c];return"string"==typeof d||"number"==typeof d?d:b})},window.onload=function(){var a=document.location.pathname.substr(1);try{a.length>0&&N8.url(a).then(function(a){document.getElementById("content").innerHTML=N8.tpl.supplant(a)})}catch(b){document.location="/real-404.html"}};
 </script>
 
 </body>
