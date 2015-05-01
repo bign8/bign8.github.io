@@ -1,0 +1,67 @@
+{
+  "dialogs": ["workbook", "presentation", "document"],
+  "dialog_options": {
+    "workbook": {
+      "panel": "workbook",
+      "scaling": {
+        "Fit to Page": true,
+        "Paginated": false
+      },
+      "show": {}
+    },
+    "presentation": {
+      "panel": "presentation",
+      "slides_per_page": {
+        "Handout - 1 slide per page": 1,
+        "Handout - 3 slides per page": 3,
+        "Handout - 6 slides per page": 6
+      },
+      "show": {}
+    },
+    "document": {
+      "show": {
+        "R-tag Highlighting": "show_rtag_highlighting"
+      }
+    },
+    "all": {
+      "show": {
+        "Comments": "show_comments",
+        "Headers": "show_headers",
+        "Footers": "show_footers",
+        "Hyperlinks": "show_hyperlinks",
+        "Leader Dots": "show_leader_dots",
+        "Table Cell Shading": "show_cell_shading",
+        "Tracked Changes": "show_tracked_changes"
+      },
+      "color_mode": {
+        "RGB": "rgb",
+        "CMYK": "cmyk"
+      },
+      "resolution": {
+        "Screen (72 dpi)": 72,
+        "Print (300 dpi)": 300,
+        "Print (600 dpi)": 600
+      },
+      "quality": {
+        "Crap": 0,
+        "Low": 1,
+        "Medium": 2,
+        "High": 3
+      },
+      "page_size": {
+        "Letter (8.5\" x 11\")": [8.5, 11],
+        "A4 (? x ?)": [0, 0],
+        "A5 (? x ?)": [0, 0]
+      },
+      "layout": {
+        "Landscape": false,
+        "Portrait": true
+      }
+    }
+  },
+  "presets": {
+    "Standard (Email)": {
+      "TODO": "generate these presets automagicaly with sick UI shiz"
+    }
+  }
+}
