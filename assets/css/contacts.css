@@ -1,0 +1,25 @@
+/*****************************************************************************/
+/*
+/* Contacts
+/*
+/*****************************************************************************/
+
+.contacts {
+  margin: 0 auto;
+  padding: 0;
+  width: 512px;
+}
+.contacts li {
+  list-style: none;
+  display: inline;
+  float: left;
+  width: 128px;
+}
+.contacts li img:hover {
+  -webkit-filter: blur(1px) opacity(60%);
+}
+.clear:after {
+    clear: both;
+    content: "";
+    display: table;
+}

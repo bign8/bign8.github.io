@@ -1,5 +1,5 @@
 ---
-layout: resume
+layout: default
 title:  "About Nate"
 permalink: /about/
 ---
@@ -59,7 +59,7 @@ Bachelor of Arts in Mathematics
 --------
 
 ## Know Scripting Languages / Protocols
-<table class="bubble-holder">
+<table class="table">
 	<thead>
 		<tr>
 			<td style="text-align: center; width: 50%;">Working knowledge</td>

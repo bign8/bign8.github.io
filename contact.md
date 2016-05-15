@@ -2,6 +2,7 @@
 layout: default
 title:  Contact Me
 permalink: /contact/
+css: contacts
 ---
 # Contact Me
 

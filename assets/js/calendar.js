@@ -31,8 +31,8 @@ Calendar.prototype.getHTML = function(){
 	var endingDate = new Date(this.year, this.month + 1, 0);
 	var monthLength = endingDate.getDate();
 	var inLastRow = 6 - endingDate.getDay();
-	var nextLink = ' class="btn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month+1) + ', ' + this.year + ').draw();" title="Next Month"';
-	var pastLink = ' class="btn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month-1) + ', ' + this.year + ').draw();" title="Past Month"';
+	var nextLink = ' class="cbtn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month+1) + ', ' + this.year + ').draw();" title="Next Month"';
+	var pastLink = ' class="cbtn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month-1) + ', ' + this.year + ').draw();" title="Past Month"';
 	
 	// generate header
 	var html = '<table class="calendar"><tr>';
@@ -89,4 +89,10 @@ Calendar.showPost = function(ele, index) {
 	} else {
 		element.innerHTML += '<div id="calendar-post-detail">' + getPostPreview() + '</div>';
 	}
+};
+console.log('here');
+window.onload = function() {
+	var cal = new Calendar('calendar');
+	cal.fetch('/misc/site.json');
+	cal.draw();
 };
