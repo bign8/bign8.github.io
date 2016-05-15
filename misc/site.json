@@ -1,5 +1,5 @@
 ---
-layout: nil
+layout: null
 "content"  : "{{ post.content | strip_html | escape | strip_newlines }}"
 "content"  : "{{ post.content | expand_urls: site.url }}"
 source:
