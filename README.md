@@ -1,3 +1,3 @@
 bign8.github.io
 ===============
-This repository houses the source for bign8.info.
+This repository houses the source for [bign8.info](http://bign8.info/).

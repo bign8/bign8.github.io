@@ -20,4 +20,4 @@ source:
     "categories" : [{% if post.categories.size > 0 %}"{{ post.categories | join:'","' }}"{% endif %}],
     "tags"       : [{% if post.tags.size > 0 %}"{{ post.tags | join:'","' }}"{% endif %}]
   }{% unless forloop.last %},{% endunless %}{% endfor %}
-] 
+]

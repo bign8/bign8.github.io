@@ -1,8 +1,8 @@
 name: Nate Woods
 markdown: redcarpet
-highlighter: pygments
+highlighter: true
 permalink: /blog/:year/:month/:title.html
-exclude: 
+exclude:
     - node_modules
     - gruntfile.js
     - package.json

@@ -5,6 +5,13 @@
     "grunt": "~0.4.2",
     "grunt-contrib-connect": "~0.6.0",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-shell": "~0.6.4"
+    "grunt-shell": "~0.6.4",
+    "gulp": "^3.8.10",
+    "gulp-less": "^2.0.1",
+    "gulp-concat": "^2.4.2",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-webserver": "^0.9.0",
+    "gulp-changed": "^1.1.0",
+    "gulp-imagemin": "^2.0.0"
   }
 }
