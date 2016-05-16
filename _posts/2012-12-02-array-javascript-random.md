@@ -16,4 +16,6 @@ Array.prototype.random = function() {
 };
 {% endhighlight %}
 
+<!--more-->
+
 Useful in applications that require the gathering of a random value...duhh

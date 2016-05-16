@@ -13,6 +13,8 @@ Have you ever wished there was a short Linux command for several lengthy piped c
 
 Either way, it would likely be a good idea to have administrative permissions. (Though not required in all cases)
 
+<!--more-->
+
 ## Alias
 For smaller/simpler commands, it is possible to simply create an alias. Using the alias command, Linux users can create a symbolic name for any desired shell code.
 

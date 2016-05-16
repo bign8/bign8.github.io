@@ -9,6 +9,8 @@ tags:
 ---
 Seen in the last page of today's Helena <del>Incorrect</del> [Independent Record](http://helenair.com/) is a half-page ad for the the quality information newspapers have to offer.  To prove this, the same ad shared a link to www.newspaperproject.org, which does not have anything to do with newspapers.  In fact, the domain was for sale.  Such a fine example of good, quality journalism.
 
+<!--more-->
+
 *The following is the text of this half-page ad.*
 
 ### America's First Portable Information Device

@@ -10,6 +10,8 @@ Being an excessive tab user, I am often run out of memory on my machine. Realizi
 
 Simply navigate to `chrome://flags/` (sorry no link, chrome doesn't let you link to that page for security reasons).
 
+<!--more-->
+
 This page has special permissions and can execute system calls to the browser itself.
 
 From here there are multiple ways to restart the browser.  The simplest of which is to click one feature twice (as to return to the enabled/disabled state it started in), and choosing the "Relaunch Now" button that appears at the bottom of the screen. After clicking, Chrome will save all your tabs, restart, and reload all your saved tabs. A nice little trick for the handbook!

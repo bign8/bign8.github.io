@@ -9,13 +9,15 @@ tags:
 - hack
 - jQuery
 ---
-### A.K.A Enjoying music the way it should be played!
+
+Ads and that stupid 'Are you still listening' button are constant annoyances while trying to enjoy the wonderful custom playlists.  Both of which are removable, just don't talk to loud or they will figure something out to make this difficult (note the absence of links to Pandora from this article).  Note: these instructions are meant for [Google Chrome](http://www.google.com/chrome), clearly a superior browser, but that's another story.
+
+<!--more-->
+
 <div style="float:right;margin-left:30px">
 	<img alt="Pandora Internet Radio" src="/assets/img/pandora.jpg" width="212" height="132" />
 	</br>Pandora Internet Radio
 </div>
-
-Ads and that stupid 'Are you still listening' button are constant annoyances while trying to enjoy the wonderful custom playlists.  Both of which are removable, just don't talk to loud or they will figure something out to make this difficult (note the absence of links to Pandora from this article).  Note: these instructions are meant for [Google Chrome](http://www.google.com/chrome), clearly a superior browser, but that's another story.
 
 ## Removing Ads
 This process works for all advertisements including YouTube's  not just Pandora's, which, if I am not mistaken, makes browsing the web a better experience.  This task is simply accomplished by installing an ad-blocker plugin for Chrome.  My ad-blocker of choice is [Simple Adblock](https://chrome.google.com/webstore/detail/nhfjefnfnmmnkcckbjjcganphignempo) which is developed by [wips.com](http://www.wips.com).  Simply add the extension to Chrome and reload the browser.  This single plugin has successfully improved my browsing experience by a bazillion, no big deal.

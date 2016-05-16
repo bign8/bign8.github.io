@@ -19,6 +19,8 @@ Array.prototype.sum = function() {
 };
 {% endhighlight %}
 
+<!--more-->
+
 Additionally, it may also be in order to provide an average function to compute the mean of an array.
 
 {% highlight javascript %}

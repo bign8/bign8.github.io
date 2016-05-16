@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ! 'Finite-state Machine: Implemented in 20 lines of code'
+title: ! 'Finite-state Machine: 20 lines of code'
 categories:
 - College work
 - Projects
@@ -10,6 +10,8 @@ tags:
 - Finite-state machine
 ---
 For those of you who thought [Automata Theory](http://en.wikipedia.org/wiki/Automata_theory "An educational link to the center of the world's knowledge.") was difficult to implement or not useful: *Think Again!*  When implemented properly, [finite-state machines](http://en.wikipedia.org/wiki/Finite-state_machine "So much knowledge!") require very few lines of code to do complex things.
+
+<!--more-->
 
 ## Backstory:
 

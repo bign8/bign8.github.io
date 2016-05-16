@@ -6,6 +6,13 @@ categories:
 - JavaScript
 css: calendar
 ---
+
+This simple script is derived from [jszen's blog](http://jszen.blogspot.com/2007/03/how-to-build-simple-calendar-with.html).  While he has done lots of great work, you will see my script has no use with double `for` loops.  This greatly improves the speed at which this script can execute and simplifies the algorithm substantially.  Also, I added the ability to scroll through the months, NBD.
+
+<!--more-->
+
+Below you can see the final result and  source code
+
 <script>
 function Calendar(ele, month, year) {
 	this.current_date = new Date();
@@ -54,10 +61,6 @@ Calendar.prototype.getHTML = function(){
 	return html + '</tr></table>';
 };
 </script>
-
-This simple script is derived from [jszen's blog](http://jszen.blogspot.com/2007/03/how-to-build-simple-calendar-with.html).  While he has done lots of great work, you will see my script has no use with double `for` loops.  This greatly improves the speed at which this script can execute and simplifies the algorithm substantially.  Also, I added the ability to scroll through the months, NBD.
-
-Below you can see the final result and  source code
 
 <div id="calendar"></div>
 <script type="text/javascript">window.onload = function() { new Calendar('calendar').draw(); };</script>

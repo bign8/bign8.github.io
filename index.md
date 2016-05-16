@@ -46,7 +46,6 @@ Bachelor of Arts in Mathematics
 
 --------
 
-
 ## Extra Course Work
 ### [Introduction to Artificial Intelligencee](http://www.ai-class.com/ "Introduction to Artificial Intelligence") <small>[*Statement of Accomplishment*](/assets/doc/ai-class-intro-to-ai.pdf)</small>
 > Based on Stanford's CS-221,
@@ -61,7 +60,7 @@ Bachelor of Arts in Mathematics
 
 --------
 
-## Know Scripting Languages / Protocols
+## Known Scripting Languages / Protocols
 <table class="table">
 	<thead>
 		<tr>
@@ -110,7 +109,7 @@ Bachelor of Arts in Mathematics
 
 --------
 
-## Applications/Protocols/Workflows
+## Applications / Protocols / Workflows
 
 - [Amazon Web Services](http://aws.amazon.com/ "Amazon Web Services")
 - [Excel](http://office.microsoft.com/en-us/excel/ "by Microsoft") / [Spreadsheets](https://developers.google.com/chart/interactive/docs/spreadsheets "by Google")

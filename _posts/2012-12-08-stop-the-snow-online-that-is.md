@@ -14,6 +14,8 @@ Short rant with a short fix today.
 
 **INSTRUCTIONS:** This method uses JavaScript injection, which consists of typing code straight into the address bar of a web browser and executing it by 'navigating' to that page.
 
+<!--more-->
+
 - Copy the line of code below
 - Paste this code into the address bar of a web browser  
     *Note: Google chrome strips the 'javascript:' on paste, need to type it in, sorry.*

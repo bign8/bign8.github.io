@@ -15,4 +15,6 @@ Array.prototype.contains = function(x) {
 }
 {% endhighlight %}
 
+<!--more-->
+
 Hope this helps with any containment needs!

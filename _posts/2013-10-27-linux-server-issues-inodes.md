@@ -9,6 +9,8 @@ When the `df`  command reports that you have plenty of disk space, yet you con
 
 For me, this usually occurs when an application creates a ton of small files in a single directory.  In order to find all these files, I started at the root with the command mentioned below and looked for the most files and drilling down and repeat.
 
+<!--more-->
+
 Attempt to track down culprit with this command:
 
 ```sh
