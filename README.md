@@ -11,7 +11,4 @@ jekyll serve
 
 # TODO
 
-- CI - https://jekyllrb.com/docs/continuous-integration/
-- Gulp
-- Less
-- Vendor
+- Gulp + Less + Bootstrap (possible to remove un-used css tags?)
