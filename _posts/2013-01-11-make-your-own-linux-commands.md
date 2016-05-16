@@ -18,28 +18,34 @@ Either way, it would likely be a good idea to have administrative permissions. (
 ## Alias
 For smaller/simpler commands, it is possible to simply create an alias. Using the alias command, Linux users can create a symbolic name for any desired shell code.
 
-{% highlight sh %}
+```sh
 > alias newCommandName='complicated | command < code >> here.sh'
-{% endhighlight %}
+```
 
 For example, a command I like to use often is a [Load Average](https://en.wikipedia.org/wiki/Load_(computing\) "Wikipedia's thoughts on Load Average") command. This command shows processor usage for the past 1 minute, 5 minutes, and 15 minutes.
 
-{% highlight sh %}
+```sh
 > cat /proc/loadavg | cut -d" " -f1-3
 0.10 0.20 0.30
-{% endhighlight %}
+```
 
 To create an alias of this command simply wrap the command in quotes and follow the syntax for the alias command.  Here I create an alias command: `la`.
 
-{% highlight sh %}> alias la='cat /proc/loadavg | cut -d" " -f1-3'{% endhighlight %}
+```sh
+> alias la='cat /proc/loadavg | cut -d" " -f1-3'
+```
 
 To view the code behind an alias, use the alias command followed by the alias name.
 
-{% highlight sh %}> alias la{% endhighlight %}
+```sh
+> alias la
+```
 
 To remove an alias of a command, simply use the unalias command.
 
-{% highlight sh %}> unalias la{% endhighlight %}
+```sh
+> unalias la
+```
 
 [[Source](http://www.mediacollege.com/linux/command/alias.html "Media College on Alias Command")]
 
@@ -48,27 +54,33 @@ As commands become more complicated, possibly creating variables and using them 
 
 Create a file with the commands desired in it. (Back to the Load Average example)
 
-{% highlight sh %}> vi la{% endhighlight %}
+```sh
+> vi la
+```
 
-{% highlight sh %}
+```sh
 #! /bin/bash
 cat /proc/loadavg | cut -d' ' -f1-3
-{% endhighlight %}
+```
 
 Add permission to execute file.
 
-{% highlight sh %}> chmod +x la{% endhighlight %}
+```sh
+> chmod +x la
+```
 
 Test if script is working
 
-{% highlight sh %}
+```sh
 > ./la
 0.11 0.21 0.31
-{% endhighlight %}
+```
 
 Finally, move to `/usr/bin`
 
-{% highlight sh %}> move la /usr/bin/la{% endhighlight %}
+```sh
+> move la /usr/bin/la
+```
 
 With that, your new la command should be ready to use, from anywhere.
 

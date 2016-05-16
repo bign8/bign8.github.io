@@ -76,7 +76,7 @@ window.onload = function() {
 ```
 
 ## Code for `Calendar.js`
-```javascript
+```js
 function Calendar(ele, month, year) {
 	this.current_date = new Date();
 	this.ele = ele;

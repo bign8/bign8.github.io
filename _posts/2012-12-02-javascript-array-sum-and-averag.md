@@ -12,12 +12,12 @@ tags:
 ---
 I can't take credit from this one, but I think the guys at [Hummingbird](http://hummingbirdstats.com/ "Hummingbird") had something right with their recursive sum function for arrays.  This function simply sums the numbers in an array.
 
-{% highlight javascript %}
+```js
 Array.prototype.sum = function() {
   return (! this.length) ? 0 : this.slice(1).sum() +
     ((typeof this[0] == 'number') ? this[0] : 0);
 };
-{% endhighlight %}
+```
 
 <!--more-->
 

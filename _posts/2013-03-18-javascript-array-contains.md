@@ -9,11 +9,12 @@ tags:
 ---
 Here is a quick one for you today.  Ever just want a simple way to see if there is an item in an array?  Well fear not, this little snippet is to the rescue!
 
-{% highlight javascript %}
+
+```js
 Array.prototype.contains = function(x) {
     return (this.indexOf(x) > -1);
 }
-{% endhighlight %}
+```
 
 <!--more-->
 

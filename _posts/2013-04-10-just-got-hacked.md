@@ -19,9 +19,9 @@ This hack was luckily, mostly unsuccessful since the hacker(s) were script kidd
 
 Finding the infected the files was the most interesting part which leads me to a nice little snippet to share.  This unix/linux command searches for files that contain a particular string, now this takes a while to execute, but sure helped me to find this infected file fast.
 
-{% highlight sh %}
-	sudo find -type f -exec grep -n "nsTView" {} \; -print 2>/dev/null
-{% endhighlight %}
+```sh
+sudo find -type f -exec grep -n "nsTView" {} \; -print 2>/dev/null
+```
 
 I won't go into specifics on how it works, but by replacing nsTView with whatever string your looking for in you navigated directory, it should return some note-worthy results.
 

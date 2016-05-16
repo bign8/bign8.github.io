@@ -10,11 +10,11 @@ tags:
 ---
 Another worthy one for the notebooks, the random entry of an array!
 
-{% highlight javascript %}
+```js
 Array.prototype.random = function() {
     return this[Math.floor(Math.random()*this.length)];
 };
-{% endhighlight %}
+```
 
 <!--more-->
 

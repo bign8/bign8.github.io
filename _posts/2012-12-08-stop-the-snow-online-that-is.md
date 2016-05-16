@@ -21,9 +21,9 @@ Short rant with a short fix today.
     *Note: Google chrome strips the 'javascript:' on paste, need to type it in, sorry.*
 - Sit back and relax as your processor chills from 96% usage to 22%.
 
-{% highlight ruby %}
-	javascript:snowStorm.stop();
-{% endhighlight %}
+```js
+javascript:snowStorm.stop();
+```
 
 **DETAILS:** This is used to stop JavaScript snow using the script entitled "DHTML Snowstorm!".  This script is available from [www.schillmania.com](http://www.schillmania.com/projects/snowstorm/ "DHTML JavaScript snow").  May I advise that when this script is used, there is an option to disable the snow, possibly setting a cookie and then have the script check if the cookie is set to disable.  This may be a small addition I add later.
 

@@ -27,7 +27,7 @@ As I was combing through and testing sample code, I found their line following s
 
 After running through the code for a line following robot several times, I finally understood how it worked: Automata Theory, or more specifically, a finite-state machine.  The following is the main operating code of this particular finite-state machine, but could be scaled easily to other machines.
 
-{% highlight java %}
+```java
 int state = 0; // Initialize to Unknown State
 
 while (true) {
@@ -47,7 +47,7 @@ while (true) {
 
 	Thread.sleep( 100 );
 }
-{% endhighlight %}
+```
 
 As you can see, this code is very compact and is very clean.  Initially, we begin in an unknown state. Once we start the infinite while loop, all we do is check our inputs, generate an input index, find our next state based off of our current state and input index, and drive our outputs based on our particular state.  Implemented this way, finite-state machines run extremely quick and could scale to run much more complex things than this simple line follower.
 
@@ -58,7 +58,7 @@ Now to clarify a few things in the above code.  First the idea of `state`, the
 In a [Finite-state machine](http://en.wikipedia.org/wiki/Finite_state_machine "So much knowledge to drink up!"), a [state](http://en.wikipedia.org/wiki/State_(computer_science\) "MORE EDUCATION!") is a way of defining the status of a widget.  Here we designate this line follower's 6 states and their actions.
 
 | State # | Description                    | Action     |
-| ------- | ------------------------------ | ---------- |
+|:-------:|:------------------------------ |:----------:|
 | 0       | Unknown                        | Stop       |
 | 1       | 2 sensors left of line         | Hard Right |
 | 2       | 1 sensor left of line          | Soft Right |
@@ -98,7 +98,7 @@ This figure gives us the graph representation of the finite-state machine.  The
 
 Now the code that defines `NEXT_STATE` (along with a few other things for completeness).  Hopefully the comments and explicit state declarations make this code easier to follow.  It sure helped me after finding their documentation.
 
-{% highlight java %}
+```java
 // State definitions
 private static final byte UNK = 0; // unknown
 private static final byte S2L = 1; // 2 sensors left of line
@@ -131,7 +131,7 @@ private byte[][] MOTOR_POWER = new byte[][] {
 	new byte[] { low,    normal }, // 1 right
 	new byte[] { 0,      normal }, // 2 right
 };
-{% endhighlight %}
+```
 
 This code also shows the definition of `MOTOR_POWER`  which gives different speeds to different wheels based on current state.  Note, this is for a simple two wheel drive system, but with no modification to the finite-state machine and only changing the `MOTOR_POWER`  and the code that accesses it, one can drive multi-wheel systems with ease.
 

@@ -13,3 +13,6 @@ exclude:
     - README.md
 plugins:
     - jekyll-paginate
+kramdown:
+    input: GFM
+    syntax_highlighter: rouge
