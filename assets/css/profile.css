@@ -1,0 +1,20 @@
+@import url("//fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,latin-ext");
+.profile {
+  display: block;
+  text-decoration: none;
+  font-family: Roboto Slab, sans-serif;
+  text-align: center;
+  color: #6A7CC3;
+}
+.profile h1 {
+  display: block;
+  font-size: 32px;
+  font-weight: normal;
+  margin-bottom: 20px;
+  text-shadow: 1px 2px rgba(0, 0, 0, 0.14);
+}
+.profile img {
+  width: 125px;
+  border: 5px solid #6A7CC3;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.51);
+}
