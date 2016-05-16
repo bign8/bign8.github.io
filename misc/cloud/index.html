@@ -34,7 +34,7 @@ title:  Tag Cloud
 	{% for tag in site.tags %}
 		{% if tag | last | size > 0 %}
 			<li>
-				<a href="#tag" title="{{tag | last | size}} Post(s)" onClick="Cloud.print(event, 'tag', '{{ tag | first | capitalize }}')">{{ tag | first | capitalize }}</a>
+				<a href="javascript:void(0)" title="{{tag | last | size}} Post(s)" onClick="Cloud.print(event, 'tag', '{{ tag | first | capitalize }}')">{{ tag | first | capitalize }}</a>
 				<small>({{tag | last | size}} Post(s))</small>
 			</li>
 		{% endif %}
@@ -42,7 +42,7 @@ title:  Tag Cloud
 	{% for category in site.categories %}
 		{% if category | last | size > 0 %}
 			<li>
-				<a href="#category" title="{{category | last | size}} Post(s)" onClick="Cloud.print(event, 'cat', '{{ category | first | capitalize }}')">{{ category | first | capitalize }}</a>
+				<a href="javascript:void(0)" title="{{category | last | size}} Post(s)" onClick="Cloud.print(event, 'cat', '{{ category | first | capitalize }}')">{{ category | first | capitalize }}</a>
 				<small>({{category | last | size}} Post(s))</small>
 			</li>
 		{% endif %}

@@ -10,7 +10,7 @@ css: contacts
 {% for contact in site.data.contacts %}
 	<li>
 		<a href="{{ contact.link }}">
-			<img src="/assets/img/contact/{{ contact.slug }}-128-black.png" title="{{ contact.name }}">
+			<img src="/assets/img/contact/{{ contact.slug }}-128-black.png" title="{{ contact.name }}" alt="{{ contact.name }}">
 		</a>
 	</li>
 {% endfor %}
