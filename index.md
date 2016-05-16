@@ -1,13 +1,9 @@
 ---
 layout: default
+permalink: /
 ---
 
 # About Nathan J. Woods
-
-<div style="float:right;margin-left:30px">
-	<a href="/assets/img/n8.jpg"><img title="Nathan Woods" alt="Nathan Woods" src="/assets/img/n8.jpg" width="148" height="185" /></a>
-	<br/>Nathan J. Woods
-</div>
 
 To be completely honest, I am just another average person (with a blog). But unlike other people who go home to relax at night, I choose to go home and tinker, program, design, and break. Ever since I was young, I've taken things apart, attempted to understand how they work and possibly improve upon them. To be honest, I have no idea what I want to do, I just know what I'm good at and enjoy doing. And when it comes down to it, I pretty much enjoy anything to do with computers (hardware, firmware, or software). Through my undergraduate education, I have touched on every abstraction layer of the computer, from transistors to the human layer, and haven't found a layer yet that doesn't excite me.
 
