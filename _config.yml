@@ -1,4 +1,4 @@
-name: Nathan Woods
+name: Nate Woods
 markdown: redcarpet
 highlighter: true
 permalink: /blog/:year/:month/:title.html
@@ -8,10 +8,3 @@ exclude:
     - package.json
     - CNAME
     - README.md
-    - Vagrantfile
-redcarpet:
-    extensions:
-        - no_intra_emphasis
-        - fenced_code_blocks
-        - autolink
-        - tables

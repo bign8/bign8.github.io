@@ -10,8 +10,10 @@
   text-align: center;
   width: auto;
   margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 2px;
 }
-.calendar .btn {
+.calendar .cbtn {
   padding-top: 0; 
   -moz-user-select: none; 
   -khtml-user-select: none; 
@@ -24,7 +26,10 @@
 }
 .calendar .has { background-color: rgba(0, 0, 0, 0.15); }
 .calendar, .calendar th, .calendar td { border: 1px solid rgba(0, 0, 0, 0.1); }
-.calendar th, .calendar .header { background-color: rgba(0, 0, 0, 0.02); }
+.calendar th, .calendar .header {
+  background-color: rgba(0, 0, 0, 0.02);
+  text-align: center;
+}
 .calendar td {
   width: 1.5em;
   line-height: 1.1em;

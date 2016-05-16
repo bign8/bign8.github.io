@@ -1,19 +1,11 @@
 ---
 layout: default
 title:  Calendar Blog Posts
+css: calendar
+js: calendar
 ---
-<script src="calendar.js"></script>
-<link rel="stylesheet" href="calendar.css">
-
 <p>This calendar highlights each day this website has a post.  Clicking on a highlighted day will show all the posts from that date.  Also, feel free to scan through the months to find more posts.</p>
 
 <div id="calendar"></div>
-<script type="text/javascript">
-window.onload = function() {
-	var cal = new Calendar('calendar');
-	cal.fetch('/misc/site.json');
-	cal.draw();
-};
-</script>
 
 <p>If you are interested in a more basic calendar, please see the <a href="/blog/2014/03/javascript-calendar.html">base code</a> behind it</p>
