@@ -47,15 +47,19 @@ Bachelor of Arts in Mathematics
 --------
 
 ## Extra Course Work
+
 ### [Introduction to Artificial Intelligencee](http://www.ai-class.com/ "Introduction to Artificial Intelligence") <small>[*Statement of Accomplishment*](/assets/doc/ai-class-intro-to-ai.pdf)</small>
+
 > Based on Stanford's CS-221,
 > introduced basics of Artificial intelligence which includes machine learning,
 > probabilistic reasoning, robotics and natural language processing
 
 ### [Building a Search Engine](http://www.udacity.com/overview/Course/cs101/ "Building a Search Engine") <small>[*Statement of Accomplishment*](/assets/doc/udacity-101-intro-to-cs.pdf)</small>
+
 > Designed and built a search engine with a web crawler and way of ranking popular pages
 
 ### [Programming a Robotic Car](http://www.udacity.com/overview/Course/cs373/ "Programming a Robotic Car") <small>[*Statement of Accomplishment*](/assets/doc/udacity-373-programming-a-robotic-car.pdf)</small>
+
 > Applied basic methods in Artificial Intelligence to a 'virtual' self driving vehicle
 
 --------
@@ -207,6 +211,7 @@ Jan 2008 - Jul 2009
 - Achieved the rank of Eagle Scout
 
 --------
+
 ## Projects
 
 - N8Stats

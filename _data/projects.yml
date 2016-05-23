@@ -1,0 +1,31 @@
+---
+- project: SubmitCoin
+  slug: submitcoin
+  category: Product
+  link: http://submitcoin.com
+  publish: yes
+  description: |
+    Need to by stuff but only have bitcoin?
+    A few friends and I started SubmitCoin to allow just that with BitCoin backed credit cards.
+
+- project: Tag Cloud
+  slug: cloud
+  category: Fun
+  publish: yes
+  description: |
+    An interesting representation of my blogs tags.
+    Uses various technologies across the Web 2.0 stack.
+
+- project: Calendar
+  slug: calendar
+  publish: yes
+  description: |
+    A calendar based representation of my blog posts.
+    Designed in conjunction with Tag Cloud, this uses the same data source with different representation.
+
+- project: Twitter Archive
+  slug: twitter
+  category: Fun
+  publish: yes
+  description: |
+    Turns out you can download all your twitter posts.  Here are some of mine.

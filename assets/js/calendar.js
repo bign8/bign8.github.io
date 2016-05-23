@@ -33,7 +33,7 @@ Calendar.prototype.getHTML = function(){
 	var inLastRow = 6 - endingDate.getDay();
 	var nextLink = ' class="cbtn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month+1) + ', ' + this.year + ').draw();" title="Next Month"';
 	var pastLink = ' class="cbtn" onclick="new Calendar(\'' + this.ele + '\', ' + (this.month-1) + ', ' + this.year + ').draw();" title="Past Month"';
-	
+
 	// generate header
 	var html = '<table class="calendar"><tr>';
 	html += '<th' + pastLink + '>&laquo;</th>'
@@ -93,6 +93,6 @@ Calendar.showPost = function(ele, index) {
 console.log('here');
 window.onload = function() {
 	var cal = new Calendar('calendar');
-	cal.fetch('/misc/site.json');
+	cal.fetch('/site.json');
 	cal.draw();
 };

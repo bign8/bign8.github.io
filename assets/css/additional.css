@@ -1,3 +1,13 @@
 .nav .glyphicon {
 	margin-right: 1em;
 }
+
+
+/* for projects page */
+a.thumbnail {
+	text-decoration: none;
+}
+
+.thumbnail .caption :last-child {
+	margin-bottom: 0;
+}
