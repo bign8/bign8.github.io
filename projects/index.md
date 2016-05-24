@@ -7,6 +7,25 @@ permalink: /projects/
 
 <!-- TODO: Intro lead -->
 
+<!--
+
+## Projects
+
+This list is very out of date and needs to be updated!
+
+- N<sub>8</sub>Stats
+- Web-works questions for Cline
+- upstream academy (purchasing system)
+- sleepDiag.com
+- NateCMS
+- Robots Senior Project
+- Small Personal Projects
+- [submitCoin.com](http://submitCoin.com/)
+- ...
+
+-->
+
+
 <div class="row">
   {% for project in site.data.projects %}{% if project.publish == true %}
   <div class="col-sm-6 col-md-4">
