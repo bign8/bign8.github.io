@@ -5,6 +5,9 @@
   link: http://submitcoin.com
   publish: yes
   image: yes
+  languages:
+    - PHP
+    - Angular
   description: |
     Need to by stuff but only have bitcoin?
     A few friends and I started SubmitCoin to allow just that with BitCoin backed credit cards.
@@ -13,6 +16,8 @@
   slug: calendar
   publish: yes
   image: yes
+  languages:
+    - Javascript
   description: |
     A calendar based representation of my blog posts.
     Designed in conjunction with Tag Cloud, this uses the same data source with different representation.
@@ -21,6 +26,8 @@
   slug: cloud
   category: Fun
   publish: yes
+  languages:
+    - Javascript
   description: |
     An interesting representation of my blogs tags.
     Uses various technologies across the Web 2.0 stack.
@@ -29,72 +36,96 @@
   slug: gobench
   link: https://github.com/bign8/gobench
   publish: yes
+  languages:
+    - Go
   description: CLI for tracing benchmarks through the software development cycle
 
 - project: Pipelines
   slug: pipelines
   link: https://github.com/bign8/pipelines
   publish: yes
+  languages:
+    - Go
   description: Cloud based DAG infrastructure with inter-node release and testing
 
 - project: PyStruct
   slug: py-struct
   link: https://github.com/bign8/PyStruct
   publish: yes
+  languages:
+    - Python
   description: Distributed system for Bayesian structure learning from sample data
 
-- project: Disk Priority Queue
+- project: Disk Queue
   slug: ddpq
   link: https://github.com/bign8/DDPQ
   publish: yes
+  languages:
+    - Python
   description: Priority queue that uses disk as swap to save memory
 
 - project: NateCMS
   slug: nate-cms
   link: https://github.com/bign8/NateCMS
   publish: yes
+  languages:
+    - PHP
   description: Custom content management system based on work done at Carroll
 
 - project: N8-Chat
   slug: n8-chat
   link: https://github.com/bign8/N8-Chat
   publish: yes
+  languages:
+    - PHP
   description: Slim websockets based chat client for demonstration purposes
 
 - project: Hipchat Lite
   slug: hipchat-lite
   link: https://github.com/bign8/hipchat-lite
   publish: yes
+  languages:
+    - Node
   description: Full featured port of Hipchat designed to be run on a travel router offline
 
 - project: URL shortener
   slig: url-shortener
   link: https://github.com/bign8/url.bign8.info
   publish: yes
+  languages:
+    - PHP
   description: Simple URL shortener for personal link tracking and secure links
 
 - project: Purchasing System
   slug: purchasing-system
   link: https://github.com/bign8/purchasing-system
   publish: yes
+  languages:
+    - PHP
   description: Highly customized web based shopping cart
 
-- project: Authentication Service
+- project: OAuth Service
   slug: auth-service
   link: https://github.com/bign8/auth-app
   publish: yes
+  languages:
+    - PHP
   description: A central authentication service developed while at Upstream
 
 - project: NateStats
   slug: nate-stats
   link: https://github.com/bign8/NateStats
   publish: yes
+  languages:
+    - Node
   description: Analytics system used to analyze web traffic and site navigation
 
 - project: Robot
   slug: robot
   link: https://github.com/bign8/Robot
   publish: yes
+  languages:
+    - Java
   description: Neural network based robot navigation system for Java based microcontrollers
 
 - project: Twitter Archive

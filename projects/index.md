@@ -31,7 +31,8 @@ This list is very out of date and needs to be updated!
     <a class="thumbnail" {% if project.link %}href="{{project.link}}" target="_blank"{% else %}href="/projects/{{ project.slug }}/"{% endif %}>
       {% if project.image %}<img src="/projects/{{ project.slug }}/cover.jpg" alt="{{ project.project }}">{% endif %}
       <div class="caption">
-        <h3 style="margin-top: 0">{{ project.project }}</h3><!--  <small class="pull-right">{{ project.category }}</small> -->
+        <div class="pull-right">{% for lang in project.languages %}<span class="label label-default">{{lang}}</span> {% endfor %}</div>
+        <h3 style="margin-top: 0">{{ project.project }}</h3>
         <p>{{ project.description }}</p>
       </div>
     </a>
