@@ -20,7 +20,6 @@ This list is very out of date and needs to be updated!
 - NateCMS
 - Robots Senior Project
 - Small Personal Projects
-- [submitCoin.com](http://submitCoin.com/)
 - ...
 
 -->
@@ -29,13 +28,17 @@ This list is very out of date and needs to be updated!
 <div class="row">
   {% for project in site.data.projects %}{% if project.publish == true %}
   <div class="col-sm-6 col-md-4">
-    <a class="thumbnail" href="/projects/{{ project.slug }}/">
-      <img src="/projects/{{ project.slug }}/cover.jpg" alt="{{ project.project }}">
+    <a class="thumbnail" {% if project.link %}href="{{project.link}}" target="_blank"{% else %}href="/projects/{{ project.slug }}/"{% endif %}>
+      {% if project.image %}<img src="/projects/{{ project.slug }}/cover.jpg" alt="{{ project.project }}">{% endif %}
       <div class="caption">
-        <h3>{{ project.project }}</h3><!--  <small class="pull-right">{{ project.category }}</small> -->
+        <h3 style="margin-top: 0">{{ project.project }}</h3><!--  <small class="pull-right">{{ project.category }}</small> -->
         <p>{{ project.description }}</p>
       </div>
     </a>
   </div>
   {% endif %}{% endfor %}
 </div>
+
+And that's just what I can share!
+Head on over to my <a href="https://github.com/bign8">GitHub page</a> for more details on these projects.
+And be sure to <a href="/contact/">drop me a line</a> if it sounds like I can help your team build modern scalable web applications.
