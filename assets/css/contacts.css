@@ -7,19 +7,23 @@
 .contacts {
   margin: 0 auto;
   padding: 0;
-  width: 512px;
+  max-width: 512px;
+  width: 100%;
 }
 .contacts li {
   list-style: none;
   display: inline;
   float: left;
-  width: 128px;
+  width: 25%;
 }
 .contacts li img:hover {
   -webkit-filter: blur(1px) opacity(60%);
 }
 .clear:after {
-    clear: both;
-    content: "";
-    display: table;
+  clear: both;
+  content: "";
+  display: table;
+}
+.contacts li img {
+  width: 100%;
 }
