@@ -11,3 +11,16 @@ a.thumbnail {
 .thumbnail .caption :last-child {
 	margin-bottom: 0;
 }
+
+
+/* For Blog post's first characters */
+.post::before{
+	color: #f8f8f8;
+	font-size: 175px;
+	font-weight: bold;
+	margin-left: -50px;
+	margin-top: 20px;
+	position: absolute;
+	z-index: -1;
+	line-height: 0;
+}

@@ -4,6 +4,13 @@ layout: default
 <h2>{{ page.title }}</h2>
 <p class="meta">{{ page.date | date_to_string }}</p>
 
+{% comment %}
+Borrowed idea from http://dyn.com/blog/
+The remainder of the styles are in assets/css/additional.css
+- https://github.com/Shopify/liquid/wiki/Liquid-for-Designers
+- https://gist.github.com/smutnyleszek/9803727
+{% endcomment %}
+<style>.post::before{content: "{{ content | strip_html | split:"" | first }}"}</style>
 <div class="post">
 {{ content }}
 </div>
