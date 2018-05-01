@@ -14,6 +14,7 @@
 
   var map = function(n, a, b, c, d) { return ((n-a)/(b-a))*(d-c)+c; };
 
+  // Vector is a 2-3 dimensional point class.
   var Vector = function(x, y, z) {
     this.x = x, this.y = y, this.z = z;
     this.add = function(x, y, z) {
@@ -29,8 +30,69 @@
     return new Vector(M.cos(angle), M.sin(angle), 0);
   };
 
-  function Dot() {
-    this.position = new Vector(M.random() * canvas.width, M.random() * canvas.height);
+  // QuadTree bounding shapes.
+  var Rect = function(x, y, w, h) {
+    this.x = x, this.y = y, this.h = h, this.w = w;
+    this.contains = function(pt) {
+      return x - w <= pt.x && x + w >= pt.x && y - h <= pt.y && y + h >= pt.y;
+    };
+    this.intersects = function(r) {
+      // Only need to deal with circular query ranges
+      return (
+        x - w <= r.x + r.r &&
+        x + w >= r.x - r.r &&
+        y - h <= r.y + r.r &&
+        y + h >= r.y - r.r
+      );
+    };
+  };
+  var Circ = function(x, y, r) {
+    this.x = x, this.y = y, this.r = r;
+    this.contains = function(pt) {
+      return M.hypot(x - pt.x, y - pt.y) <= r;
+    };
+  };
+
+  // QuadTree based on psuedocode on https://en.wikipedia.org/wiki/Quadtree
+  var QuadTree = function(bounds, limit) {
+    limit = limit || 4;
+    var points = [], nw, ne, se, sw;
+
+    var subdivide = function() {
+      var w2 = bounds.w / 2, h2 = bounds.h / 2;
+      nw = new QuadTree(new Rect(bounds.x - w2, bounds.y - h2, w2, h2), limit);
+      ne = new QuadTree(new Rect(bounds.x - w2, bounds.y + h2, w2, h2), limit);
+      sw = new QuadTree(new Rect(bounds.x + w2, bounds.y - h2, w2, h2), limit);
+      se = new QuadTree(new Rect(bounds.x + w2, bounds.y + h2, w2, h2), limit);
+    };
+
+    // Insert point into quadtree
+    this.insert = function(pt) {
+      if (!bounds.contains(pt)) return false; // not my problem
+      if (points.length < limit) {
+        points.push(pt); // fits just fine
+        return true;
+      }
+      if (nw == undefined) subdivide(); // initialize sub-components
+      return nw.insert(pt) || ne.insert(pt) || sw.insert(pt) || se.insert(pt); // defer to one of children
+    };
+
+    // Query a range of items from quadtree
+    this.query = function(range, list) {
+      if (list == undefined) list = [];
+      if (bounds.intersects(range)) {
+        for (let p of points) if (range.contains(p)) list.push(p);
+        if (nw != undefined)
+          list = se.query(range, sw.query(range, ne.query(range, nw.query(range, list))));
+      }
+      return list;
+    };
+  };
+
+  // Dot is a visible point with velocity and position vectors.
+  // The Z of the position vector is the index/identifier within the dots array.
+  function Dot(idx) {
+    this.position = new Vector(M.random() * canvas.width, M.random() * canvas.height, idx);
     this.velocity = Vector.random2D();
     this.velocity.mult(M.random());
     this.size = M.random() + 1;
@@ -62,7 +124,7 @@
     // TODO: deal with resize of dots
     if (dots.length > 0) return;
     var density = M.floor(height * width / 5e3);
-    for (var i = 0; i < density; i++) dots.push(new Dot());
+    for (var i = 0; i < density; i++) dots.push(new Dot(dots.length));
   }
 
   function setup() {
@@ -87,13 +149,20 @@
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    var w2 = canvas.width / 2, h2 = canvas.height / 2,
+      quad = new QuadTree(new Rect(w2, h2, w2, h2), 4); // center point and half width/height
+
     // Drawing + Updating Circles: O(n)
-    for (var i = 0; i < dots.length; i++) dots[i].draw();
+    for (let dot of dots) {
+      dot.draw();
+      quad.insert(dot.position);
+    }
 
     // Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
-    for (var i = 0; i < dots.length; i++)
-      for (var j = i+1; j < dots.length; j++)
-        line(dots[i].position, dots[j].position);
+    for (let p of dots)                                                     // for all dots
+      for (let q of quad.query(new Circ(p.position.x, p.position.y, DIST))) // find neighbors
+        if (q.z > p.position.z)                                             // with index later than my own
+          line(p.position, q);                                              // draw a line between them
 
     // redo the animation rendering
     w.requestAnimationFrame(draw);
@@ -101,8 +170,6 @@
 
   function line(a, b) {
     var d = M.hypot(b.x - a.x, b.y - a.y);
-    if (d > DIST) return;
-
     ctx.strokeStyle = "rgba("+G+", "+G+", "+G+", " + map(d, 0, DIST, 1, 0) + ")";
     ctx.beginPath();
     ctx.moveTo(a.x, a.y);
