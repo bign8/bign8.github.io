@@ -1,6 +1,7 @@
 // Author: Nate Woods
 // Inspired by: http://netengine.com.au/blog/deploying-your-static-site-with-travis-ci/
 // Based on: http://vincentgarreau.com/particles.js - http://github.com/VincentGarreau/particles.js
+// Augmented using quad-trees: https://en.wikipedia.org/wiki/Quadtree
 // Dependencies:
 //  Math: random, hypot, abs, cos, sin, floor, PI
 //  Document: readyState, createElement
@@ -10,16 +11,19 @@
 
 (function(d, w, M) {
   "use strict";
-  var dots = [], DIST = 150, G = 150, ctx = null, canvas = null;
+  var dots = [], // Each point that is rendered
+    R = 150,     // Radius of interacting lines
+    G = 150,     // The exact color of gray
+    ctx, canvas; // html5 canvas and 2d drawing context
 
+  // Map converts n on the scale [a, b) to the scale [c, d).
   var map = function(n, a, b, c, d) { return ((n-a)/(b-a))*(d-c)+c; };
 
   // Vector is a 2-3 dimensional point class.
   var Vector = function(x, y, z) {
     this.x = x, this.y = y, this.z = z;
-    this.add = function(x, y, z) {
-      if (x instanceof Vector) this.x += x.x || 0, this.y += x.y || 0, this.z += x.z || 0;
-      else throw 'Unsupported Add';
+    this.add = function(v) {
+      this.x += v.x || 0, this.y += v.y || 0, this.z += v.z || 0;
     };
     this.mult = function(n) {
       this.x *= n || 0, this.y *= n || 0, this.z *= n || 0;
@@ -30,60 +34,51 @@
     return new Vector(M.cos(angle), M.sin(angle), 0);
   };
 
-  // QuadTree bounding shapes.
-  var Rect = function(x, y, w, h) {
-    this.x = x, this.y = y, this.h = h, this.w = w;
-    this.contains = function(pt) {
-      return x - w <= pt.x && x + w >= pt.x && y - h <= pt.y && y + h >= pt.y;
-    };
-    this.intersects = function(r) {
-      // Only need to deal with circular query ranges
-      return (
-        x - w <= r.x + r.r &&
-        x + w >= r.x - r.r &&
-        y - h <= r.y + r.r &&
-        y + h >= r.y - r.r
-      );
-    };
-  };
-  var Circ = function(x, y, r) {
-    this.x = x, this.y = y, this.r = r;
-    this.contains = function(pt) {
-      return M.hypot(x - pt.x, y - pt.y) <= r;
-    };
-  };
-
-  // QuadTree based on psuedocode on https://en.wikipedia.org/wiki/Quadtree
-  var QuadTree = function(bounds, limit) {
-    limit = limit || 4;
+  // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
+  var QuadTree = function(x, y, w, h, cap) {
     var points = [], nw, ne, se, sw;
 
+    // Initialize sub-trees (should only be called once);
     var subdivide = function() {
-      var w2 = bounds.w / 2, h2 = bounds.h / 2;
-      nw = new QuadTree(new Rect(bounds.x - w2, bounds.y - h2, w2, h2), limit);
-      ne = new QuadTree(new Rect(bounds.x - w2, bounds.y + h2, w2, h2), limit);
-      sw = new QuadTree(new Rect(bounds.x + w2, bounds.y - h2, w2, h2), limit);
-      se = new QuadTree(new Rect(bounds.x + w2, bounds.y + h2, w2, h2), limit);
+      var w2 = w / 2, h2 = h / 2;
+      nw = new QuadTree(x - w2, y - h2, w2, h2, cap);
+      ne = new QuadTree(x - w2, y + h2, w2, h2, cap);
+      sw = new QuadTree(x + w2, y - h2, w2, h2, cap);
+      se = new QuadTree(x + w2, y + h2, w2, h2, cap);
+    };
+
+    // Does this rectangle contain a given point. Arg: point vector.
+    var contains = function(pt) {
+      return x - w <= pt.x && x + w >= pt.x && y - h <= pt.y && y + h >= pt.y;
+    };
+
+    // Does a circle intersect with this Rectangle? Arg: center vector.
+    var intersects = function(c) {
+      return x - w <= c.x + R && x + w >= c.x - R && y - h <= c.y + R && y + h >= c.y - R;
+    };
+
+    // Does a circle contain a point. Args: center vector, point vector.
+    var near = function(c, p) {
+      return M.hypot(c.x - p.x, c.y - p.y) <= R;
     };
 
     // Insert point into quadtree
-    this.insert = function(pt) {
-      if (!bounds.contains(pt)) return false; // not my problem
-      if (points.length < limit) {
-        points.push(pt); // fits just fine
-        return true;
-      }
-      if (nw == undefined) subdivide(); // initialize sub-components
-      return nw.insert(pt) || ne.insert(pt) || sw.insert(pt) || se.insert(pt); // defer to one of children
+    this.add = function(pt) {
+      if (!contains(pt)) return false; // not my problem
+      if (points.length < cap) {       // if we have room
+        points.push(pt);               // add to ourselves
+        return true;                   // exit insertion stack
+      }                                // otherwise
+      if (!nw) subdivide();            // initialize sub-components
+      return nw.add(pt) || ne.add(pt) || sw.add(pt) || se.add(pt); // defer to children
     };
 
-    // Query a range of items from quadtree
-    this.query = function(range, list) {
-      if (list == undefined) list = [];
-      if (bounds.intersects(range)) {
-        for (let p of points) if (range.contains(p)) list.push(p);
-        if (nw != undefined)
-          list = se.query(range, sw.query(range, ne.query(range, nw.query(range, list))));
+    // Query a range of items from quadtree. Args: center for query (list is optional)
+    this.ask = function(c, list) {
+      if (list == undefined) list = []; // init list if it wasn't previously
+      if (intersects(c)) {              // if we are worried about this point
+        for (let p of points) if (near(c, p)) list.push(p); // check if it's near
+        if (nw) list = se.ask(c, sw.ask(c, ne.ask(c, nw.ask(c, list)))); // or if kids have it
       }
       return list;
     };
@@ -97,7 +92,7 @@
     this.velocity.mult(M.random());
     this.size = M.random() + 1;
 
-    this.draw = function() {
+    this.show = function() {
       this.position.add(this.velocity);
 
       // Absolute values allow for resizes, pushing particles back into view
@@ -110,6 +105,7 @@
       ctx.beginPath();
       ctx.arc(this.position.x, this.position.y, this.size, 0, 2*M.PI);
       ctx.fill();
+      return this.position;
     };
   }
 
@@ -150,19 +146,16 @@
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var w2 = canvas.width / 2, h2 = canvas.height / 2,
-      quad = new QuadTree(new Rect(w2, h2, w2, h2), 4); // center point and half width/height
+      quad = new QuadTree(w2, h2, w2, h2, 4); // center point and half width/height
 
     // Drawing + Updating Circles: O(n)
-    for (let dot of dots) {
-      dot.draw();
-      quad.insert(dot.position);
-    }
+    for (let dot of dots) quad.add(dot.show());
 
     // Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
-    for (let p of dots)                                                     // for all dots
-      for (let q of quad.query(new Circ(p.position.x, p.position.y, DIST))) // find neighbors
-        if (q.z > p.position.z)                                             // with index later than my own
-          line(p.position, q);                                              // draw a line between them
+    for (let p of dots)                   // for all dots
+      for (let q of quad.ask(p.position)) // find neighbors : dist(p, q) <= R
+        if (q.z > p.position.z)           // with index later than my own
+          line(p.position, q);            // draw a line between them
 
     // redo the animation rendering
     w.requestAnimationFrame(draw);
@@ -170,7 +163,7 @@
 
   function line(a, b) {
     var d = M.hypot(b.x - a.x, b.y - a.y);
-    ctx.strokeStyle = "rgba("+G+", "+G+", "+G+", " + map(d, 0, DIST, 1, 0) + ")";
+    ctx.strokeStyle = "rgba("+G+", "+G+", "+G+", " + map(d, 0, R, 1, 0) + ")";
     ctx.beginPath();
     ctx.moveTo(a.x, a.y);
     ctx.lineTo(b.x, b.y);
