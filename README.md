@@ -6,7 +6,13 @@ This repository houses the source for [bign8.info](http://bign8.info/).
 # Build Process
 
 ```sh
-jekyll serve
+docker build -t bign8/about .
+```
+
+# Running
+
+```sh
+docker run -p 8080:8080 bign8/about:latest
 ```
 
 # TODO
