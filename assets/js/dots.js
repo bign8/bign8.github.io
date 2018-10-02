@@ -167,7 +167,7 @@
       return;
     }
 
-		// Regular render loop
+    // Regular render loop
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var w2 = canvas.width / 2, h2 = canvas.height / 2,
