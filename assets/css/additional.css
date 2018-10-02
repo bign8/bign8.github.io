@@ -27,15 +27,15 @@ a.thumbnail {
 
 /* For background animator close button */
 a.kill-animation {
-	position: absolute;
-	right: 5px;
-	top: 5px;
-	width: 20px;
-	height: 20px;
-	line-height: 20px;
-	font-size: 20px;
-	background: rgba(50, 50, 50, 0.14);
-	text-align: center;
-	color: #fff;
-	border-radius: 100%;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+  background: rgba(50, 50, 50, 0.14);
+  text-align: center;
+  color: #fff;
+  border-radius: 100%;
 }
