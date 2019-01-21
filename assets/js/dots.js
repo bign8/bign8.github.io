@@ -14,7 +14,8 @@
   var dots = [], // Each point that is rendered
     R = 150,     // Radius of interacting lines
     G = 150,     // The exact color of gray
-    ctx, canvas; // html5 canvas and 2d drawing context
+    ctx, canvas, // html5 canvas and 2d drawing context
+    kill, dead;  // dom button and boolean toggle for killing script.
 
   // Map converts n on the scale [a, b) to the scale [c, d).
   var map = function(n, a, b, c, d) { return ((n-a)/(b-a))*(d-c)+c; };
@@ -137,12 +138,36 @@
     ctx.lineWidth = 0.5; // for lines
     ctx.fillStyle = "rgb("+G+", "+G+", "+G+")";
 
+    // Add Close Button
+    dead = false;
+    kill = d.createElement('a');
+    kill.className = 'kill-animation';
+    kill.text = '×';
+    kill.title = 'Stop background animation';
+    kill.addEventListener('click', function() {
+      dead = true;
+      return false;
+    })
+    kill.href = '#kill-animation';
+    d.body.appendChild(kill);
+
     // Event listeners
     w.addEventListener("resize", resize);
     w.requestAnimationFrame(draw);
   }
 
   function draw() {
+
+    // if we have died, clean up after ourselves
+    if (dead) {
+      canvas.remove();
+      kill.remove();
+      dots = null;
+      w.removeEventListener("resize", resize);
+      return;
+    }
+
+    // Regular render loop
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var w2 = canvas.width / 2, h2 = canvas.height / 2,
