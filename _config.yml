@@ -12,7 +12,7 @@ exclude:
     - package.json
     - CNAME
     - README.md
-gems: [jekyll-paginate]
+plugins: [jekyll-paginate]
 kramdown:
     input: GFM
     syntax_highlighter: rouge

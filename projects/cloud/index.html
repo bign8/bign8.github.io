@@ -32,7 +32,8 @@ title:  Tag Cloud
 
 <ul id="tags">
 	{% for tag in site.tags %}
-		{% if tag | last | size > 0 %}
+		{% assign real_tags = tag | last | size %}
+		{% if real_tags > 0 %}
 			<li>
 				<a href="javascript:void(0)" title="{{tag | last | size}} Post(s)" onClick="Cloud.print(event, 'tag', '{{ tag | first | capitalize }}')">{{ tag | first | capitalize }}</a>
 				<small>({{tag | last | size}} Post(s))</small>
@@ -40,7 +41,8 @@ title:  Tag Cloud
 		{% endif %}
 	{% endfor %}
 	{% for category in site.categories %}
-		{% if category | last | size > 0 %}
+		{% assign real_cats = category | last | size %}
+		{% if real_cats > 0 %}
 			<li>
 				<a href="javascript:void(0)" title="{{category | last | size}} Post(s)" onClick="Cloud.print(event, 'cat', '{{ category | first | capitalize }}')">{{ category | first | capitalize }}</a>
 				<small>({{category | last | size}} Post(s))</small>
