@@ -39,3 +39,7 @@ a.kill-animation {
 	color: #fff;
 	border-radius: 100%;
 }
+
+.post img {
+	max-width: 100%;
+}
