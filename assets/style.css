@@ -95,6 +95,7 @@ nav li a:hover {
     width: 100%;
     height: 40px;
     padding: 0;
+    border-bottom: 1px solid #eee;
   }
   main {
     margin-left: 0;
@@ -106,6 +107,7 @@ nav li a:hover {
     margin: 0 0 0 50px;
     font-size: 20px;
     line-height: 40px;
+    color: #333;
   }
   nav {
     float: left;
@@ -119,6 +121,7 @@ nav li a:hover {
   nav li a {
     padding: 0 10px;
     line-height: 40px;
+    color: #333;
   }
 }
 
