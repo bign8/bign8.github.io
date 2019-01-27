@@ -159,7 +159,8 @@
   function draw() {
 
     // if we have died, clean up after ourselves
-    if (dead) {
+    if (dead || localStorage.getItem("no-dots") == "true") {
+      localStorage.setItem("no-dots", "true");
       canvas.remove();
       kill.remove();
       dots = null;
