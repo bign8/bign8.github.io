@@ -1,0 +1,259 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+  width: 200px;
+  box-sizing: border-box;
+}
+
+nav {
+  margin: 0 -20px;
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+nav ul a {
+  padding: 10px 20px;
+  display: block;
+}
+nav .active a,
+nav .active a:hover  {
+  color: #fff;
+  background-color: #428bca;
+}
+nav li a:hover {
+  text-decoration: none;
+  background-color: #eee;
+}
+
+.profile,
+.profile:hover {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+  color: #6A7CC3;
+}
+.profile h1 {
+  font-size: 40px;
+}
+.profile figure {
+  margin: 0;
+}
+.profile .face {
+  width: 135px;
+  height: 135px;
+  margin: 20px auto;
+  border: 5px solid #6A7CC3;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.51);
+  border-radius: 50%;
+  position: relative;
+}
+.profile img {
+  border-radius: 50%;
+}
+.profile .face::before {
+  opacity: 0;
+  -webkit-transition: opacity, 0.5s, ease-in-out;
+  -moz-transition: opacity, 0.5s, ease-in-out;
+  transition: opacity, 0.5s, ease-in-out;
+  content: 'i';
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  color: #fbfbfb;
+  font-size: 72px;
+  line-height: 125px;
+  font-weight: 700;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.profile:hover .face::before {
+  opacity: 1;
+}
+
+main {
+  line-height: 1.4;
+  margin-left: 200px; /* gives room for header on left */
+  padding: 20px 40px;
+}
+
+/* Content Styles */
+
+h1, h2, h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  line-height: 1.1;
+}
+h1 { font-size: 36px }
+h2 { font-size: 30px }
+h3 { font-size: 24px }
+h4 { font-size: 18px }
+h5 { font-size: 14px }
+h6 { font-size: 12px }
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+a:focus, a:hover {
+  color: #23527c;
+  text-decoration: underline;
+}
+p {
+  margin: 0 0 10px;
+}
+.lead {
+  font-size: 21px;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+.post::before {
+  color: #f8f8f8;
+  font-size: 175px;
+  font-weight: bold;
+  margin-left: -50px;
+  margin-top: 20px;
+  position: absolute;
+  z-index: -1;
+  line-height: 0;
+}
+img {
+  max-width: 100%;
+  display: block;
+  margin: auto;
+  padding-bottom: 10px;
+}
+blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  border-left: 5px solid #eee;
+}
+.pull-right { float: right !important }
+.text-muted { color: #777 }
+article { display: block }
+.clearfix::after {
+  clear: both;
+  display: table;
+  content: " ";
+}
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #333;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border-radius: 4px;
+}
+code, kbd, pre, samp {
+  font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+table {
+  width: 100%;
+  margin-bottom: 10px;
+}
+table, th, td {
+  border: 1px solid black;
+}
+table.table, table.table th, table.table td {
+  border: none;
+}
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  white-space: pre-wrap;
+  background-color: transparent;
+  border-radius: 0;
+}
+.pager {
+  padding-left: 0;
+  margin: 20px 0;
+  text-align: center;
+  list-style: none;
+}
+.pager li {
+  display: inline;
+}
+.pager li > a, .pager li > span {
+  display: inline-block;
+  padding: 5px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+}
+.pager .next > a, .pager .next > span {
+  float: right;
+}
+.pager .previous > a, .pager .previous > span {
+  float: left;
+}
+.pager li > a:focus, .pager li > a:hover {
+  text-decoration: none;
+  background-color: #eee;
+}
+.pager .disabled > a,
+.pager .disabled > a:focus,
+.pager .disabled > a:hover,
+.pager .disabled > span {
+  color: #777;
+  cursor: not-allowed;
+  background-color: #fff;
+}
+a.thumbnail {
+  text-decoration: none;
+}
+.thumbnail {
+  color: #333;
+}
+.label-default {
+  background-color: #777;
+}
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
