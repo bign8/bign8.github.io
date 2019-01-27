@@ -21,6 +21,7 @@ main {
   line-height: 1.4;
   margin-left: 200px; /* gives room for header on left */
   padding: 20px 40px;
+  overflow: hidden;
 }
 nav { margin: 0 -20px }
 nav ul {
@@ -86,6 +87,40 @@ nav li a:hover {
   bottom: 0;
 }
 .profile:hover .face::before { opacity: 1 }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  header {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    padding: 0;
+  }
+  main {
+    margin-left: 0;
+    padding-top: 40px;
+  }
+  .profile figure { display: none }
+  .profile h1 {
+    float: left;
+    margin: 0 0 0 50px;
+    font-size: 20px;
+    line-height: 40px;
+  }
+  nav {
+    float: left;
+    margin: 0 0 0 10px;
+  }
+  nav ul { margin: 0 }
+  nav li {
+    float: left;
+    height: 30px;
+  }
+  nav li a {
+    padding: 0 10px;
+    line-height: 40px;
+  }
+}
 
 /* Content Styles */
 
