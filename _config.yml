@@ -6,13 +6,10 @@ paginate: 20
 paginate_path: "/blog/:num/"
 permalink: /blog/:year/:month/:title.html
 exclude:
-    - node_modules
-    - gruntfile.js
-    - gulpfile.js
-    - package.json
     - CNAME
-    - README.md
     - develop
+    - Dockerfile
+    - README.md
 plugins: [jekyll-paginate]
 kramdown:
     input: GFM

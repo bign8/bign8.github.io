@@ -1,4 +1,2 @@
 _site
-*.sublime*
-node_modules
 .DS_Store
