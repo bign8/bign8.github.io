@@ -25,7 +25,7 @@ The fundamentals of any program: accepting input, processing information, and pr
 * Hello name (Program) [Variables]
   * [Wikipedia](http://en.wikipedia.org/wiki/Variable_(computer_science))
 	* [Utah's Write-up](http://www.cs.utah.edu/~germain/PPS/Topics/variables.html) (Name, Type, Value)
-	* Nate's Code ([Good](/assets/doc/services.js), [Bad](/assets/doc/js.js))
+	* Nate's Code ([Good](services.js), [Bad](js.js))
 * Paycheck (Program)
 * Arithmetic (See Book)
 * Conversion Strategies

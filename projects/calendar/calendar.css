@@ -9,15 +9,15 @@
   font-size: 12px;
   text-align: center;
   width: auto;
-  margin: 0 auto;
+  margin: 0 auto 10px;
   border-collapse: separate;
   border-spacing: 2px;
 }
 .calendar .cbtn {
-  padding-top: 0; 
-  -moz-user-select: none; 
-  -khtml-user-select: none; 
-  -webkit-user-select: none; 
+  padding-top: 0;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
   -o-user-select: none;
 }
 .calendar .btn:hover, .calendar .has:hover {

@@ -15,7 +15,7 @@ This hack was luckily, mostly unsuccessful since the hacker(s) were script kidd
 
 <!--more-->
 
-![Screenshot of nathanjwoods.com when it was hacked](/assets/img/hacked.jpg "Screenshot of nathanjwoods.com when it was hacked")
+![Screenshot of nathanjwoods.com when it was hacked](hacked.jpg "Screenshot of nathanjwoods.com when it was hacked")
 
 Finding the infected the files was the most interesting part which leads me to a nice little snippet to share.  This unix/linux command searches for files that contain a particular string, now this takes a while to execute, but sure helped me to find this infected file fast.
 

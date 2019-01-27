@@ -17,7 +17,7 @@ For those of you who thought [Automata Theory](http://en.wikipedia.org/wiki/Auto
 
 During my time at [Carroll College](http://www.carroll.edu/ "Carroll College"), I expressed interest in Robotics.  The professors took note and when it came to choose a topic for CS Senior Project, we choose to  center ours around robotics.  At the time Carroll didn't have any robots to use, so we borrowed some from [MSU](http://www.montana.edu/ "Montana State University")'s [Computer Science](http://www.cs.montana.edu/ "Computer Science Program @ Montana State University") program (Thanks to some connections between Carroll's Engineering Department Chair and MSU).
 
-![IntelliBrain-Bot Deluxe](/assets/img/IntelliBrainBotDeluxe200.jpg "IntelliBrain-Bot Deluxe")
+![IntelliBrain-Bot Deluxe](IntelliBrainBotDeluxe.jpg "IntelliBrain-Bot Deluxe")
 
 The robots we borrowed, several [Ridgesoft's IntelliBrain<sup>TM</sup>-Bot](http://www.ridgesoft.com/intellibrainbot/intellibrainbot.htm "The IntelliBrain Bot!") amongst a few others, were great, educational, [Java](http://en.wikipedia.org/wiki/Java_(programming_language\) "Another educational link!") based robots.  Along with being great hardware to work with, Ridgesoft's website provided many [tutorials](http://www.ridgesoft.com/tutorials.htm "Some good stuff here!") and [texts](http://www.ridgesoft.com/articles/education/ExploringRobotics.htm "The book link is on the picture of the book (don't ask!)") that eased the learning curve of basic robotics.
 
@@ -81,7 +81,7 @@ Again, we can do some tricks with binary addition (or regular addition for that 
 
 Next, we should probably look at the actual state diagram so we can see how the logic is designed to transfer between states.  Then we can dive into the code!
 
-![Line Following State Diagram](/assets/img/StateDiagram-tiff.png "Line Following State Diagram")
+![Line Following State Diagram](stateDiagram.png "Line Following State Diagram")
 
 This figure gives us the graph representation of the finite-state machine.  These are probably what you saw a lot of if you took automata theory.  One thing we skipped in my class, or maybe I just forgot, was that these transitions can be represented in a transition matrix or a two-dimensional array.  The english version of this matrix/array is as follows.
 

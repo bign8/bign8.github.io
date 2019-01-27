@@ -14,9 +14,9 @@ Ads and that stupid 'Are you still listening' button are constant annoyances whi
 
 <!--more-->
 
-<div style="float:right;margin-left:30px">
-	<img alt="Pandora Internet Radio" src="/assets/img/pandora.jpg" width="212" height="132" />
-	</br>Pandora Internet Radio
+<div class="pull-right" style="margin-left:30px">
+	<img alt="Pandora Internet Radio" src="pandora.jpg" width="212" height="132" />
+	Pandora Internet Radio
 </div>
 
 ## Removing Ads

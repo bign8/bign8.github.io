@@ -14,7 +14,7 @@ In hopes that St. Nicholas soon would be there;
 
 <!--more-->
 
-![Night Before X-mas](/assets/img/holiday_orig.gif)
+![Night Before X-mas](snow.gif)
 
 The children were nestled all snug in their beds,
 While visions of sugar-plums danced in their heads;
@@ -81,4 +81,4 @@ And away they all flew like the down of a thistle.
 But I heard him exclaim, ere he drove out of sight,
 "HAPPY CHRISTMAS TO ALL, AND TO ALL A GOOD-NIGHT!"
 
-![Happy Holidays](/assets/img/holidays_gif.gif)
+![Happy Holidays](sparkle.gif)

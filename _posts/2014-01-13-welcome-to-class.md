@@ -14,8 +14,8 @@ Welcome to CSCI-100 Spring 2014!
 
 ### Links
 
-* <a style="line-height: 1.5;" href="/assets/doc/2014_Spring_CSCI_100_Syllabus.pdf">2014 Spring CSCI-100 Syllabus</a>
-* <a title="Visual Logic DL" href="http://www.visuallogic.org/download/" target="\_blank">Visual Logic Download Page</a>
+* [2014 Spring CSCI-100 Syllabus](2014_Spring_CSCI_100_Syllabus.pdf)
+* [Visual Logic Download Page](http://www.visuallogic.org/download/ "Visual Logic DL")
 
 ### Homework
 

@@ -5,9 +5,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>{{ site.name }}{% if page.title.size %} &mdash; {{ page.title }}{% endif %}</title>
 		<meta name="viewport" content="width=device-width">
-		<link rel="stylesheet" href="/assets/css/syntax.css">
-		<link rel="stylesheet" href="/assets/css/style.css">
-		{% if page.css.size %}<link rel='stylesheet' type='text/css' href='/assets/css/{{ page.css }}.css' />{% endif %}
+		<link rel="stylesheet" href="/assets/syntax.css">
+		<link rel="stylesheet" href="/assets/style.css">
+		{% if page.css.size %}<link rel='stylesheet' type='text/css' href='{{ page.css }}.css' />{% endif %}
 		<link rel="shortcut icon" href="/assets/favicons/favicon.ico">
 	</head>
 	<body>
@@ -16,7 +16,7 @@
 				<h1>Nate Woods</h1>
 				<figure>
 					<div class="face">
-						<img src="/assets/img/n8.jpg" alt="Nate Woods">
+						<img src="/assets/n8.jpg" alt="Nate Woods">
 					</div>
 					<figcaption>Technical Ninja</figcaption>
 				</figure>
@@ -35,7 +35,7 @@
 		<footer>
 			<p>&copy; <script>document.write(new Date().getFullYear())</script> <a href="/contact/">{{site.name}}</a></p>
 		</footer>
-		{% if page.js.size %}<script src="/assets/js/{{ page.js }}.js"></script>{% endif %}
-		<!-- <script src="/assets/js/dots.js"></script> -->
+		{% if page.js.size %}<script src="{{ page.js }}.js"></script>{% endif %}
+		<script src="/assets/dots.js"></script>
 	</body>
 </html>

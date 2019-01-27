@@ -12,7 +12,7 @@ Alright, so a undergraduate thesis is not that big of a deal, but it is a fairly
 
 <!--more-->
 
-[![Web Statistics Database Presentation](/assets/img/presentation.png)](http://prezi.com/tuvt25p4d8fl/database-i-web-analytics/)
+[![Web Statistics Database Presentation](webAnalytics.png)](http://prezi.com/tuvt25p4d8fl/database-i-web-analytics/)
 
 Anyways, trying to utilize my work for as many classes as possible to reinforce my mathematical nature of being as lazy as possible, I created a [presentation](http://prezi.com/tuvt25p4d8fl/database-i-web-analytics/ "Web Statistics Database I Presentation") that shares my [database design](http://en.wikipedia.org/wiki/Database_design "Wikipedia - Database Design") along with a few thesis related goals.
 
