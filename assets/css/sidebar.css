@@ -39,6 +39,13 @@
   background-color: #428bca;
 }
 
+/*
+ * Small Device Navbar
+ */
+
+.navbar .nav > li {
+  float: left;
+}
 
 /*
  * Main content

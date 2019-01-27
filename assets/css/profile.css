@@ -1,29 +1,6 @@
-/*@import url("//fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,latin-ext");*/
-
-
-/* latin */
-@font-face {
-  font-family: 'Roboto Slab';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(//fonts.gstatic.com/s/robotoslab/v6/y7lebkjgREBJK96VQi37Zogp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-}
-/* latin */
-@font-face {
-  font-family: 'Roboto Slab';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Roboto Slab Bold'), local('RobotoSlab-Bold'), url(//fonts.gstatic.com/s/robotoslab/v6/dazS1PrQQuCxC3iOAJFEJf79_ZuUxCigM2DespTnFaw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-}
-
-
-
 .profile, .profile:hover {
   display: block;
   text-decoration: none;
-  font-family: Roboto Slab, sans-serif;
   text-align: center;
   color: #6A7CC3;
 }
@@ -68,15 +45,3 @@
 .profile:hover .face:before {
   opacity: 1;
 }
-
-/*
-border-radius: 50%;
-    border: 5px solid #6A7CC3;
-    margin: 20px;
-    width: 135px;
-    height: 135px;
-    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.51);
-    background-color: black;
-    z-index: 10;
-
-    */
