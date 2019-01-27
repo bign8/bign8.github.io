@@ -1,9 +1,9 @@
+* { box-sizing: border-box }
 body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #333;
 }
-
 header {
   position: fixed;
   top: 0;
@@ -16,12 +16,13 @@ header {
   background-color: #f5f5f5;
   border-right: 1px solid #eee;
   width: 200px;
-  box-sizing: border-box;
 }
-
-nav {
-  margin: 0 -20px;
+main {
+  line-height: 1.4;
+  margin-left: 200px; /* gives room for header on left */
+  padding: 20px 40px;
 }
+nav { margin: 0 -20px }
 nav ul {
   list-style: none;
   padding: 0;
@@ -40,6 +41,7 @@ nav li a:hover {
   background-color: #eee;
 }
 
+/* profile component */
 .profile,
 .profile:hover {
   display: block;
@@ -48,23 +50,21 @@ nav li a:hover {
   text-align: center;
   color: #6A7CC3;
 }
-.profile h1 {
-  font-size: 40px;
-}
-.profile figure {
-  margin: 0;
-}
+.profile h1 { font-size: 40px }
+.profile figure { margin: 0 }
 .profile .face {
-  width: 135px;
-  height: 135px;
+  width: 138px;
   margin: 20px auto;
-  border: 5px solid #6A7CC3;
+  border: 5px solid currentColor;
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.51);
   border-radius: 50%;
   position: relative;
 }
 .profile img {
+  height: 128px;
+  width: 128px;
   border-radius: 50%;
+  padding: 0;
 }
 .profile .face::before {
   opacity: 0;
@@ -85,15 +85,7 @@ nav li a:hover {
   top: 0;
   bottom: 0;
 }
-.profile:hover .face::before {
-  opacity: 1;
-}
-
-main {
-  line-height: 1.4;
-  margin-left: 200px; /* gives room for header on left */
-  padding: 20px 40px;
-}
+.profile:hover .face::before { opacity: 1 }
 
 /* Content Styles */
 
@@ -119,9 +111,7 @@ a:focus, a:hover {
   color: #23527c;
   text-decoration: underline;
 }
-p {
-  margin: 0 0 10px;
-}
+p { margin: 0 0 10px }
 .lead {
   font-size: 21px;
   font-weight: 300;
@@ -188,12 +178,11 @@ table {
   width: 100%;
   margin-bottom: 10px;
 }
-table, th, td {
-  border: 1px solid black;
-}
-table.table, table.table th, table.table td {
-  border: none;
-}
+table, th, td { border: 1px solid black }
+table.table,
+table.table th,
+table.table td { border: none }
+ul { padding-left: 40 }
 pre code {
   padding: 0;
   font-size: inherit;
@@ -208,9 +197,7 @@ pre code {
   text-align: center;
   list-style: none;
 }
-.pager li {
-  display: inline;
-}
+.pager li { display: inline }
 .pager li > a, .pager li > span {
   display: inline-block;
   padding: 5px 14px;
@@ -218,12 +205,8 @@ pre code {
   border: 1px solid #ddd;
   border-radius: 15px;
 }
-.pager .next > a, .pager .next > span {
-  float: right;
-}
-.pager .previous > a, .pager .previous > span {
-  float: left;
-}
+.pager .next > a, .pager .next > span { float: right }
+.pager .previous > a, .pager .previous > span { float: left }
 .pager li > a:focus, .pager li > a:hover {
   text-decoration: none;
   background-color: #eee;
@@ -236,15 +219,9 @@ pre code {
   cursor: not-allowed;
   background-color: #fff;
 }
-a.thumbnail {
-  text-decoration: none;
-}
-.thumbnail {
-  color: #333;
-}
-.label-default {
-  background-color: #777;
-}
+a.thumbnail { text-decoration: none }
+.thumbnail { color: #333 }
+.label-default { background-color: #777 }
 .label {
   display: inline;
   padding: .2em .6em .3em;
