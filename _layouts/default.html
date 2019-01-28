@@ -22,9 +22,9 @@
 			</a>
 			<nav>
 				<ul>
-					<li{% if page.url == "/blog/" %} class="active"{% endif %}><a href="/blog/">Blog</a></li>
-					<li{% if page.url == "/contact/" %} class="active"{% endif %}><a href="/contact/">Contact</a></li>
-					<li{% if page.url == "/projects/" %} class="active"{% endif %}><a href="/projects/">Projects</a></li>
+					<li{% if page.url contains "/blog/" %} class="active"{% endif %}><a href="/blog/">Blog</a></li>
+					<li{% if page.url contains "/contact/" %} class="active"{% endif %}><a href="/contact/">Contact</a></li>
+					<li{% if page.url contains "/projects/" %} class="active"{% endif %}><a href="/projects/">Projects</a></li>
 				</ul>
 			</nav>
 		</header>
