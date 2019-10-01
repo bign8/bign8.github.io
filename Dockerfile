@@ -1,4 +1,4 @@
-FROM jekyll/jekyll:builder as builder
+FROM jekyll/jekyll:3 as builder
 ADD . /site
 WORKDIR /site
 RUN mkdir _site

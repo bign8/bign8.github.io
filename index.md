@@ -28,12 +28,20 @@ Interests include (but are **not** limited to):
 
 --------
 
+## Publications
+
+### System and method for convergent document collaboration [US Patent 10325014](https://patents.justia.com/patent/10325014)
+
+In various implementations, a computing device: displays the document outline on the user interface; maintains, in a non-transitory computer-readable medium, a causal graph data structure representing the document outline, wherein the causal graph data structure includes a plurality of structure nodes, each structure node representing a level of the document outline; receives, via the user interface, an insertion of a new level to the document outline; in response to the insertion, defines a structure node that represents the inserted level; inserts a transition node in the causal graph data structure, wherein the transition node represents a relationship between the structure node and at least one other node of the causal graph data structure; inserts the structure node into the causal graph data structure as a child of the transition node; and updating the user interface to display the inserted level.
+
+--------
+
 ## Education
 
 ### Graduate at [Montana State University](http://www.cs.montana.edu/)
 
 <div class="pull-right">
-	Expected Graduation: May 2017<br/>
+	Graduated: May 2017<br/>
 	Cumulative GPA 3.910
 </div>
 Master of Sciences in Computer Science
