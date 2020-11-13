@@ -8,12 +8,13 @@ tags: []
 ---
 Have you ever wished there was a short Linux command for several lengthy piped commands, or even a script, that is often used? (Of course you have, lets be honest here!) Fortunately for you, there are two ways to do such a thing.
 
+<!--more-->
+
 - Create a command alias
 - Move a script to the `/usr/bin` directory
 
 Either way, it would likely be a good idea to have administrative permissions. (Though not required in all cases)
 
-<!--more-->
 
 ## Alias
 For smaller/simpler commands, it is possible to simply create an alias. Using the alias command, Linux users can create a symbolic name for any desired shell code.

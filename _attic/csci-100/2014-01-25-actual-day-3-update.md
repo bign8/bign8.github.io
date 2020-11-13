@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ! 'Actual Day 3: Update'
+title: ! 'Day 3: Update'
 categories:
 - CSCI-100
 - Intro to Programming
