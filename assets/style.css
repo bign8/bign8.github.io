@@ -41,6 +41,13 @@ nav li a:hover {
   text-decoration: none;
   background-color: #eee;
 }
+footer {
+  text-align: center;
+  line-height: 1.4;
+  margin-left: 200px; /* gives room for header on left */
+  padding: 20px 40px;
+  overflow: hidden;
+}
 
 /* profile component */
 .profile,
@@ -123,6 +130,7 @@ nav li a:hover {
     line-height: 40px;
     color: #333;
   }
+  footer { margin-left: 0 }
 }
 
 /* Content Styles */
