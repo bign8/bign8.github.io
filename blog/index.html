@@ -8,6 +8,7 @@ title: Blog
 		<time class="text-muted pull-right" itemprop="datePublished" content="{{ post.date }}">{{ post.date | date_to_string }}</time>
 		<h1>
 			<a href="{{ post.url }}">{{ post.title }}</a>
+			{% if post.draft %}<small>DRAFT</small>{% endif %}
 		</h1>
 		{{ post.excerpt }}
 		<a class="pull-right" href="{{ post.url }}">continue reading »</a>

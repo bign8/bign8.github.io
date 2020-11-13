@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<h2>{{ page.title }}</h2>
+<h2>{{ page.title }} {% if page.draft %}<small>DRAFT</small>{% endif %}</h2>
 <p class="meta">{{ page.date | date_to_string }}</p>
 
 {% comment %}
