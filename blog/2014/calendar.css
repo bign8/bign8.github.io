@@ -34,3 +34,8 @@
   width: 1.5em;
   line-height: 1.1em;
 }
+
+/* For calendar in blog post */
+.post #calendar { overflow: auto }
+.post #calendar .calendar { float: left; margin-right: 20px }
+.post #calendar ul { list-style-position: inside }
