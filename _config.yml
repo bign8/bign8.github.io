@@ -4,10 +4,6 @@ highlighter: rouge
 excerpt_separator: <!--more-->
 permalink: /blog/:year/:title.html
 exclude:
-    - CNAME
-    - develop
     - Dockerfile
     - README.md
-kramdown:
-    input: GFM
-    syntax_highlighter: rouge
+    - Makefile
