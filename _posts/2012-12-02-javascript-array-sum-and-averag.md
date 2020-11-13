@@ -23,11 +23,11 @@ Array.prototype.sum = function() {
 
 Additionally, it may also be in order to provide an average function to compute the mean of an array.
 
-{% highlight javascript %}
+```js
 Array.prototype.average = function() {
   return (!this.length) ? undefined : (this.sum()/this.length);
 };
-{% endhighlight %}
+```
 
 *Note: while sum accounts for array entries that are not numbers, mean does not.  This is simply because it requires the count of numbers in an array.*
 

@@ -2,15 +2,8 @@ name: Nate Woods
 markdown: kramdown
 highlighter: rouge
 excerpt_separator: <!--more-->
-paginate: 20
-paginate_path: "/blog/:num/"
-permalink: /blog/:year/:month/:title.html
+permalink: /blog/:year/:title.html
 exclude:
-    - CNAME
-    - develop
     - Dockerfile
     - README.md
-plugins: [jekyll-paginate]
-kramdown:
-    input: GFM
-    syntax_highlighter: rouge
+    - Makefile

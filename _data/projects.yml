@@ -12,16 +12,6 @@
     Need to by stuff but only have bitcoin?
     A few friends and I started SubmitCoin to allow just that with BitCoin backed credit cards.
 
-- project: Calendar
-  slug: calendar
-  publish: yes
-  image: yes
-  languages:
-    - Javascript
-  description: |
-    A calendar based representation of my blog posts.
-    Designed in conjunction with Tag Cloud, this uses the same data source with different representation.
-
 - project: Tag Cloud
   slug: cloud
   category: Fun

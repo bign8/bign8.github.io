@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<h2>{{ page.title }}</h2>
+<h2>{{ page.title }} {% if page.draft %}<small>DRAFT</small>{% endif %}</h2>
 <p class="meta">{{ page.date | date_to_string }}</p>
 
 {% comment %}
@@ -12,8 +12,4 @@ Borrowed idea from http://dyn.com/blog/
 <style>.post::before{content: "{{ content | strip_html | split:"" | first }}"}</style>
 <div class="post">
 {{ content }}
-</div>
-
-<div class="comments">
-	{% include disqus.html %}
 </div>

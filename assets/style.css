@@ -41,6 +41,13 @@ nav li a:hover {
   text-decoration: none;
   background-color: #eee;
 }
+footer {
+  text-align: center;
+  line-height: 1.4;
+  margin-left: 200px; /* gives room for header on left */
+  padding: 20px 40px;
+  overflow: hidden;
+}
 
 /* profile component */
 .profile,
@@ -123,6 +130,7 @@ nav li a:hover {
     line-height: 40px;
     color: #333;
   }
+  footer { margin-left: 0 }
 }
 
 /* Content Styles */
@@ -141,6 +149,14 @@ h3 { font-size: 24px }
 h4 { font-size: 18px }
 h5 { font-size: 14px }
 h6 { font-size: 12px }
+h1 small, h2 small {
+  font-size: 24px;
+  background-color: red;
+  padding: 3px 5px;
+  margin-left: 10px;
+  border-radius: 5px;
+  color: white;
+}
 a {
   color: #337ab7;
   text-decoration: none;

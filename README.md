@@ -18,3 +18,4 @@ docker run -p 8080:8080 bign8/about:latest
 # TODO
 
 - Gulp + Less + Bootstrap (possible to remove un-used css tags?)
+- Favicon thanks too: http://realfavicongenerator.net/
