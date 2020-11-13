@@ -55,5 +55,5 @@ Note: for those of you who have already done these lab problems, they are good t
 
 ### Homework
 
-* Finish Labs and email to me
+* Finish Labs and email to me [Nathan.J.K.Woods@gmail.com](mailto:Nathan.J.K.Woods@gmail.com)
 * Read VL Chapter 2

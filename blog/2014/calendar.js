@@ -90,7 +90,6 @@ Calendar.showPost = function(ele, index) {
 		element.innerHTML += '<div id="calendar-post-detail">' + getPostPreview() + '</div>';
 	}
 };
-console.log('here');
 window.onload = function() {
 	var cal = new Calendar('calendar');
 	cal.fetch('/site.json');
