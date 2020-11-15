@@ -4,38 +4,10 @@
 /*
 /*****************************************************************************/
 
-.calendar {
-  font-family: Helvetica, sans-serif;
-  font-size: 12px;
-  text-align: center;
-  width: auto;
-  margin: 0 auto 10px;
-  border-collapse: separate;
-  border-spacing: 2px;
-}
-.calendar .cbtn {
-  padding-top: 0;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
-}
-.calendar .btn:hover, .calendar .has:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-}
-.calendar .has { background-color: rgba(0, 0, 0, 0.15); }
-.calendar, .calendar th, .calendar td { border: 1px solid rgba(0, 0, 0, 0.1); }
-.calendar th, .calendar .header {
-  background-color: rgba(0, 0, 0, 0.02);
-  text-align: center;
-}
-.calendar td {
-  width: 1.5em;
-  line-height: 1.1em;
-}
-
-/* For calendar in blog post */
-.post #calendar { overflow: auto }
-.post #calendar .calendar { float: left; margin-right: 20px }
-.post #calendar ul { list-style-position: inside }
+#myCalendar{text-align:center}
+#myCalendar table{width:auto;margin:auto}
+#myCalendar th[onclick]{background-color:rgba(0,0,0,.1);cursor:pointer}
+#myCalendar th[onclick]:hover{background-color:rgba(0,0,0,.2)}
+#myCalendar table,#myCalendar th,#myCalendar td{border:1px solid rgba(0,0,0,.1)}
+#myCalendar th{background-color:rgba(0,0,0,.05)}
+#myCalendar td{line-height:1.1em}

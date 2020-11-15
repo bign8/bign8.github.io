@@ -12,14 +12,14 @@ This simple script is derived from [jszen's blog](http://jszen.blogspot.com/2007
 
 <!--more-->
 
-<div id="calendar"></div>
+<div id="myCalendar"></div>
 
 ## Executing Code
 ```html
-<div id="calendar"></div>
+<div id="myCalendar"></div>
 <script type="text/javascript">
 window.onload = function() {
-	new Calendar('calendar', /* month */, /* year */).draw();
+	cal('myCalendar', /* month */, /* year */);
 };
 </script>
 ```
