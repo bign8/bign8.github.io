@@ -19,11 +19,7 @@
   name: jsFiddle
   slug: jsfiddle
 -
-  link: "https://plus.google.com/113404491327587080494"
-  name: Google+
-  slug: googleplus
--
-  link: "http://www.linkedin.com/in/nathanjkwoods/"
+  link: "http://www.linkedin.com/in/bign8/"
   name: LinkedIn
   slug: linkedin
 -
@@ -43,10 +39,6 @@
   name: Email
   slug: email
 -
-  link: "mailto:Nathan.J.K.Woods@gmail.com"
-  name: Gmail
-  slug: gmail
--
   link: "https://en.gravatar.com/bignatew"
   name: Gravatar
   slug: gravatar
@@ -54,11 +46,11 @@
   link: "https://www.kickstarter.com/profile/2055576200"
   name: Kickstarter
   slug: kickstarter
--
-  link: "https://myspace.com/natetec"
-  name: Myspace
-  slug: myspace
--
-  link: "skype:bignatewoods?chat"
-  name: Skype
-  slug: skype
+# -
+#   link: "https://myspace.com/natetec"
+#   name: Myspace
+#   slug: myspace
+# -
+#   link: "skype:bignatewoods?chat"
+#   name: Skype
+#   slug: skype
