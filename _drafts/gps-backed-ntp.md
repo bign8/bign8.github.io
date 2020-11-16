@@ -13,15 +13,17 @@ This post covers all the nitty gritty details on how to configure a GPS backed N
 
 <!--more-->
 
+
 ## Parts
 
 * GPS Receiver (USB or Serial interface models are available)
-* Raspberry Pi (flashed with your favorite linux distro)
-* Free time! (debugging isn't cheep)
+* Raspberry Pi (flashed with your favorite linux distribution, mine was [Raspberry Pi OS](https://www.raspberrypi.org/software/operating-systems/))
+* Free time! (debugging isn't cheap)
+
 
 ## Plug it in!
 
-For me, using a USB interface made things super simple, I just plugged in my USB receiver and the linux OS handled it correctly.  To verify the raspberry pi is receiving the data from the USB receiver, I just tailed the system logs to see where the USB device was mounted `journalctl -b`, searched for a tty interface by typing `/ttyUSB` and `cat /dev/ttyUSB0`-ed the associated USB device to see if the GPS was producing anything.
+For me, using a USB interface made things super simple, I plugged in my USB receiver and the OS handled it correctly.  To verify the raspberry pi is receiving the data from the USB receiver, I tailed the system logs to see where the USB device was mounted `journalctl -b`, searched for a tty interface by typing `/ttyUSB` and `cat /dev/ttyUSB0`-ed the associated USB device to see if the GPS was producing anything.
 
 ```
 # journalctl -b output
@@ -45,11 +47,14 @@ $GPGGA,<time>,<lat>,<long>,1,06,1.5,<altitude>,<geoid-height>,,*<checksum>
 ... and updates kept coming ...
 ```
 
-Now, at the time, I had no idea what this data meant, but... after some quick googling, I found this is a standard GPS communication format called [NMEA](http://aprs.gids.nl/nmea/).  Each line is considered a "sentence", where the type of content is defined by the prefix `$<prefix>,` the content being the CSV content until the `*` after which is a checksum of the message to ensure nothing was garbled during transmission.  Then I just quickly wanted to verify I was retrieving semi-valid data, so looking through the NMEA spec, I found the `$GPRMC,` message which provides some UTC timing information.  By just `cat /dev/ttyUSB0 | grep 'GPRMC'`-ing, I was able to watch the update roll in and verify the UTC time was correct (it was not until later, that I noticed the date was wrong :cry:).  Now parsing all this data by hand, sounds terrible, so lets see if there are any tools out there that are designed to handle it!
+Now, at the time, I had no idea what this data meant, but... after some quick googling, I found this is a standard GPS communication format called [NMEA](http://aprs.gids.nl/nmea/).  Each line is considered a "sentence", where the type of content is defined by the prefix `$<prefix>,` the content being the CSV content until the `*` after which is a checksum of the message to ensure nothing was garbled during transmission.  To verify I was retrieving semi-valid data, the NEMA spec defines the `$GPRMC,` message, which provides UTC timing information.  By `cat /dev/ttyUSB0 | grep 'GPRMC'`-ing, I was able to watch the update roll in and verify the UTC time was correct (it was not until later, that I noticed the date was wrong 😢).  Now parsing all this data by hand, sounds terrible, so lets see if there are any tools out there that are designed to handle it!
 
-## NTPD + NTP
+
+## GPSD + NTP
 
 After seeing the massive stream of NMEA data, I knew I was in business, but needed to get all the other software configured.  First part, was to get something to read the NMEA data from the GPS.  After a quick trip to Google, I landed on [gpsd](https://gpsd.gitlab.io/gpsd/), a service used to read NMEA data, and produce many consumable outputs for various other applications.  Additionally, I found [a](https://www.satsignal.eu/ntp/Raspberry-Pi-NTP.html) few [posts](http://www.unixwiz.net/techtips/raspberry-pi3-gps-time.html) on [how](https://github.com/rnorris/gpsd/blob/master/www/gpsd-time-service-howto.txt) to do exactly what I wanted to do, have GPS drive NTP... easy enough right?  NOT!
+
+Below you will fine the install steps I used to get GPSD and NTP services installed.  Depending on distro and subsequent releases of these services, your mileage may vary, but the basic idea is the same: install + configure.
 
 ```sh
 # Install GPSD + NTP
@@ -99,32 +104,33 @@ remote           refid      st t when poll reach   delay   offset  jitter
 
 Things to note in the above output, first, the 127.127.X.Y server in NTP is a "shortcut" address that instructs NTP to look for different types of date providers as defined by the number in X, and Y defines some additional parameters based on the type.  28 stands for a shared memory driver, which can be seen by `ipcs -m`, and the Y of 0 or 1 means to create it with 600 permissions, while 2 and 3 create the shared memory object with 666 permissions.  The [Shared Memory Driver documentation](http://doc.ntp.org/4.2.8/drivers/driver28.html) was helpful while debugging some content later on.
 
-Finally, the keen eyed among you may have noticed, it was showing a date 19.6 years in the past (2001 != 2020).  What the heck is up with that!  Well, turns out, my GPS receiver was manufactured in the last decade, and there is a specific field in the GPS data streem coming from satalites, denoting the "week".  Unfortunantly, the week is a 10 bit field in some implementation an rolls over every 1024 week, or approx 19.6 years.  Newer GPSs account for this sometimes, but mine... does not :cry:.  GPSD claims it uses the system date to accomidate for this by looking at the decade that the current clock is set, but for some reason, that didn't work for me, so... some hackery ensued.
+Finally, the keen eyed among you may have noticed, it was showing a date 19.6 years in the past (2001 != 2020).  What the heck is up with that!  Well, turns out, my GPS receiver was manufactured in the last decade, and there is a field in the GPS data stream coming from satellites, denoting the "week".  Unfortunately, the week field is a 10 bit integer for some implementations of GPS receivers, and rolls over every 1024 weeks, or approximately 19.6 years.  Newer GPSs account for this sometimes, but mine... does not 😢.  GPSD claims it uses the system date to accommodate for this by looking at the decade that the current clock is set, but for some reason, that didn't work for me, so... some hackery ensued.
 
 
 ## Decision time!
 
+Now there comes a time in any project where one needs to decide to either give up, move on or pay for someone else to fix it.  For me, this was a personal educational adventure and was not the foundation of any critical infrastructure.  As such, I decided to hack something until I could get it working.  This said, I am very aware of the shortcoming and inaccuracies that are possible due to this hackery, and am capable of circling back and re-configuring this NTP server if there ever is a problem in the future.
+
 1. Code around the problem
   * Fix GPSD (requires C knowledge)
   * Hack NMEA data-stream (basic I/O processing)
-2. Buy new hardware (expensive)
+2. Buy new hardware
   * Hardware I have doesn't support PPS
   * Doesn't support this decade :cry:
 
-<!-- TODO: convert to cost/benefit/time-frame analysis -->
+Being a software engineer for some time now, I figured it would be easy enough to code around the problem.  I could dive into the source of GPSD, modify the date offset, recompile and be good to go.  One problem, I don't really know C, and I wanted to have something in minutes, not hours.  So, looking through the spec, I was able to find a classic, well defined input/output of NMEA, and found the field that needed to be modified.  Then, I could write a NMEA parser, look for the one field that needed to be updated, update it and pass it along to GPSD.  Easy!
 
-Being a software engineer for some time now, I figured it would be easy enough to code around the problem.  I could dive into the source of GPSD, modify the date offset, recompile and be good to go.  One problem, I don't really know C, and I wanted to have something in minutes, not hours.  So, looking through the spec, I was able to find a classic, well defined input/output of NMEA, and found the field that needed to be modified.  Then, I could just write a simple NMEA parser, look for the one field that needed to be updated, update it and pass it along to GPSD.  Easy!
 
 ## Coding around the problem
 
-So, just like the `cat /dev/ttyUSB0` I did earlier, I sought after getting the following to produce correctly dated output (where `fakegps` is a script).
+So, like the `cat /dev/ttyUSB0` earlier, I sought after getting the following to produce correctly dated output (where `fakegps` is a script).
 
 ```sh
 cat /dev/ttyUSB0 | fakegps
 ```
 
 ### Fixing date
-To start things out, I grabbed a few lines of content from `/dev/ttyUSB0` so I wasn't continually re-opening the device and had consistent data to read against.  Then, after looking through it, it turned out the `GPRMC` line needed to have it's date field modified.  I was able to verify that by using the [decoder from freenema.net](http://freenmea.net/decoder) to verify the date was incorrect, and after poking around the numbers, found that modifying the 9th CSV field (Date of fix) according to http://aprs.gids.nl/nmea/#rmc correctly fix the problem.
+To start things out, I grabbed a few lines of content from `/dev/ttyUSB0` so I wasn't continually re-opening the device and had consistent data to read against.  Then, after looking through it, it turned out the `GPRMC` line needed to have it's date field modified.  I was able to verify that by using the [decoder from freenema.net](http://freenmea.net/decoder) to verify the date was incorrect, and after poking around the numbers, found that modifying the [9th CSV field (Date of fix)](http://aprs.gids.nl/nmea/#rmc) to fix the problem.
 
 ```py
 import datetime
@@ -158,7 +164,7 @@ modify()
 ```
 
 ### Fixing checksum
-After running that through the freenmea.net/decoder, I knew we had the date part working!  On to fixing the checksum so GPSD wouldn't just discard the line.  In this case, after reading through some docs, turns out the checksum is a bytewise xor of all the characters between the `$` and the `*` characters of the sentence, and output as an uppercase-hex encoded number.
+After running that through the [freenmea.net/decoder](http://freenmea.net/decoder), I knew we had the date part working!  On to fixing the checksum so GPSD wouldn't discard the line.  The checksum is a byte-wise xor of all the characters between the `$` and the `*` characters of the sentence, and output as an uppercase-hex encoded number.
 
 ```python
         # Recompute checksum
@@ -173,11 +179,11 @@ After running that through the freenmea.net/decoder, I knew we had the date part
         line = f'${line}*{chksum}\n'
 ```
 
-There may be smaller ways to do that, but I couldn't see anything without imports, and I wanted to keep it simple!  At this point, the resulting data could be put into freenmea.net/decoder with the correct data AND vaild checksums!  Success!, SHIPIT!!! Well... not so fast...
+There may be smaller ways to do that, but I couldn't see anything without imports, and I wanted to keep it simple!  At this point, the resulting data could be put into freenmea.net/decoder with the correct data AND valid checksums!  Success!, SHIPIT!!! Well... not so fast...
 
 
 ### Connecting to GPSD
-Now the real fun problems seem to come up.  And by real fun, I mean the intricate linux details.  While the script is able to produce valid NMEA data, it doesn't write to a file; better yet, this is a raspberry pi, and writing contantly to an SD card DRASTICALLY shortens SD cards lives (speaking from experience here).  BUT, linux and python have the concept of [Named Pipes](https://en.wikipedia.org/wiki/Named_pipe) where we can still pipe data around, but this time just writing to a memory slot (just like regular pipes), but interfaced with like a file, so gpsd can use it.  So... I added/modified the python script to startup the named pipe, and write to it!
+Now the real fun problems seem to come up.  And by real fun, I mean the intricate linux details.  While the script is able to produce valid NMEA data, it doesn't write to a file; better yet, this is a raspberry pi, and writing constantly to an SD card DRASTICALLY shortens SD cards lives (speaking from experience here).  BUT, linux and python have the concept of [Named Pipes](https://en.wikipedia.org/wiki/Named_pipe) where we can still pipe data around, but this time writing to a memory slot (like regular pipes), but interfaced with like a file, so gpsd can use it.  So... I added/modified the python script to startup the named pipe, and write to it!
 
 ```py
 # omitted - existing imports
@@ -201,7 +207,7 @@ except OSError as oe:
 modify(open(path, 'w'))
 ```
 
-Then we just need to configure GPSD to look for the named pipe!
+Then we need to configure GPSD to look for the named pipe!
 
 GPSD's configuration file is located at `/etc/default/gpsd` and I changed the lines that we configured before, to the following:
 
@@ -220,7 +226,7 @@ DEVICES="/tmp/ttyGPS0.fifo"
 GPSD_OPTIONS="-n -b"
 ```
 
-And now, we just need to start everything up in the correct sequence, and lets see what happens...
+And now, we need to start everything up in the correct sequence, and lets see what happens...
 
 ```sh
 cat /dev/ttyUSB0 | fakegps # start the named pipe manually (will automate later)
@@ -228,11 +234,12 @@ service restart gpsd # start the gpsd service
 cgps -s # Try to read the GPS information
 
 # * CRASH * BANG * FIZZLE *
+
 service status gpsd
 SER: /tmp/ttyGPS0.fifo already opened by another process
 ```
 
-Chasing this error down, I found https://gitlab.com/gpsd/gpsd/-/blob/8c3efd058424cfaf4325cad438e262c82ca5c7d5/gpsd/serial.c#L608 or the following logic that essentially ensures that gpsd is the sole reader of a device.
+Chasing this error down, I found [the following logic](https://gitlab.com/gpsd/gpsd/-/blob/8c3efd058424cfaf4325cad438e262c82ca5c7d5/gpsd/serial.c#L608) that essentially ensures that gpsd is the sole reader of a device.
 
 ```cpp
 /*
@@ -248,7 +255,7 @@ if (fusercount(session->gpsdata.dev.path) > 1) {
 }
 ```
 
-Normally, this is a valid check, and I ran into the very issue it's trying to resolve, where I had two separate terminals listening to the same GPS device, and the messages would get split between the listeners.  After digging through the code, I found the implementation of `fusercount` and saw that it required root user access.  I was able to temporarily bypass this check by killing the service, and starting the GPSD manually. But I without modifying the init.d script, I was unable to figure out how to get gpsd to start with user permissions.  So, since we were hacking, I figured we could just put a spin-loop in the python logic to get us moving.
+Normally, this is a valid check, and I ran into the very issue it's trying to resolve, where I had two separate terminals listening to the same GPS device, and the messages would get split between the listeners.  After digging through the code, I found the implementation of `fusercount` and saw that it required root user access.  I was able to temporarily bypass this check by killing the service, and starting the GPSD manually (as a non-root user). But without modifying the init.d script, I was unable to figure out how to get gpsd to start with user permissions.  So, since we were hacking, I figured we could put a spin-loop in the python logic to get us moving.  This would allow the python script to create the named-pipe, but not attach to it until after the gpsd process has started.
 
 ```py
 # omitted - existing imports / modify function
@@ -328,9 +335,9 @@ Now that everything can connect, I let it run for a while and it turned out NTP 
 
 So I was thinking about it, and yes, nothing I'm doing here is really stable; obviously I'm working around quirks in gpsd; maybe I should can the whole project.  So, I took a small break and went to play 8-ball.
 
--- TIME PASSES --
+<center>-- TIME PASSES --</center>
 
-After an evening playing billiards at the local pool hall, I remembered the python has internal buffers by default when opening a file for reading and writing!  The often un-used 3rd parameter for `open` tells python how to configure it's internal buffers and un-buffered reading/writing requires the files to be opened in binary mode.  This just means all our string processing needs to be able to deal with byte string `b'byte string'` instead of regular strings `'regular string'`.  Which required a few changes across teh script, but nothing too crazy.
+After an evening playing billiards at the local pool hall, I remembered that python has internal buffers by default when opening a file for reading and writing!  The often un-used 3rd parameter for `open` tells python how to configure it's internal buffers; similiarly un-buffered reading/writing requires the files to be opened in binary mode.  This means all our string processing needs to be able to deal with byte strings `b'byte string'` instead of regular strings `'regular string'`.  Which required a few changes to the script, but nothing too crazy.
 
 ```py
 
@@ -370,7 +377,7 @@ with open('/tmp/ttyGPS0.fifo', 'wb', 0) as fifo:  # unbuffered
 
 
 ### Surviving GPSD restarts
-Now, the way the code works is fine, but it if gpsd restarts for any-reason, or if a listener of the socket joins and leaves again (like I did continually while verify the changes), this script currently just hard exits.  So, now to have the modify logic be able to restart and handle the case where the consumer of the fifo socket disappears and results in `BrokenPipeError`'s
+Now, the way the code works is fine, but if gpsd restarts for any-reason, or if a listener of the socket joins and leaves again (like I did continually while verifying changes), this script currently hard exits.  Now we must modify the logic to restart and handle the case where the consumer of the fifo socket disappears and results in `BrokenPipeError`'s.
 
 ```python
 # omitted - imports / modify / mkfifo
@@ -392,7 +399,7 @@ while True:
         print("Disconnected")  # log and pop out to while loop (closing with blocks)
 ```
 
-And with that, I was able to have my `./fakegps` running in a terminal, and have another one starting and stoping the gpsd service at will w/o seeing failures.
+And with that, I was able to have my `./fakegps` running in a terminal, and have another one starting and stoping the gpsd service at will.
 
 ```sh
 service stop gpsd
@@ -401,7 +408,7 @@ service start gpsd
 ```
 
 ### Automate Startup of `fakegps`
-Alright, now, time for the last bit... how do we get `fakegps` to start up when the system boots!  Well, there is a very old and outdated linux concept called rc.local.  Yes, it's out of date and replaced by systemd. Yes, there are better ways to do it, but... this is hacked up the wazu, whats just one more hack.
+Alright, now, time for the last bit... how do we get `fakegps` to start up when the system boots!  Well, there is a very old and outdated linux concept called rc.local.  Yes, it's out of date and replaced by systemd. Yes, there are better ways to do it, but... this is hacked up the wazu, what's one more hack?
 
 So, here is my `/etc/rc.local`.
 ```sh
@@ -414,11 +421,13 @@ So, here is my `/etc/rc.local`.
 exit 0
 ```
 
-Do a system restart a few times to verify, and GPSD doesn't want to start by itself, so, just have the python do it after the fifo creation.
+Do a system restart a few times to verify, and GPSD doesn't want to start by itself, so, have the python do it after the fifo creation.
 
 ```python
 os.system('systemctl start gpsd')
 ```
+
+Boom, now we have a GPS backed NTP server providing time for my in-house services.
 
 
 ## Future Work
@@ -433,6 +442,6 @@ os.system('systemctl start gpsd')
 
 None of what I have done with this python script is respectable.  Never use this in a production environment.  Buy a different GPS device and move on.  But, if you want to learn something by digging through code; see if you can get things that aren't supposed to work together, to work together, then maybe, try some hacking around.
 
-For me, this NTP server is still running today, and is keeping time quite nicely.  The project was a nice break from the usual grind of things I've been doing lately, and was a decent weekend project where I learned a lot about NTP, GPSD and some linux things.  Hopefully this post finds you and your family well, and if nothing else was somewhat entertaining and maybe educational.
+For me, this NTP server is still running today, and is keeping time quite nicely.  The project was a nice break from the usual grind of things I've been doing lately.  This was a decent weekend project where I learned a lot about NTP, GPSD and some linux commands that I didn't know before (`fuser`).  Hopefully this post finds you and your family well, and if nothing else, was somewhat entertaining and maybe educational.
 
-Oh, and if you wanted to use this monstrosity of code, w/o copy/pasting from a blog, here is the gist on github: https://gist.github.com/bign8/206283c1652d1475136a893d375177a6.
+Oh, and if you wanted to use this monstrosity of code, w/o copy/pasting from a blog, here is the [gist on GitHub](https://gist.github.com/bign8/206283c1652d1475136a893d375177a6).
