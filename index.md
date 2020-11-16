@@ -6,12 +6,12 @@ permalink: /
 # About Nathan J. Woods
 
 <p class="lead">
-	I am a freelance software developer with emphasis on web development, with hopes and aspirations of moving into the field of robotics.  Put simply, I'm a code monkey.  It's what I'm good at and I enjoy doing it.  Additionally, I have been told that I communicate complex ideas well with others, including the non-technical members of society.  Because of this, I work closely with my user base so they receive the best products and services possible.
+	I am a full-stack software developer with aspirations of moving into robotics.  I dive into problems, seek to understand the situation, derive execution plans and help carry out those plans.  I communicate complex ideas well with others: technical and non-technical alike.  I work closely with my customers so they receive the best products and services possible.
 </p>
 
-To be completely honest, I am just another average person (with a blog). But unlike other people who go home to relax at night, I choose to go home and tinker, program, design, and hack. Ever since I was young, I've taken things apart, attempted to understand how they work and improve upon them. To tell you I know exactly what I want to do would be a like any anybody that tells you otherwise is lying to themselves.  To be honest, All I know is that I've been said to be a great software engineer and apparently I can get paid doing that. When it comes down to it, I enjoy anything to do with computers (hardware, firmware, or software). Through my education and personal studies, I have touched on every abstraction layer of the computer, from transistors to the human layer, and haven't found a layer yet that doesn't excite me.
+I am a dude who tinkers, programs, designs, and hacks. I love to take things apart, discover how they work and improve their function. I enjoy anything to do with computers (hardware, firmware, or software). Through my education and personal studies, I have touched on every abstraction layer of the computer, from silicon and transistors to user interfaces as the human layer, discovering joy throughout the stack.
 
-If you want to learn more about me, feel free to surf around or [ask questions](/contact/).
+If you want to learn more, feel free to surf around or [reach out](/contact/).
 
 --------
 
@@ -77,7 +77,7 @@ Bachelor of Arts in Physics (Minor)
 
 --------
 
-## Extra Course Work
+## Online Courses
 
 ### [Introduction to Artificial Intelligencee](http://www.ai-class.com/ "Introduction to Artificial Intelligence") <small>[*Statement of Accomplishment*](/assets/doc/ai-class-intro-to-ai.pdf)</small>
 
@@ -95,7 +95,7 @@ Bachelor of Arts in Physics (Minor)
 
 --------
 
-## Known Scripting Languages / Protocols
+## Scripting Languages / Tools
 <table class="table">
 	<thead>
 		<tr>
@@ -107,7 +107,17 @@ Bachelor of Arts in Physics (Minor)
 		<tr>
 			<td>
 				<ul class="pull-right">
-					<li><a title="by Google" href="http://angularjs.org/" target="\_blank">Angular JS</a></li>
+					<li><a href="http://www.mysql.com/" target="\_blank">MySQL</a></li>
+					<li><a href="http://nodejs.org/" target="\_blank">Node.js</a></li>
+					<li><a href="http://www.php.net/" target="\_blank">PHP</a></li>
+					<li><a href="http://www.python.org/" target="\_blank">Python</a></li>
+					<li><a href="http://sqlite.org/" target="\_blank">SQLite</a></li>
+					<li><a href="http://jekyllrb.com/" target="\_blank">Jekyll</a></li>
+					<li><a href="https://golang.org/" target="\_blank">GO</a></li>
+					<li><a href="http://nats.io/" target="\_blank">NATS</a></li>
+				</ul>
+				<ul>
+					<li><a href="http://angularjs.org/" target="\_blank">Angular JS</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="\_blank">Bash</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/CSS" target="\_blank">CSS</a></li>
 					<li><a href="http://www.adobe.com/products/flex.html" target="\_blank">Flex</a></li>
@@ -115,32 +125,23 @@ Bachelor of Arts in Physics (Minor)
 					<li><a href="http://en.wikipedia.org/wiki/Html" target="\_blank">HTML</a></li>
 					<li><a href="http://www.java.com/" target="\_blank">Java</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/JavaScript" target="\_blank">JavaScript</a></li>
-				</ul>
-				<ul>
 					<li><a href="http://jquery.com/" target="\_blank">jQuery</a></li>
-					<li><a href="http://www.mysql.com/" target="\_blank">MySQL</a></li>
-					<li><a href="http://nodejs.org/" target="\_blank">Node.js</a></li>
-					<li><a href="http://www.php.net/" target="\_blank">PHP</a></li>
-					<li><a href="http://www.python.org/" target="\_blank">Python</a></li>
-					<li><a href="http://sqlite.org/" target="\_blank">SQLite</a></li>
-					<li><a title="Blog aware static sites" href="http://jekyllrb.com/" target="\_blank">Jekyll</a></li>
-					<li><a href="https://golang.org/" target="\_blank">GO</a></li>
-					<li><a href="http://nats.io/" target="\_blank">NATS</a></li>
 				</ul>
 			</td>
 			<td>
 				<ul class="pull-right">
+					<li><a href="http://en.wikipedia.org/wiki/Cgi-bin" target="\_blank">CGI</a></li>
+					<li><a href="http://gruntjs.com/" target="\_blank">Grunt</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Perl" target="\_blank">Perl</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/PL/SQL" target="\_blank">PL/SQL</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Visual_basic" target="\_blank">Visual Basic</a></li>
+				</ul>
+				<ul>
 					<li><a href="http://en.wikipedia.org/wiki/Assembly_language" target="\_blank">Assembly</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Autolisp" target="\_blank">AutoLISP</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Batch_file" target="\_blank">Batch</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/C%2B%2B" target="\_blank">C++</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/C_Sharp_(programming_language)" target="\_blank">C#</a></li>
-				</ul><ul>
-					<li><a href="http://en.wikipedia.org/wiki/Cgi-bin" target="\_blank">CGI</a></li>
-					<li><a title="The JavaScript Task Runner" href="http://gruntjs.com/" target="\_blank">Grunt</a></li>
-					<li><a href="http://en.wikipedia.org/wiki/Perl" target="\_blank">Perl</a></li>
-					<li><a href="http://en.wikipedia.org/wiki/PL/SQL" target="\_blank">PL/SQL</a></li>
-					<li><a href="http://en.wikipedia.org/wiki/Visual_basic" target="\_blank">Visual Basic</a></li>
 				</ul>
 			</td>
 		</tr>
@@ -157,6 +158,7 @@ Bachelor of Arts in Physics (Minor)
 - Flash Builder + [Flex](http://www.adobe.com/products/flex.html "by Adobe")
 - [Flash](http://www.adobe.com/products/flash.html "by Adobe")
 - Gitflow Workflow
+- [Google Cloud Platform](https://cloud.google.com/)
 - [Mathematica](http://www.wolfram.com/mathematica/ "by Wolfram")
 - [MATLAB](http://www.mathworks.com/products/matlab/ "by MathWorks")
 - [Photoshop](http://www.photoshop.com/ "by Adobe")
@@ -165,13 +167,15 @@ Bachelor of Arts in Physics (Minor)
 
 --------
 
-## CS Experience
+## Experience
 
 ### Software Engineer @ [Workiva](https://www.workiva.com/)
 July 2014 - Present
 
-- Worked for 2 years on team of 10+ developers
-- Technical lead on several initiatives
+- Advocated for developer efficiency and worked to accelerate other developers velocity
+- Planned and Executed cross-organization, multi-team technical efforts
+- Worked for 4 years on team of 10+ developers
+- Technical lead on several successful initiatives
 - Developed on the full stack with emphasis in server processes + algorithms
 - Tech: Python, Go, Flex, PDF and NATS
 
