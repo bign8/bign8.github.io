@@ -15,7 +15,13 @@ If you want to learn more about me, feel free to surf around or [ask questions](
 
 --------
 
-Interests include (but are **not** limited to):
+## Contact
+
+{% include contacts.html %}
+
+--------
+
+## Interests
 
 - Robotics
 - Artificial Intelligence

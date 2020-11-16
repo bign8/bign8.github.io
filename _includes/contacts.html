@@ -1,0 +1,9 @@
+<ul class="contacts clear">
+{% for contact in site.data.contacts %}
+	<li>
+		<a href="{{ contact.link }}">
+			<img src="/contact/{{ contact.slug }}.svg" title="{{ contact.name }}" alt="{{ contact.name }}">
+		</a>
+	</li>
+{% endfor %}
+</ul>

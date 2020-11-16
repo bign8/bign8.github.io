@@ -2,50 +2,55 @@
   link: "https://www.facebook.com/NathanJKWoods"
   name: Facebook
   slug: facebook
+  color: '#1877F2'
 -
   link: "https://twitter.com/bignatewoods"
   name: Twitter
   slug: twitter
+  color: '#1DA1F2'
 -
   link: "https://github.com/bign8/"
   name: GitHub
   slug: github
--
-  link: "http://www.youtube.com/user/NathanW2009"
-  name: YouTube
-  slug: youtube
--
-  link: "http://jsfiddle.net/user/bign8/"
-  name: jsFiddle
-  slug: jsfiddle
+  color: '#181717'
 -
   link: "http://www.linkedin.com/in/bign8/"
   name: LinkedIn
   slug: linkedin
--
-  link: "http://stackoverflow.com/users/3220865/bign8"
-  name: Stack Overflow
-  slug: stackoverflow
--
-  link: "http://disqus.com/bign8/"
-  name: Disqus
-  slug: disqus
--
-  link: "https://www.dropbox.com/sh/d2q84ko8hyqe7rt/qZCPFjqp6a"
-  name: Dropbox
-  slug: dropbox
+  color: '#0077B5'
 -
   link: "mailto:me@bign8.info"
   name: Email
-  slug: email
--
-  link: "https://en.gravatar.com/bignatew"
-  name: Gravatar
-  slug: gravatar
--
-  link: "https://www.kickstarter.com/profile/2055576200"
-  name: Kickstarter
-  slug: kickstarter
+  slug: gmail
+  color: '#D14836'
+# -
+#   link: "http://www.youtube.com/user/NathanW2009"
+#   name: YouTube
+#   slug: youtube
+# -
+#   link: "http://jsfiddle.net/user/bign8/"
+#   name: jsFiddle
+#   slug: jsfiddle
+# -
+#   link: "http://stackoverflow.com/users/3220865/bign8"
+#   name: Stack Overflow
+#   slug: stackoverflow
+# -
+#   link: "http://disqus.com/bign8/"
+#   name: Disqus
+#   slug: disqus
+# -
+#   link: "https://www.dropbox.com/sh/d2q84ko8hyqe7rt/qZCPFjqp6a"
+#   name: Dropbox
+#   slug: dropbox
+# -
+#   link: "https://en.gravatar.com/bignatew"
+#   name: Gravatar
+#   slug: gravatar
+# -
+#   link: "https://www.kickstarter.com/profile/2055576200"
+#   name: Kickstarter
+#   slug: kickstarter
 # -
 #   link: "https://myspace.com/natetec"
 #   name: Myspace
@@ -54,3 +59,7 @@
 #   link: "skype:bignatewoods?chat"
 #   name: Skype
 #   slug: skype
+# [CS Tutoring Center](http://www.cstutoringcenter.com/profile.php?id=2399)
+# [Hack This Site](https://www.hackthissite.org/user/view/bignatew/)
+# [Prezi](http://prezi.com/user/bign8)
+# [Phone: (406) 890-0603](tel:4068900603)
