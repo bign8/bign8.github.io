@@ -28,6 +28,7 @@
 					<li{% if page.url contains "/projects/" %} class="active"{% endif %}><a href="/projects/">Projects</a></li>
 				</ul>
 			</nav>
+			<n8-blog-calendar source="/site.json"></n8-blog-calendar>
 		</header>
 		<main>
 			{{ content }}
@@ -37,5 +38,6 @@
 		</footer>
 		{% if page.js.size %}<script src="{{ page.js }}.js"></script>{% endif %}
 		<script src="/assets/dots.js"></script>
+		<script src="/assets/calendar.js"></script>
 	</body>
 </html>

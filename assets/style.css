@@ -108,6 +108,7 @@ footer {
     margin-left: 0;
     padding-top: 40px;
   }
+  n8-blog-calendar { display: none }
   .profile figure { display: none }
   header .contacts { display: none }
   .profile h1 {
@@ -457,4 +458,3 @@ a.kill-animation {
 .contacts li img {
   width: 100%;
 }
-
