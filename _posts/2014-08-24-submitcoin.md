@@ -37,7 +37,12 @@ Overall, it was a great experience: Meeting all the folks at Startup Weekend, th
 
 The site was written in PHP and AngularJS, and built with Jekyll, grunt and had a backing cron service as well. The site managed user accounts, Oauth connections to Coinbase, provisioned cards with our pre-paid credit card provider, and accepted applications for beta testers.  Details available upon request, but the source has been asked to stay closed for legal reasons.
 
-Technically, we
+
+## Links
+
+* [Site](http://submitcoin.com) (dead)
+* [Source](https://bitbucket.org/submitcoin/) (closed source)
+* [Twitter](https://twitter.com/submitcoin) (silent since startup weekend)
 
 ## FAQ
 
