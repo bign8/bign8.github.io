@@ -1,17 +1,4 @@
 ---
-- project: SubmitCoin
-  slug: submitcoin
-  category: Product
-  link: http://submitcoin.com
-  publish: yes
-  image: yes
-  languages:
-    - PHP
-    - Angular
-  description: |
-    Need to by stuff but only have bitcoin?
-    A few friends and I started SubmitCoin to allow just that with BitCoin backed credit cards.
-
 - project: Tag Cloud
   slug: cloud
   category: Fun

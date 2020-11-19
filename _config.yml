@@ -6,4 +6,4 @@ permalink: /blog/:year/:title.html
 exclude:
     - Dockerfile
     - README.md
-    - Makefile
+    - makefile
