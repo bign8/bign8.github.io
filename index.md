@@ -6,10 +6,10 @@ permalink: /
 # About Nathan J. Woods
 
 <p class="lead">
-	I am a full-stack software developer with aspirations of moving into robotics.  I dive into problems, seek to understand the situation, derive execution plans and help carry out those plans.  I communicate complex ideas well with others: technical and non-technical alike.  I work closely with my customers so they receive the best products and services possible.
+	I am a full-stack software developer with aspirations of moving into robotics.  I dive into problems, seek to understand the situation, derive execution plans and can realize those goals.  I communicate complex ideas well with others: technical and non-technical alike.  I work closely with my customers so they receive the best products and services possible.
 </p>
 
-I am a dude who tinkers, programs, designs, and hacks. I love to take things apart, discover how they work and improve their function. I enjoy anything to do with computers (hardware, firmware, or software). Through my education and personal studies, I have touched on every abstraction layer of the computer, from silicon and transistors to user interfaces as the human layer, discovering joy throughout the stack.
+I am a laid-back dude who tinkers, programs, designs, and hacks. I love to take things apart, discover how they work and improve them. I enjoy anything to do with computers (hardware, firmware, or software). Through my education and personal studies, I have touched on every abstraction layer of the computer, from silicon and transistors to user interfaces and the human layer, discovering joy throughout the stack.
 
 If you want to learn more, feel free to surf around or [reach out](/contact/).
 
@@ -169,7 +169,7 @@ Bachelor of Arts in Physics (Minor)
 
 ## Experience
 
-### Software Engineer @ [Workiva](https://www.workiva.com/)
+### Senior Software Engineer @ [Workiva](https://www.workiva.com/)
 July 2014 - Present
 
 - Advocated for developer efficiency and worked to accelerate other developers velocity
@@ -216,7 +216,7 @@ Summer 2010
 
 ## Leadership / Extra Curricular
 
-### [Kryptos cryptanalysis contest](http://www.cwu.edu/~boersmas/kryptos/ "Kryptos Site")
+### [Kryptos cryptanalysis contest](https://www.cwu.edu/math/kryptos "Kryptos")
 Spring 2012
 
 - Breaking, or cryptanalysis, of ciphers (secret writing)
@@ -229,7 +229,7 @@ Spring/Fall 2012
 - Assisted professor with 36 students in MA-336: Probability and Statistics I
 - Assisted professor with 12 students in CS-3XX: Networking I
 
-### [ACM Programming Competition](http://icpc.baylor.edu/ "ACM ICPC")
+### [ACM Programming Competition](https://icpc.global/ "ACM ICPC")
 Fall 2011/2
 
 - Competed on a team of 2 other students and placed 8/20 at regional competition
@@ -242,7 +242,7 @@ Fall 2010 - 2012
 - Tamed 3 years of sophomores
 
 ### [Mathematical Contest in Modeling](http://www.comap.com/undergraduate/contests/mcm/ "MCM")
-Spring 2010 - Present
+Spring 2010 - 2014
 
 - Worked 96 hours with two other students to produce a paper
 - Completed 3 years, Achieving Meritorious Rank in 2010 (top 18% worldwide)
