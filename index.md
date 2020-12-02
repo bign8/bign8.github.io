@@ -55,7 +55,7 @@ Master of Sciences in Computer Science
 - Focused on distributed system architecture design and testing and AI
 - Notable projects:
 	- Homemade datacenter and custom cloud testing utilities
-		- [Paper](/school/csci-591-pipelines.pdf) + [Prez](/school/csci-591-pipelines.html)
+		- [Paper](/assets/doc/csci-591-pipelines.pdf) + [Prez](https://docs.google.com/presentation/d/1AIgGUhBbZ-Jfm434AOfpHGzrZEac23oXP9kM3rYTXUc/present)
 	- Artificial Intelligence Game Engine
 		- Professor requested closed source
 
