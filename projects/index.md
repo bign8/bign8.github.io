@@ -5,6 +5,7 @@ permalink: /projects/
 ---
 # Projects
 
+<!-- TODO: remove -->
 <!-- TODO: Intro lead -->
 
 <!--

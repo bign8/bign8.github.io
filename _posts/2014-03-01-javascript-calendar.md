@@ -4,6 +4,8 @@ title:  JavaScript Calendar
 categories:
 - Projects
 - JavaScript
+tags:
+- visuals
 css: calendar
 js: calendar
 ---
@@ -28,3 +30,6 @@ window.onload = function() {
 
 * [calendar.js](calendar.js)
 * [calendar.css](calendar.css)
+
+
+*Edit 2020-11-14 - Reworked to use FETCH api and removed directly embedded source files*

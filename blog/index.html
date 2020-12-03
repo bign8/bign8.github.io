@@ -2,14 +2,18 @@
 layout: default
 title: Blog
 ---
+<h1>Nate's Musings</h1>
 
+<p class="lead">Welcome to my blog! Below you will find a collection of thoughts, concepts, projects and ideas that I have posted over the years.</p>
+
+<hr/>
 <section class="posts">
 	{% for post in site.posts %}<article class="clearfix">
 		<time class="text-muted pull-right" itemprop="datePublished" content="{{ post.date }}">{{ post.date | date_to_string }}</time>
-		<h1>
+		<h2>
 			<a href="{{ post.url }}">{{ post.title }}</a>
 			{% if post.draft %}<small>DRAFT</small>{% endif %}
-		</h1>
+		</h2>
 		{{ post.excerpt }}
 		<a class="pull-right" href="{{ post.url }}">continue reading »</a>
 	</article>
