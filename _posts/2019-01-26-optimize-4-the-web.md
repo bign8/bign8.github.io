@@ -7,7 +7,7 @@ categories:
 - CSS
 tags:
 - css
-- js
+- javascript
 - web development
 ---
 In a world of broadband internet and fast hardware, optimizing websites and web applications can seem like a meaningless task.  But what can the extra code you are sending your clients really cost?  After reading [In Defense of Optimization Work](https://www.clever-cloud.com/blog/engineering/2018/09/27/in-defense-of-optimization-work/), I set out to revamp this very website, just to see how much cruft could be removed.

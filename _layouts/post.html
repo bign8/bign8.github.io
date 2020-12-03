@@ -2,7 +2,7 @@
 layout: default
 ---
 <h2>{{ page.title }} {% if page.draft %}<small>DRAFT</small>{% endif %}</h2>
-<p class="meta">{{ page.date | date_to_string }}</p>
+<p class="meta">{{ page.date | date: "%Y-%m-%d" }}</p>
 
 {% comment %}
 Borrowed idea from http://dyn.com/blog/

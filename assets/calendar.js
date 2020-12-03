@@ -139,7 +139,15 @@ customElements.define('n8-blog-calendar', class extends HTMLElement {
 	show(index) {
 		let items = this.data.get(index);
 		let date = new Date(items[0].date);
-		date = `${this.M[date.getMonth()]}\xa0${date.getDate()},\xa0${date.getFullYear()}`;
+
+		// Convert date to the site standard format
+		// https://stackoverflow.com/a/34290167/3220865
+		date = [
+			date.getFullYear(),
+			('0' + (date.getMonth() + 1)).slice(-2),
+			('0' + date.getDate()).slice(-2)
+		].join('-');
+
 		this.p.textContent = `Posts for ${date}`;
 		this.ul.innerHTML = '';
 		for (const item of items)

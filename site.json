@@ -16,7 +16,6 @@ source:
     "title"      : "{{ post.title }}",
     "url"        : "{{ post.url }}",
     "date"       : "{{ post.date | date: "%B %d, %Y" }}",
-    "date2"      : "{{ post.date | date_to_string }}",
     "categories" : [{% if post.categories.size > 0 %}"{{ post.categories | join:'","' }}"{% endif %}],
     "tags"       : [{% if post.tags.size > 0 %}"{{ post.tags | join:'","' }}"{% endif %}]
   }{% unless forloop.last %},{% endunless %}{% endfor %}
