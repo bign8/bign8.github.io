@@ -2,7 +2,7 @@
 - project: Tag Cloud
   slug: cloud
   category: Fun
-  publish: yes
+  publish: no
   languages:
     - Javascript
   description: |
