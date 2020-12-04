@@ -8,25 +8,27 @@ tags: []
 
 <!--more-->
 
-<pre title="Hummingbird's formatted time for JavaScript Date object">Date.prototype.formattedTime = function() {
+```js
+Date.prototype.formattedTime = function() {
   var formattedDate = this.getHours();
 
   var minutes = this.getMinutes();
-  if(minutes &gt; 9) {
+  if(minutes > 9) {
     formattedDate += ":" + minutes;
   } else {
     formattedDate += ":0" + minutes;
   }
 
   var seconds = this.getSeconds();
-  if(seconds &gt; 9) {
+  if(seconds > 9) {
     formattedDate += ":" + seconds;
   } else {
     formattedDate += ":0" + seconds;
   }
 
   return formattedDate;
-};</pre>
+};
+```
 
 Now this is nice for simply formatting time, but I was looking for something a little more elegant; closer to [PhP's date formatting](http://php.net/manual/en/function.date.php).
 I've looked around a few places and [jQuery UI has a nice option](http://api.jqueryui.com/datepicker/#utility-functions) along with [this guy's nice encapsulated design](http://blog.stevenlevithan.com/archives/date-time-format), but I'm looking for something sleeker and a little slimmer.

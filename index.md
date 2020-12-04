@@ -3,7 +3,7 @@ layout: default
 permalink: /
 ---
 
-# About Nathan J. Woods
+# About Nate Woods
 
 <p class="lead">
 	I am a full-stack software developer with aspirations of moving into robotics.  I dive into problems, seek to understand the situation, derive execution plans and can realize those goals.  I communicate complex ideas well with others: technical and non-technical alike.  I work closely with my customers so they receive the best products and services possible.

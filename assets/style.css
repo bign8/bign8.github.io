@@ -3,6 +3,7 @@ body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #333;
+  background-color: #FFF;
 }
 header {
   position: fixed;
@@ -456,4 +457,21 @@ a.kill-animation {
 }
 .contacts li img {
   width: 100%;
+}
+
+/*****************************************************************************/
+/*
+/* DARK MODE!!!
+/*
+/*****************************************************************************/
+@media (prefers-color-scheme: dark) {
+  body{background-color:#000;color:#CCC}
+  header{background-color:#0B0B0B;border-color:#111}
+  pre,.contacts img{filter:invert(1)}
+  .post::before{color:#111}
+  nav li a:hover{background-color:#111}
+  .contacts li img:hover{filter:blur(1px) opacity(60%) invert(1)}
+  .highlight{background:transparent}
+  code{background-color:transparent}
+  .thumbnail{color:#CCC}
 }

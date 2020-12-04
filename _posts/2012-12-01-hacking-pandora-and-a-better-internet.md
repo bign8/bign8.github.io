@@ -30,14 +30,22 @@ This one requires a little more technological knowledge  but hopefully I can wal
 - Once Pandora is loaded in Chrome, press F12 on your keyboard to bring up Chrome Developer Tools (alternatively, right-clicking anywhere on the page and clicking 'inspect element' should also summon this wonderful Chrome creation).
 - Along the top is a list of different operating tabs (Elements, Resources, Network...), among them should be a tab called 'Console', select it.  This tab give direct access to the page's JavaScript interface.
 - Simply copy the code below and paste into the console and press return.
-<pre lang="javascript" title="Fix Pandora's Still Listening Button">var panFix = setInterval(function(){
+
+```js
+var panFix = setInterval(function(){
     var obj = $('.still_listening');
-    if (obj.length &gt; 0) obj.click();
-}, 10000);</pre>
+    if (obj.length > 0) obj.click();
+}, 10000);
+```
+
 *Explanation:* After some looking, I found that one, jQuery is loaded and two the still listening link has a unique class applied to it.  Using this, every 10 seconds, I simply check to see if the link is there and if it is, click it.
 - Sit back and relax while Pandora plays forever.
 - If you wish to remove this script, simply enter the following into the console and press return.
-<pre lang="javascript" title="Re-enabling Pandora's Still Listening button">clearInterval(panFix);</pre>
+
+```js
+clearInterval(panFix);
+```
+
 **Explanation**: This code clears the setInterval looping function set above.
 
 ## Closing Notes
