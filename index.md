@@ -55,7 +55,7 @@ Master of Sciences in Computer Science
 - Focused on distributed system architecture design and testing and AI
 - Notable projects:
 	- Homemade datacenter and custom cloud testing utilities
-		- [Paper](/assets/doc/csci-591-pipelines.pdf) + [Prez](https://docs.google.com/presentation/d/1AIgGUhBbZ-Jfm434AOfpHGzrZEac23oXP9kM3rYTXUc/present)
+		- [Paper](/files/csci-591-pipelines.pdf) + [Prez](https://docs.google.com/presentation/d/1AIgGUhBbZ-Jfm434AOfpHGzrZEac23oXP9kM3rYTXUc/present)
 	- Artificial Intelligence Game Engine
 		- Professor requested closed source
 
@@ -79,17 +79,17 @@ Bachelor of Arts in Physics (Minor)
 
 ## Online Courses
 
-### [Introduction to Artificial Intelligencee](http://www.ai-class.com/ "Introduction to Artificial Intelligence") <small>[*Statement of Accomplishment*](/assets/doc/ai-class-intro-to-ai.pdf)</small>
+### [Introduction to Artificial Intelligencee](http://www.ai-class.com/ "Introduction to Artificial Intelligence") <small>[*Statement of Accomplishment*](/files/ai-class-intro-to-ai.pdf)</small>
 
 > Based on Stanford's CS-221,
 > introduced basics of Artificial intelligence which includes machine learning,
 > probabilistic reasoning, robotics and natural language processing
 
-### [Building a Search Engine](http://www.udacity.com/overview/Course/cs101/ "Building a Search Engine") <small>[*Statement of Accomplishment*](/assets/doc/udacity-101-intro-to-cs.pdf)</small>
+### [Building a Search Engine](http://www.udacity.com/overview/Course/cs101/ "Building a Search Engine") <small>[*Statement of Accomplishment*](/files/udacity-101-intro-to-cs.pdf)</small>
 
 > Designed and built a search engine with a web crawler and way of ranking popular pages
 
-### [Programming a Robotic Car](http://www.udacity.com/overview/Course/cs373/ "Programming a Robotic Car") <small>[*Statement of Accomplishment*](/assets/doc/udacity-373-programming-a-robotic-car.pdf)</small>
+### [Programming a Robotic Car](http://www.udacity.com/overview/Course/cs373/ "Programming a Robotic Car") <small>[*Statement of Accomplishment*](/files/udacity-373-programming-a-robotic-car.pdf)</small>
 
 > Applied basic methods in Artificial Intelligence to a 'virtual' self driving vehicle
 
