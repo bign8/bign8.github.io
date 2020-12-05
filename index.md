@@ -11,11 +11,11 @@ permalink: /
 
 I am a laid-back dude who tinkers, programs, designs, and hacks. I love to take things apart, discover how they work and improve them. I enjoy anything to do with computers (hardware, firmware, or software). Through my education and personal studies, I have touched on every abstraction layer of the computer, from silicon and transistors to user interfaces and the human layer, discovering joy throughout the stack.
 
-If you want to learn more, feel free to surf around or [reach out](/contact/).
-
 --------
 
 ## Contact
+
+Feel free to reach out and say "Hey".  I seem to always have things going on, so it may take a while to get back to you, but I will get back to you as soon as I can.  Oh, and if I haven't gotten back to you in over a week, you may have gotten trapped in a spam filter; Try reaching out on a different platform.
 
 {% include contacts.html %}
 

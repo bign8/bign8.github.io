@@ -23,7 +23,6 @@
 			<nav>
 				<ul>
 					<li{% if page.url contains "/blog/" %} class="active"{% endif %}><a href="/blog/">Blog</a></li>
-					<li{% if page.url contains "/contact/" %} class="active"{% endif %}><a href="/contact/">Contact</a></li>
 					<li{% if page.url contains "/projects/" %} class="active"{% endif %}><a href="/projects/">Projects</a></li>
 				</ul>
 			</nav>
@@ -33,7 +32,7 @@
 			{{ content }}
 		</main>
 		<footer>
-			<p>&copy; <script>document.write(new Date().getFullYear())</script> <a href="/contact/">{{site.name}}</a></p>
+			<p>&copy; <script>document.write(new Date().getFullYear())</script> <a href="/#contact">{{site.name}}</a></p>
 		</footer>
 		{% if page.js.size %}<script src="{{ page.js }}.js"></script>{% endif %}
 		<script src="/dots.js"></script>
