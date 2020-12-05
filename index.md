@@ -42,6 +42,12 @@ In various implementations, a computing device: displays the document outline on
 
 --------
 
+## Projects
+
+All of my open source projects can be found on [GitHub](https://github.com/bign8) or on my [self hosted git server](https://gogs.bign8.info/bign8).  These projects are personal discovery efforts or work that I have retrieved approval from employers to share with the world under my name.  But this is only what I am allowed to show or what I can do on my free time.  Just imagine how I can help your teams out if I was on your payroll, eh?
+
+--------
+
 ## Education
 
 ### Graduate at [Montana State University](http://www.cs.montana.edu/)
