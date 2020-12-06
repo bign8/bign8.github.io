@@ -36,9 +36,13 @@ Feel free to reach out and say "Hey".  I seem to always have things going on, so
 
 ## Publications
 
-### System and method for convergent document collaboration [US Patent 10325014](https://patents.justia.com/patent/10325014)
+### [US Patent 10325014: System and method for convergent document collaboration](/blog/2018/convergent-document-collaboration.html)
 
 In various implementations, a computing device: displays the document outline on the user interface; maintains, in a non-transitory computer-readable medium, a causal graph data structure representing the document outline, wherein the causal graph data structure includes a plurality of structure nodes, each structure node representing a level of the document outline; receives, via the user interface, an insertion of a new level to the document outline; in response to the insertion, defines a structure node that represents the inserted level; inserts a transition node in the causal graph data structure, wherein the transition node represents a relationship between the structure node and at least one other node of the causal graph data structure; inserts the structure node into the causal graph data structure as a child of the transition node; and updating the user interface to display the inserted level.
+
+### [ACM Conference Proceedings: The Causal Graph CRDT for Complex Document Structure](/blog/2018/causal-graph-crdt.html)
+
+Commutative Replicated Data Types (CRDTs) are an emerging tool for real-time collaborative editing. Existing work on CRDTs mostly focuses on documents as a list of text content, but large documents (having over 7,000 pages) with complex sectional structure need higher-level organization. We introduce the Causal Graph, which extends the Causal Tree CRDT into a graph of nodes and transitions to represent ordered trees. This data structure is useful in driving document outlines for large collaborative documents, resolving structures with over 100,000 sections in less than a second.
 
 --------
 

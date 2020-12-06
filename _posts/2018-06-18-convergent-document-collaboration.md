@@ -9,7 +9,8 @@ tags:
 ---
 While working with Workiva, teammates and I designed and implemented a method for "Convergent Document Collaboration" using CRDTs.  After operating with success, our legal team helped us produce a patent to help protect Workiva's Intellectual Property.
 
-* [Online Link](https://pdfpiw.uspto.gov/.piw?docid=10325014)
+* [Full Text Link](https://pdfpiw.uspto.gov/.piw?docid=10325014)
+* [Alternative Link](https://patents.justia.com/patent/10325014)
 
 <!--more-->
 

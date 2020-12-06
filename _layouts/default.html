@@ -20,6 +20,7 @@
 			{% include contacts.html indent="			" %}
 			<nav>
 				<ul>
+					<li{% if page.url == "/" %} class="active"{% endif %}><a href="/">About</a></li>
 					<li{% if page.url contains "/blog/" %} class="active"{% endif %}><a href="/blog/">Blog</a></li>
 				</ul>
 			</nav>
