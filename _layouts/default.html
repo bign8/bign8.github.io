@@ -14,12 +14,10 @@
 			<a class="profile" href="/">
 				<h1>Nate Woods</h1>
 				<figure>
-					<div class="face">
-						<img src="/n8.jpg" alt="Nate Woods">
-					</div>
+					<img src="/n8.jpg" alt="Nate Woods" title="Nate Woods">
 				</figure>
 			</a>
-			{% include contacts.html %}
+			{% include contacts.html indent="			" %}
 			<nav>
 				<ul>
 					<li{% if page.url contains "/blog/" %} class="active"{% endif %}><a href="/blog/">Blog</a></li>

@@ -209,6 +209,7 @@ Summer 2010
 - Managed systems and corporate network
 - Tech: Joomla, AJAX, JavaScript, HTML+CSS, RSS and related
 
+{% comment %}
 --------
 
 ## Leadership / Extra Curricular
@@ -255,3 +256,4 @@ Jan 2008 - Jul 2009
 
 - Led more than 20 through wilderness training and ethical teaching
 - Achieved the rank of Eagle Scout
+{% endcomment %}

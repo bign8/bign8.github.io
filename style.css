@@ -59,9 +59,9 @@ footer {
   text-align: center;
   color: #6A7CC3;
 }
+.profile:hover { color: #4054a0 } /* darken 25% */
 .profile h1 { font-size: 40px }
-.profile figure { margin: 0 }
-.profile .face {
+.profile figure {
   width: 138px;
   margin: 20px auto;
   border: 5px solid currentColor;
@@ -74,7 +74,7 @@ footer {
   border-radius: 50%;
   padding: 0;
 }
-.profile .face::before {
+.profile figure::before {
   opacity: 0;
   -webkit-transition: opacity, 0.5s, ease-in-out;
   -moz-transition: opacity, 0.5s, ease-in-out;
@@ -92,8 +92,9 @@ footer {
   right: 0;
   top: 0;
   bottom: 0;
+  pointer-events: none;
 }
-.profile:hover .face::before { opacity: 1 }
+.profile:hover figure::before { opacity: 1 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
@@ -432,7 +433,7 @@ a.kill-animation {
 /*
 /* Contacts
 /*
-/* Icons curtosy of https://github.com/danleech/simple-icons
+/* Icons curtosy of https://github.com/simple-icons/simple-icons
 /* Icons converted with https://www.mobilefish.com/services/base64/base64.php
 /* Embedding SVGs based on https://css-tricks.com/using-svg/
 /*****************************************************************************/
