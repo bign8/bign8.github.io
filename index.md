@@ -83,9 +83,7 @@ Bachelor of Arts in Physics (Minor)
 - Intern for Carroll IT department
 - Deans list all semesters
 
---------
-
-## Extra Coursework
+### Training
 
 * **[Introduction to Artificial Intelligence](/blog/2011/intro-to-ai.html)**  
 	Based on Stanford's CS-221, introduced basics of Artificial intelligence which includes machine learning, probabilistic reasoning, robotics and natural language processing
@@ -96,75 +94,126 @@ Bachelor of Arts in Physics (Minor)
 
 --------
 
-## Scripting Languages / Tools
-<table class="table">
+## Skills
+<style>
+.inline li {display:inline}
+.inline ul {padding:0 10px}
+</style>
+<table class="table inline">
 	<thead>
 		<tr>
-			<td style="text-align: center; width: 50%;">Working knowledge</td>
-			<td style="text-align: center; width: 50%;">Basic knowledge</td>
+			<td></td>
+			<th style="text-align: center" title="Prolonged Exposure">Working knowledge</th>
+			<th style="text-align: center" title="Minimal Exposure">Basic knowledge</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
+			<th>Languages</th>
 			<td>
-				<ul class="pull-right">
-					<li><a href="http://www.mysql.com/" target="\_blank">MySQL</a></li>
-					<li><a href="http://nodejs.org/" target="\_blank">Node.js</a></li>
-					<li><a href="http://www.php.net/" target="\_blank">PHP</a></li>
-					<li><a href="http://www.python.org/" target="\_blank">Python</a></li>
-					<li><a href="http://sqlite.org/" target="\_blank">SQLite</a></li>
-					<li><a href="http://jekyllrb.com/" target="\_blank">Jekyll</a></li>
-					<li><a href="https://golang.org/" target="\_blank">GO</a></li>
-					<li><a href="http://nats.io/" target="\_blank">NATS</a></li>
-				</ul>
 				<ul>
-					<li><a href="http://angularjs.org/" target="\_blank">Angular JS</a></li>
-					<li><a href="http://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="\_blank">Bash</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/CSS" target="\_blank">CSS</a></li>
 					<li><a href="http://www.adobe.com/products/flex.html" target="\_blank">Flex</a></li>
-					<li><a href="http://git-scm.com/" target="\_blank">Git</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Html" target="\_blank">HTML</a></li>
 					<li><a href="http://www.java.com/" target="\_blank">Java</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/JavaScript" target="\_blank">JavaScript</a></li>
-					<li><a href="http://jquery.com/" target="\_blank">jQuery</a></li>
+					<li><a href="http://www.php.net/" target="\_blank">PHP</a></li>
+					<li><a href="http://www.python.org/" target="\_blank">Python</a></li>
+					<li><a href="https://golang.org/" target="\_blank">Go</a></li>
 				</ul>
 			</td>
 			<td>
-				<ul class="pull-right">
-					<li><a href="http://en.wikipedia.org/wiki/Cgi-bin" target="\_blank">CGI</a></li>
-					<li><a href="http://gruntjs.com/" target="\_blank">Grunt</a></li>
-					<li><a href="http://en.wikipedia.org/wiki/Perl" target="\_blank">Perl</a></li>
-					<li><a href="http://en.wikipedia.org/wiki/PL/SQL" target="\_blank">PL/SQL</a></li>
-					<li><a href="http://en.wikipedia.org/wiki/Visual_basic" target="\_blank">Visual Basic</a></li>
-				</ul>
 				<ul>
 					<li><a href="http://en.wikipedia.org/wiki/Assembly_language" target="\_blank">Assembly</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Autolisp" target="\_blank">AutoLISP</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Batch_file" target="\_blank">Batch</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/C%2B%2B" target="\_blank">C++</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/C_Sharp_(programming_language)" target="\_blank">C#</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Cgi-bin" target="\_blank">CGI</a></li>
+					<li>Dart</li>
+					<li><a href="https://en.wikipedia.org/wiki/ECMAScript" target="\_blank">ECMAScript</a></li>
+					<li><a href="http://en.wikipedia.org/wiki/Perl" target="\_blank">Perl</a></li>
+					<li>TypeScript</li>
+					<li><a href="http://en.wikipedia.org/wiki/Visual_basic" target="\_blank">Visual&nbsp;Basic</a></li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th>Libraries</th>
+			<td>
+				<ul>
+					<li><a href="http://angularjs.org/" target="\_blank">AngularJS</a></li>
+					<li><a href="https://github.com/golang/appengine" target="\_blank">Appengine</a></li>
+					<li><a href="https://click.palletsprojects.com/" target="\_blank">Click</a></li>
+					<li><a href="http://jquery.com/" target="\_blank">jQuery</a></li>
+					<li>Logrus</li>
+					<li>Requests</li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li><a href="http://en.wikipedia.org/wiki/PL/SQL" target="\_blank">PL/SQL</a></li>
+					<li>Thrift</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th>Protocols</th>
+			<td>
+				<ul>
+					<li><a href="http://en.wikipedia.org/wiki/Secure_Shell" target="\_blank">SSH</a></li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li><a href="http://en.wikipedia.org/wiki/File_Transfer_Protocol" target="\_blank">FTP</a></li>
+					<li><a href="https://en.wikipedia.org/wiki/Secure_copy" target="\_blank">SCP</a></li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th>Providers</th>
+			<td>
+				<ul>
+					<li><a href="http://aws.amazon.com/" target="\_blank">AWS</a></li>
+					<li><a href="https://cloud.google.com/" target="\_blank">GCP</a></li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li>Heroku</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th>Tools</th>
+			<td>
+				<ul>
+					<li><a href="http://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="\_blank">Bash</a></li>
+					<li>Docker</li>
+					<li><a href="http://git-scm.com/" target="\_blank">Git</a></li>
+					<li>Make</li>
+					<li><a href="http://www.mysql.com/" target="\_blank">MySQL</a></li>
+					<li><a href="http://nodejs.org/" target="\_blank">Node.js</a></li>
+					<li><a href="http://sqlite.org/" target="\_blank">SQLite</a></li>
+					<li><a href="http://jekyllrb.com/" target="\_blank">Jekyll</a></li>
+					<li><a href="http://sqlite.org/" target="\_blank">SQLite</a></li>
+					<li><a href="http://nats.io/" target="\_blank">NATS</a></li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li><a href="http://gruntjs.com/" target="\_blank">Grunt</a></li>
+					<li><a href="http://www.wolfram.com/mathematica/" target="\_blank">Mathematica</a></li>
+					<li><a href="http://www.mathworks.com/products/matlab/" target="\_blank">MATLAB</a></li>
+					<li>K8s</li>
+					<li><a href="http://www.photoshop.com/" target="\_blank">Photoshop</a></li>
+					<li><a href="http://www.r-project.org/" target="\_blank">R</a></li>
 				</ul>
 			</td>
 		</tr>
 	</tbody>
 </table>
-
---------
-
-## Applications / Protocols / Workflows
-
-- [Amazon Web Services](http://aws.amazon.com/ "Amazon Web Services")
-- [Excel](http://office.microsoft.com/en-us/excel/ "by Microsoft") / [Spreadsheets](https://developers.google.com/chart/interactive/docs/spreadsheets "by Google")
-- [File Transfer Protocol (FTP)](http://en.wikipedia.org/wiki/File_Transfer_Protocol "File Transfer Protocol")
-- Flash Builder + [Flex](http://www.adobe.com/products/flex.html "by Adobe")
-- [Flash](http://www.adobe.com/products/flash.html "by Adobe")
-- Gitflow Workflow
-- [Google Cloud Platform](https://cloud.google.com/)
-- [Mathematica](http://www.wolfram.com/mathematica/ "by Wolfram")
-- [MATLAB](http://www.mathworks.com/products/matlab/ "by MathWorks")
-- [Photoshop](http://www.photoshop.com/ "by Adobe")
-- [R](http://www.r-project.org/ "Statistics Engine")
-- [Secure Shell (SSH)](http://en.wikipedia.org/wiki/Secure_Shell), [SCP](https://en.wikipedia.org/wiki/Secure_copy), etc
 
 --------
 
