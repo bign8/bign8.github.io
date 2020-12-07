@@ -199,11 +199,6 @@ blockquote {
 .pull-right { float: right !important }
 .text-muted { color: #777 }
 article { display: block }
-.clearfix::after {
-  clear: both;
-  display: table;
-  content: " ";
-}
 pre {
   display: block;
   padding: 9.5px;
@@ -445,6 +440,11 @@ a.kill-animation {
   max-width: 512px;
   width: 100%;
 }
+.contacts:after { /* float clearfix */
+  clear: both;
+  content: "";
+  display: block;
+}
 .contacts li {
   list-style: none;
   display: inline;
@@ -456,11 +456,6 @@ a.kill-animation {
   content: "";
   display: block;
   margin-top: 100%; /* use width to set height */
-}
-.clear:after {
-  clear: both;
-  content: "";
-  display: table;
 }
 .contacts .icon {
   position: absolute;

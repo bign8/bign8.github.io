@@ -8,7 +8,7 @@ title: Blog
 
 <hr/>
 <section class="posts">
-	{% for post in site.posts %}<article class="clearfix">
+	{% for post in site.posts %}<article>
 		<div class="pull-right">{% for tag in post.tags %}<span class="label label-default">{{tag}}</span> {% endfor %}</div>
 		<h2>
 			<a href="{{ post.url }}">{{ post.title }}</a>
