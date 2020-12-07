@@ -436,6 +436,7 @@ a.kill-animation {
 /* Icons curtosy of https://github.com/simple-icons/simple-icons
 /* Icons converted with https://www.mobilefish.com/services/base64/base64.php
 /* Embedding SVGs based on https://css-tricks.com/using-svg/
+/* Setting height with width trick https://stackoverflow.com/a/6615994/3220865
 /*****************************************************************************/
 
 .contacts {
@@ -449,36 +450,33 @@ a.kill-animation {
   display: inline;
   float: left;
   width: 20%;
-  padding: 8px;
+  position: relative;
 }
-.contacts li img:hover {
-  -webkit-filter: blur(1px) opacity(60%);
+.contacts li:before {
+  content: "";
+  display: block;
+  margin-top: 100%; /* use width to set height */
 }
 .clear:after {
   clear: both;
   content: "";
   display: table;
 }
-.contacts li img {
-  width: 100%;
-}
-
-.icon {
-  height: 85px;
-  width: 85px;
+.contacts .icon {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
   display: block;
   color: transparent;
-  filter: invert(1); /* TODO: Dark Mode ONLY */
 }
-.icon:hover {
+.contacts .icon:hover,
+.contacts .icon:focus {
   filter: blur(1px) opacity(60%) invert(1);
   color: transparent;
 }
-header .icon {
-  height: 15px;
-  width: 15px;
-}
-.icon.facebook{background-image:url('data:image/svg+xml;base64,\
+.contacts .icon.facebook{background-image:url('data:image/svg+xml;base64,\
 PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N\
 2ZyI+PHBhdGggZD0iTTIzLjk5ODEgMTEuOTk5MUMyMy45OTgxIDUuMzcyMTYgMTguNjI2IDAgMT\
 EuOTk5MSAwQzUuMzcyMTYgMCAwIDUuMzcyMTYgMCAxMS45OTkxQzAgMTcuOTg4MiA0LjM4Nzg5I\
@@ -488,7 +486,7 @@ xNS45NjkyIDQuNjg3MTQgMTcuMzQyNCA0LjkyMTQ5IDE3LjM0MjQgNC45MjE0OVY3Ljg3NDM5SD\
 E1LjgyOTRDMTQuMzM4OCA3Ljg3NDM5IDEzLjg3MzkgOC43OTkzMyAxMy44NzM5IDkuNzQ4MjRWM\
 TEuOTk5MUgxNy4yMDE4TDE2LjY2OTggMTUuNDY3NkgxMy44NzM5VjIzLjg1MjRDMTkuNjEwMyAy\
 Mi45NTIyIDIzLjk5ODEgMTcuOTg4MiAyMy45OTgxIDExLjk5OTFaIi8+PC9zdmc+')}
-.icon.twitter{background-image:url('data:image/svg+xml;base64,\
+.contacts .icon.twitter{background-image:url('data:image/svg+xml;base64,\
 PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N\
 2ZyI+PHBhdGggZD0iTTIzLjk1NCA0LjU2OWMtLjg4NS4zODktMS44My42NTQtMi44MjUuNzc1ID\
 EuMDE0LS42MTEgMS43OTQtMS41NzQgMi4xNjMtMi43MjMtLjk1MS41NTUtMi4wMDUuOTU5LTMuM\
@@ -502,7 +500,7 @@ uNjA0IDMuNDE3LTEuNjggMS4zMTktMy44MDkgMi4xMDUtNi4xMDIgMi4xMDUtLjM5IDAtLjc3OS\
 0uMDIzLTEuMTctLjA2NyAyLjE4OSAxLjM5NCA0Ljc2OCAyLjIwOSA3LjU1NyAyLjIwOSA5LjA1N\
 CAwIDEzLjk5OS03LjQ5NiAxMy45OTktMTMuOTg2IDAtLjIwOSAwLS40Mi0uMDE1LS42My45NjEt\
 LjY4OSAxLjgtMS41NiAyLjQ2LTIuNTQ4bC0uMDQ3LS4wMnoiLz48L3N2Zz4=')}
-.icon.github{background-image:url('data:image/svg+xml;base64,\
+.contacts .icon.github{background-image:url('data:image/svg+xml;base64,\
 PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N\
 2ZyI+PTxwYXRoIGQ9Ik0xMiAuMjk3Yy02LjYzIDAtMTIgNS4zNzMtMTIgMTIgMCA1LjMwMyAzLj\
 QzOCA5LjggOC4yMDUgMTEuMzg1LjYuMTEzLjgyLS4yNTguODItLjU3NyAwLS4yODUtLjAxLTEuM\
@@ -518,7 +516,7 @@ y4yMiAwIDQuNjEtMi44MDUgNS42MjUtNS40NzUgNS45Mi40Mi4zNi44MSAxLjA5Ni44MSAyLjIy\
 IDAgMS42MDYtLjAxNSAyLjg5Ni0uMDE1IDMuMjg2IDAgLjMxNS4yMS42OS44MjUuNTdDMjAuNTY\
 1IDIyLjA5MiAyNCAxNy41OTIgMjQgMTIuMjk3YzAtNi42MjctNS4zNzMtMTItMTItMTIiLz48L3\
 N2Zz4=')}
-.icon.linkedin{background-image:url('data:image/svg+xml;base64,\
+.contacts .icon.linkedin{background-image:url('data:image/svg+xml;base64,\
 PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N\
 2ZyI+PHBhdGggZD0iTTIwLjQ0NyAyMC40NTJoLTMuNTU0di01LjU2OWMwLTEuMzI4LS4wMjctMy\
 4wMzctMS44NTItMy4wMzctMS44NTMgMC0yLjEzNiAxLjQ0NS0yLjEzNiAyLjkzOXY1LjY2N0g5L\
@@ -530,7 +528,7 @@ S43ODIgMTMuMDE5SDMuNTU1VjloMy41NjR2MTEuNDUyek0yMi4yMjUgMEgxLjc3MUMuNzkyIDAg\
 MCAuNzc0IDAgMS43Mjl2MjAuNTQyQzAgMjMuMjI3Ljc5MiAyNCAxLjc3MSAyNGgyMC40NTFDMjM\
 uMiAyNCAyNCAyMy4yMjcgMjQgMjIuMjcxVjEuNzI5QzI0IC43NzQgMjMuMiAwIDIyLjIyMiAwaC\
 4wMDN6Ii8+PC9zdmc+')}
-.icon.gmail{background-image:url('data:image/svg+xml;base64,\
+.contacts .icon.gmail{background-image:url('data:image/svg+xml;base64,\
 PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N\
 2ZyI+PHBhdGggZD0iTTI0IDQuNXYxNWMwIC44NS0uNjUgMS41LTEuNSAxLjVIMjFWNy4zODdsLT\
 kgNi40NjMtOS02LjQ2M1YyMUgxLjVDLjY0OSAyMSAwIDIwLjM1IDAgMTkuNXYtMTVjMC0uNDI1L\
@@ -546,8 +544,9 @@ Yy40MjUgMCAuOC4xNjIgMS4wNjkuNDMyLjI3LjI2OC40MzEuNjQzLjQzMSAxLjA2OHoiLz48L3N\
 @media (prefers-color-scheme: dark) {
   body{background-color:#000;color:#CCC}
   header{background-color:#0B0B0B;border-color:#111}
-  pre,.contacts img{filter:invert(1)}
+  pre,.contacts .icon{filter:invert(1)}
   .post::before{color:#111}
+  nav li a,.profile h1{color:#CCC}
   nav li a:hover{background-color:#111}
   .contacts li img:hover{filter:blur(1px) opacity(60%) invert(1)}
   .highlight{background:transparent}
