@@ -37,27 +37,21 @@
 
     // Initialize sub-trees (should only be called once);
     var subdivide = function() {
-      var w2 = w / 2, h2 = h / 2;
-      nw = new QuadTree(x - w2, y - h2, w2, h2, cap);
-      ne = new QuadTree(x - w2, y + h2, w2, h2, cap);
-      sw = new QuadTree(x + w2, y - h2, w2, h2, cap);
-      se = new QuadTree(x + w2, y + h2, w2, h2, cap);
+      var w2 = w/2, h2 = h/2;
+      nw = new QuadTree(x-w2, y-h2, w2, h2, cap);
+      ne = new QuadTree(x-w2, y+h2, w2, h2, cap);
+      sw = new QuadTree(x+w2, y-h2, w2, h2, cap);
+      se = new QuadTree(x+w2, y+h2, w2, h2, cap);
     };
 
     // Does this rectangle contain a given point. Arg: point vector.
-    var contains = function(pt) {
-      return x - w <= pt.x && x + w >= pt.x && y - h <= pt.y && y + h >= pt.y;
-    };
+    var contains = pt =>  x - w <= pt.x && x + w >= pt.x && y - h <= pt.y && y + h >= pt.y;
 
     // Does a circle intersect with this Rectangle? Arg: center vector.
-    var intersects = function(c) {
-      return x - w <= c.x + R && x + w >= c.x - R && y - h <= c.y + R && y + h >= c.y - R;
-    };
+    var intersects = c => x - w <= c.x + R && x + w >= c.x - R && y - h <= c.y + R && y + h >= c.y - R;
 
     // Does a circle contain a point. Args: center vector, point vector.
-    var near = function(c, p) {
-      return M.hypot(c.x - p.x, c.y - p.y) <= R;
-    };
+    var near = (c, p) => M.hypot(c.x - p.x, c.y - p.y) <= R;
 
     // Insert point into quadtree
     this.add = function(pt) {
@@ -83,36 +77,37 @@
 
   // Dot is a visible point with velocity and position vectors.
   // The Z of the position vector is the index/identifier within the dots array.
-  function Dot(idx) {
-    this.position = new Vector(M.random() * canvas.width, M.random() * canvas.height, idx);
-    this.velocity = Vector.random2D();
-    this.velocity.mult(M.random());
-    this.size = M.random() + 1;
-
-    this.show = function() {
+  class Dot {
+    constructor(idx) {
+      this.position = new Vector(M.random()*canvas.width, M.random()*canvas.height, idx);
+      this.velocity = Vector.random2D();
+      this.velocity.mult(M.random());
+      this.size = M.random()+1;
+    }
+    show() {
       this.position.add(this.velocity);
 
       // Absolute values allow for resizes, pushing particles back into view
       if      (this.position.x <= this.size) this.velocity.x = M.abs(this.velocity.x);
       else if (this.position.y <= this.size) this.velocity.y = M.abs(this.velocity.y);
-      else if (this.position.x >= canvas.width - this.size) this.velocity.x = -M.abs(this.velocity.x);
-      else if (this.position.y > canvas.height - this.size) this.velocity.y = -M.abs(this.velocity.y);
+      else if (this.position.x >= canvas.width-this.size) this.velocity.x = -M.abs(this.velocity.x);
+      else if (this.position.y > canvas.height-this.size) this.velocity.y = -M.abs(this.velocity.y);
 
       // Draw Circle
       ctx.beginPath();
       ctx.arc(this.position.x, this.position.y, this.size, 0, 2*M.PI);
       ctx.fill();
       return this.position;
-    };
+    }
   }
 
   function resize() {
     var height = w.innerHeight || d.documentElement && d.documentElement.clientHeight || d.body && d.body.clientHeight || 0,
         width = w.innerWidth || d.documentElement && d.documentElement.clientWidth || d.body && d.body.clientWidth || 0;
-    canvas.height = height * 2;
-    canvas.width = width * 2;
-    canvas.style.height = height + 'px';
-    canvas.style.width = width + 'px';
+    canvas.height = height*2;
+    canvas.width = width*2;
+    canvas.style.height = height+'px';
+    canvas.style.width = width+'px';
 
     // TODO: deal with resize of dots
     if (dots.length > 0) return;
@@ -147,19 +142,19 @@
     d.body.appendChild(kill);
 
     // Event listeners
-    w.addEventListener("resize", resize);
+    w.addEventListener('resize', resize);
     w.requestAnimationFrame(draw);
   }
 
   function draw() {
 
     // if we have died, clean up after ourselves
-    if (dead || localStorage.getItem("no-dots") == "true") {
-      localStorage.setItem("no-dots", "true");
+    if (dead || localStorage.getItem('no-dots') == 'true') {
+      localStorage.setItem('no-dots', 'true');
       canvas.remove();
       kill.remove();
       dots = null;
-      w.removeEventListener("resize", resize);
+      w.removeEventListener('resize', resize);
       return;
     }
 
@@ -167,7 +162,7 @@
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = `rgb(${G}, ${G}, ${G})`;
 
-    var w2 = canvas.width / 2, h2 = canvas.height / 2,
+    var w2 = canvas.width/2, h2 = canvas.height/2,
       quad = new QuadTree(w2, h2, w2, h2, 4); // center point and half width/height
 
     // Drawing + Updating Circles: O(n)
@@ -184,7 +179,7 @@
   }
 
   function line(a, b) {
-    var d = M.hypot(b.x - a.x, b.y - a.y);
+    var d = M.hypot(b.x-a.x, b.y-a.y);
     ctx.strokeStyle = `rgba(${G}, ${G}, ${G}, ${map(d, 0, R, 1, 0)})`;
     ctx.beginPath();
     ctx.moveTo(a.x, a.y);
