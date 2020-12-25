@@ -18,22 +18,18 @@
     kill, dead;  // dom button and boolean toggle for killing script.
 
   // Map converts n on the scale [a, b) to the scale [c, d).
-  var map = function(n, a, b, c, d) { return ((n-a)/(b-a))*(d-c)+c; };
+  var map = (n, a, b, c, d) => ((n-a)/(b-a))*(d-c)+c;
 
   // Vector is a 2-3 dimensional point class.
-  var Vector = function(x, y, z) {
-    this.x = x, this.y = y, this.z = z;
-    this.add = function(v) {
-      this.x += v.x || 0, this.y += v.y || 0, this.z += v.z || 0;
-    };
-    this.mult = function(n) {
-      this.x *= n || 0, this.y *= n || 0, this.z *= n || 0;
+  class Vector {
+    constructor(x, y, z) { this.x = x, this.y = y, this.z = z; }
+    add(v) { this.x += v.x || 0, this.y += v.y || 0, this.z += v.z || 0; }
+    mult(n) { this.x *= n || 0, this.y *= n || 0, this.z *= n || 0; }
+    static random2D() {
+      let angle = M.random()*M.PI*2;
+      return new Vector(M.cos(angle), M.sin(angle), 0);
     }
-  };
-  Vector.random2D = function() {
-    var angle = M.random()*M.PI*2;
-    return new Vector(M.cos(angle), M.sin(angle), 0);
-  };
+  }
 
   // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
   var QuadTree = function(x, y, w, h, cap) {
@@ -136,7 +132,6 @@
     ctx = canvas.getContext('2d');
     resize();
     ctx.lineWidth = 0.5; // for lines
-    ctx.fillStyle = "rgb("+G+", "+G+", "+G+")";
 
     // Add Close Button
     dead = false;
@@ -170,6 +165,7 @@
 
     // Regular render loop
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = `rgb(${G}, ${G}, ${G})`;
 
     var w2 = canvas.width / 2, h2 = canvas.height / 2,
       quad = new QuadTree(w2, h2, w2, h2, 4); // center point and half width/height
@@ -189,7 +185,7 @@
 
   function line(a, b) {
     var d = M.hypot(b.x - a.x, b.y - a.y);
-    ctx.strokeStyle = "rgba("+G+", "+G+", "+G+", " + map(d, 0, R, 1, 0) + ")";
+    ctx.strokeStyle = `rgba(${G}, ${G}, ${G}, ${map(d, 0, R, 1, 0)})`;
     ctx.beginPath();
     ctx.moveTo(a.x, a.y);
     ctx.lineTo(b.x, b.y);
