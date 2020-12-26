@@ -96,8 +96,9 @@ Bachelor of Arts in Physics (Minor)
 
 ## Skills
 <style>
-.inline li {display:inline}
-.inline ul {padding:0 10px}
+.inline li {display:inline-block;float:left;margin:0}
+.inline li:not(:last-child):after{content:'\00b7';font-weight:bold;margin:.3em}
+.inline ul {padding:0 10px;margin:0}
 </style>
 <table class="table inline">
 	<thead>
@@ -130,10 +131,10 @@ Bachelor of Arts in Physics (Minor)
 					<li><a href="http://en.wikipedia.org/wiki/C%2B%2B" target="\_blank">C++</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/C_Sharp_(programming_language)" target="\_blank">C#</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Cgi-bin" target="\_blank">CGI</a></li>
-					<li>Dart</li>
+					<li><a href="https://dart.dev/" target="\_blank">Dart</a></li>
 					<li><a href="https://en.wikipedia.org/wiki/ECMAScript" target="\_blank">ECMAScript</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Perl" target="\_blank">Perl</a></li>
-					<li>TypeScript</li>
+					<li><a href="https://www.typescriptlang.org/" target="\_blank">TypeScript</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Visual_basic" target="\_blank">Visual&nbsp;Basic</a></li>
 				</ul>
 			</td>
@@ -146,14 +147,13 @@ Bachelor of Arts in Physics (Minor)
 					<li><a href="https://github.com/golang/appengine" target="\_blank">Appengine</a></li>
 					<li><a href="https://click.palletsprojects.com/" target="\_blank">Click</a></li>
 					<li><a href="http://jquery.com/" target="\_blank">jQuery</a></li>
-					<li>Logrus</li>
-					<li>Requests</li>
+					<li><a href="https://pkg.go.dev/github.com/sirupsen/logrus" target="\_blank">Logrus</a></li>
+					<li><a href="https://requests.readthedocs.io/" target="\_blank">Requests</a></li>
 				</ul>
 			</td>
 			<td>
 				<ul>
 					<li><a href="http://en.wikipedia.org/wiki/PL/SQL" target="\_blank">PL/SQL</a></li>
-					<li>Thrift</li>
 				</ul>
 			</td>
 		</tr>
@@ -161,7 +161,9 @@ Bachelor of Arts in Physics (Minor)
 			<th>Protocols</th>
 			<td>
 				<ul>
+					<li><a href="https://grpc.io/" target="\_blank">gRPC</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/Secure_Shell" target="\_blank">SSH</a></li>
+					<li><a href="https://thrift.apache.org/" target="\_blank">Thrift</a></li>
 				</ul>
 			</td>
 			<td>
@@ -181,7 +183,7 @@ Bachelor of Arts in Physics (Minor)
 			</td>
 			<td>
 				<ul>
-					<li>Heroku</li>
+					<li><a href="https://www.heroku.com/" target="\_blank">Heroku</a></li>
 				</ul>
 			</td>
 		</tr>
@@ -190,9 +192,9 @@ Bachelor of Arts in Physics (Minor)
 			<td>
 				<ul>
 					<li><a href="http://en.wikipedia.org/wiki/Bash_(Unix_shell)" target="\_blank">Bash</a></li>
-					<li>Docker</li>
+					<li><a href="https://www.docker.com/" target="\_blank">Docker</a></li>
 					<li><a href="http://git-scm.com/" target="\_blank">Git</a></li>
-					<li>Make</li>
+					<li><a href="https://www.gnu.org/software/make/manual/html_node/index.html" target="\_blank">Make</a></li>
 					<li><a href="http://www.mysql.com/" target="\_blank">MySQL</a></li>
 					<li><a href="http://nodejs.org/" target="\_blank">Node.js</a></li>
 					<li><a href="http://sqlite.org/" target="\_blank">SQLite</a></li>
@@ -206,7 +208,7 @@ Bachelor of Arts in Physics (Minor)
 					<li><a href="http://gruntjs.com/" target="\_blank">Grunt</a></li>
 					<li><a href="http://www.wolfram.com/mathematica/" target="\_blank">Mathematica</a></li>
 					<li><a href="http://www.mathworks.com/products/matlab/" target="\_blank">MATLAB</a></li>
-					<li>K8s</li>
+					<li><a href="https://kubernetes.io/" target="\_blank">K8s</a></li>
 					<li><a href="http://www.photoshop.com/" target="\_blank">Photoshop</a></li>
 					<li><a href="http://www.r-project.org/" target="\_blank">R</a></li>
 				</ul>
