@@ -98,7 +98,9 @@ Bachelor of Arts in Physics (Minor)
 <style>
 .inline li {display:inline-block;float:left;margin:0}
 .inline li:not(:last-child):after{content:'\00b7';font-weight:bold;margin:.3em}
-.inline ul {padding:0 10px;margin:0}
+.inline ul {padding:0;margin:0}
+table.table.inline {border-style:hidden;border-collapse:collapse}
+table.table.inline td, table.table.inline th {border:1px solid white;padding:5px 10px}
 </style>
 <table class="table inline">
 	<thead>
