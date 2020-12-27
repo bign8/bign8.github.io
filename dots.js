@@ -178,7 +178,9 @@
 
   function line(a, b) {
     var d = M.hypot(b.x-a.x, b.y-a.y);
-    ctx.strokeStyle = `rgba(${G}, ${G}, ${G}, ${map(d, 0, R, 1, 0)})`;
+    d = map(d, 0, R, 1, 0);
+    if (d < 0.05) return; // skip nearly transparent lines
+    ctx.strokeStyle = `rgba(${G}, ${G}, ${G}, ${d.toFixed(2)})`;
     ctx.beginPath();
     ctx.moveTo(a.x, a.y);
     ctx.lineTo(b.x, b.y);
