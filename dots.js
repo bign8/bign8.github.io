@@ -32,48 +32,46 @@
   }
 
   // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
-  var QuadTree = function(x, y, w, h, cap) {
-    var points = [], nw, ne, se, sw;
-
-    // Initialize sub-trees (should only be called once);
-    var subdivide = function() {
-      var w2 = w/2, h2 = h/2;
-      nw = new QuadTree(x-w2, y-h2, w2, h2, cap);
-      ne = new QuadTree(x-w2, y+h2, w2, h2, cap);
-      sw = new QuadTree(x+w2, y-h2, w2, h2, cap);
-      se = new QuadTree(x+w2, y+h2, w2, h2, cap);
-    };
+  class QuadTree {
+    constructor(x, y, w, h, cap) { this.x=x, this.y=y, this.w=w, this.h=h, this.cap=cap, this.points=[]; }
+    subdivide() {
+      var w2 = this.w/2, h2 = this.h/2;
+      this.nw = new QuadTree(this.x-w2, this.y-h2, w2, h2, this.cap);
+      this.ne = new QuadTree(this.x-w2, this.y+h2, w2, h2, this.cap);
+      this.sw = new QuadTree(this.x+w2, this.y-h2, w2, h2, this.cap);
+      this.se = new QuadTree(this.x+w2, this.y+h2, w2, h2, this.cap);
+    }
 
     // Does this rectangle contain a given point. Arg: point vector.
-    var contains = pt =>  x - w <= pt.x && x + w >= pt.x && y - h <= pt.y && y + h >= pt.y;
+    contains(pt) { return this.x - this.w <= pt.x && this.x + this.w >= pt.x && this.y - this.h <= pt.y && this.y + this.h >= pt.y; }
 
     // Does a circle intersect with this Rectangle? Arg: center vector.
-    var intersects = c => x - w <= c.x + R && x + w >= c.x - R && y - h <= c.y + R && y + h >= c.y - R;
+    intersects(c) { return this.x - this.w <= c.x + R && this.x + this.w >= c.x - R && this.y - this.h <= c.y + R && this.y + this.h >= c.y - R; }
 
     // Does a circle contain a point. Args: center vector, point vector.
-    var near = (c, p) => M.hypot(c.x - p.x, c.y - p.y) <= R;
+    near(c, p) { return M.hypot(c.x - p.x, c.y - p.y) <= R; }
 
     // Insert point into quadtree
-    this.add = function(pt) {
-      if (!contains(pt)) return false; // not my problem
-      if (points.length < cap) {       // if we have room
-        points.push(pt);               // add to ourselves
-        return true;                   // exit insertion stack
-      }                                // otherwise
-      if (!nw) subdivide();            // initialize sub-components
-      return nw.add(pt) || ne.add(pt) || sw.add(pt) || se.add(pt); // defer to children
-    };
+    add(pt) {
+      if (!this.contains(pt)) return false; // not my problem
+      if (this.points.length < this.cap) {  // if we have room
+        this.points.push(pt);               // add to ourselves
+        return true;                        // exit insertion stack
+      }                                     // otherwise
+      if (!this.nw) this.subdivide();       // initialze sub-components
+      return this.nw.add(pt) || this.ne.add(pt) || this.sw.add(pt) || this.se.add(pt); // defer to children
+    }
 
-    // Query a range of items from quadtree. Args: center for query (list is optional)
-    this.ask = function(c, list) {
+    // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
+    ask(c, list) {
       if (list == undefined) list = []; // init list if it wasn't previously
-      if (intersects(c)) {              // if we are worried about this point
-        for (let p of points) if (near(c, p)) list.push(p); // check if it's near
-        if (nw) list = se.ask(c, sw.ask(c, ne.ask(c, nw.ask(c, list)))); // or if kids have it
+      if (this.intersects(c)) {         // if we are worried about this point
+        for (let p of this.points) if (this.near(c, p)) list.push(p); // check if it's near
+        if (this.nw) list = this.se.ask(c, this.sw.ask(c, this.ne.ask(c, this.nw.ask(c, list)))); // or if kids have it
       }
       return list;
-    };
-  };
+    }
+  }
 
   // Dot is a visible point with velocity and position vectors.
   // The Z of the position vector is the index/identifier within the dots array.
