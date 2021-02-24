@@ -3,7 +3,7 @@ docker:
 .PHONY:=docker
 
 serve:
-	docker run --rm --label=jekyll --volume=$(shell pwd):/srv/jekyll -it -p 4000:4000 jekyll/jekyll jekyll serve --watch --drafts
+	docker run --rm --label=jekyll --volume=$(shell pwd):/srv/jekyll -it -p 4000:4000 jekyll/jekyll:4 jekyll serve --watch --drafts
 .PHONY:=serve
 
 deploy: docker

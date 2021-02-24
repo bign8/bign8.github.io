@@ -7,3 +7,7 @@ exclude:
     - Dockerfile
     - README.md
     - makefile
+    - main.go
+    - go.mod
+    - ship.sh
+    - about.service
