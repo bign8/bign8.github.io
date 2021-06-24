@@ -20,6 +20,24 @@
   // Map converts n on the scale [a, b) to the scale [c, d).
   var map = (n, a, b, c, d) => ((n-a)/(b-a))*(d-c)+c;
 
+  // Buffer allows some pre-allocation of an array that can grow, but maintains array over time
+  class Buffer {
+    constructor(n) { this.arr = new Array(n), this.idx = 0 }
+    reset() { this.idx = 0; return this }
+    push(o) {
+      if (this.idx >= this.arr.length) {
+        console.log('Extending buffer!!!')
+        this.idx++
+        return this.arr.push(o) // growing underlying buffer
+      }
+      this.arr[this.idx] = o
+      this.idx++
+    }
+    *[Symbol.iterator]() {
+      for (let i = 0; i < this.idx; i++) yield this.arr[i]
+    }
+  }
+
   // Vector is a 2-3 dimensional point class.
   class Vector {
     constructor(x, y, z) { this.x = x, this.y = y, this.z = z; }
@@ -91,7 +109,6 @@
 
     // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
     ask(c, list) {
-      if (list == undefined) list = []; // init list if it wasn't previously
       if (this.intersects(c)) {         // if we are worried about this point
         for (let i = 0; i < this.idx; i++) // iterate over the points we have and...
           if (this.near(c, this.points[i])) list.push(this.points[i]); // check if it's near
@@ -173,7 +190,7 @@
   }
 
   // vars used in draw every time
-  var w2, h2, quad, dot, p, q;
+  var w2, h2, quad, dot, p, q, buffer = new Buffer(32);
 
   function draw() {
 
@@ -199,7 +216,7 @@
 
     // Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
     for (p of dots)                   // for all dots
-      for (q of quad.ask(p.position)) // find neighbors : dist(p, q) <= R
+      for (q of quad.ask(p.position, buffer.reset())) // find neighbors : dist(p, q) <= R
         if (q.z > p.position.z)           // with index later than my own
           line(p.position, q);            // draw a line between them
 
