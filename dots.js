@@ -1,21 +1,21 @@
 // Author: Nate Woods
-// Inspired by: http://netengine.com.au/blog/deploying-your-static-site-with-travis-ci/
-// Based on: http://vincentgarreau.com/particles.js - http://github.com/VincentGarreau/particles.js
-// Augmented using quad-trees: https://en.wikipedia.org/wiki/Quadtree
-// Dependencies:
-//  Math: random, hypot, abs, cos, sin, floor, PI
-//  Document: readyState, createElement
-//  Window: requestAnimationFrame, addEventListener
-//  canvas: height, width, style, getContext, classList
-//  ctx: clearRect, lineWidth, strokeStyle, beginPath, moveTo, lineTo, stroke, arc, fill
+// Based on: http://github.com/VincentGarreau/particles.js
+// Quad-Trees: https://en.wikipedia.org/wiki/Quadtree
 
 (function(d, w, M) {
   "use strict";
+  const CAP = 4,  // max number of points per node
+    PHI = 2*M.PI, // physicists rejoyce!
+    R = 150,      // radius of interacting lines
+    G = 150,      // the darkest shade of gray
+    GS = `rgb(${G}, ${G}, ${G})`; // gray of a dot
+
   var dots = [], // Each point that is rendered
-    R = 150,     // Radius of interacting lines
-    G = 150,     // The exact color of gray
     ctx, canvas, // html5 canvas and 2d drawing context
-    kill, dead;  // dom button and boolean toggle for killing script.
+    kill, dead,  // dom button and boolean toggle for killing script.
+    pool = [];   // set of QuadTrees that can be used as desired
+
+  dead = localStorage.getItem('no-dots') == 'true'; // can only check once
 
   // Map converts n on the scale [a, b) to the scale [c, d).
   var map = (n, a, b, c, d) => ((n-a)/(b-a))*(d-c)+c;
@@ -26,20 +26,46 @@
     add(v) { this.x += v.x || 0, this.y += v.y || 0, this.z += v.z || 0; }
     mult(n) { this.x *= n || 0, this.y *= n || 0, this.z *= n || 0; }
     static random2D() {
-      let angle = M.random()*M.PI*2;
+      let angle = M.random()*PHI;
       return new Vector(M.cos(angle), M.sin(angle), 0);
     }
   }
 
   // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
   class QuadTree {
-    constructor(x, y, w, h, cap) { this.x=x, this.y=y, this.w=w, this.h=h, this.cap=cap, this.points=[]; }
-    subdivide() {
+    constructor(x, y, w, h) { this.x=x, this.y=y, this.w=w, this.h=h, this.points=new Array(CAP), this.idx=0 }
+    subdivide(pool) {
       var w2 = this.w/2, h2 = this.h/2;
-      this.nw = new QuadTree(this.x-w2, this.y-h2, w2, h2, this.cap);
-      this.ne = new QuadTree(this.x-w2, this.y+h2, w2, h2, this.cap);
-      this.sw = new QuadTree(this.x+w2, this.y-h2, w2, h2, this.cap);
-      this.se = new QuadTree(this.x+w2, this.y+h2, w2, h2, this.cap);
+      this.nw = QuadTree.make(pool, this.x-w2, this.y-h2, w2, h2);
+      this.ne = QuadTree.make(pool, this.x-w2, this.y+h2, w2, h2);
+      this.sw = QuadTree.make(pool, this.x+w2, this.y-h2, w2, h2);
+      this.se = QuadTree.make(pool, this.x+w2, this.y+h2, w2, h2);
+    }
+
+    // make a new QuadTree node (use pool to recycle if possible)
+    static make(pool, x, y, w, h) {
+      if (pool.length) {
+        let node = pool.pop() // TODO: can we avoid resizing the array
+        node.x = x, node.y = y, node.w = w, node.h = h, node.index = 0
+        return node
+      }
+      return new QuadTree(x, y, w, h)
+    }
+
+    // recycle deconstructs the QuadTree into a pool for re-use
+    recycle(pool) {
+      pool.push(this)
+      this.idx = 0 // array stays allocated, but points inside it are ignored
+      if (this.nw) {
+        this.nw.recycle(pool)
+        this.ne.recycle(pool)
+        this.sw.recycle(pool)
+        this.se.recycle(pool)
+        this.nw = undefined
+        this.ne = undefined
+        this.sw = undefined
+        this.se = undefined
+      }
     }
 
     // Does this rectangle contain a given point. Arg: point vector.
@@ -52,21 +78,23 @@
     near(c, p) { return M.hypot(c.x - p.x, c.y - p.y) <= R; }
 
     // Insert point into quadtree
-    add(pt) {
+    add(pool, pt) {
       if (!this.contains(pt)) return false; // not my problem
-      if (this.points.length < this.cap) {  // if we have room
-        this.points.push(pt);               // add to ourselves
-        return true;                        // exit insertion stack
+      if (this.idx < CAP) {                 // if we have room
+        this.points[this.idx] = pt          // add to ourselves
+        this.idx++                          // increment idx cursor
+        return true                         // exit insertion stack
       }                                     // otherwise
-      if (!this.nw) this.subdivide();       // initialze sub-components
-      return this.nw.add(pt) || this.ne.add(pt) || this.sw.add(pt) || this.se.add(pt); // defer to children
+      if (!this.nw) this.subdivide(pool);   // initialze sub-components
+      return this.nw.add(pool, pt) || this.ne.add(pool, pt) || this.sw.add(pool, pt) || this.se.add(pool, pt); // defer to children
     }
 
     // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
     ask(c, list) {
       if (list == undefined) list = []; // init list if it wasn't previously
       if (this.intersects(c)) {         // if we are worried about this point
-        for (let p of this.points) if (this.near(c, p)) list.push(p); // check if it's near
+        for (let i = 0; i < this.idx; i++) // iterate over the points we have and...
+          if (this.near(c, this.points[i])) list.push(this.points[i]); // check if it's near
         if (this.nw) list = this.se.ask(c, this.sw.ask(c, this.ne.ask(c, this.nw.ask(c, list)))); // or if kids have it
       }
       return list;
@@ -93,7 +121,7 @@
 
       // Draw Circle
       ctx.beginPath();
-      ctx.arc(this.position.x, this.position.y, this.size, 0, 2*M.PI);
+      ctx.arc(this.position.x, this.position.y, this.size, 0, PHI);
       ctx.fill();
       return this.position;
     }
@@ -144,10 +172,13 @@
     w.requestAnimationFrame(draw);
   }
 
+  // vars used in draw every time
+  var w2, h2, quad, dot, p, q;
+
   function draw() {
 
     // if we have died, clean up after ourselves
-    if (dead || localStorage.getItem('no-dots') == 'true') {
+    if (dead) {
       localStorage.setItem('no-dots', 'true');
       canvas.remove();
       kill.remove();
@@ -158,19 +189,22 @@
 
     // Regular render loop
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = `rgb(${G}, ${G}, ${G})`;
-
-    var w2 = canvas.width/2, h2 = canvas.height/2,
-      quad = new QuadTree(w2, h2, w2, h2, 4); // center point and half width/height
+    ctx.fillStyle = GS;
+    w2 = canvas.width/2
+    h2 = canvas.height/2
+    quad = QuadTree.make(pool, w2, h2, w2, h2) // center point and half width/height
 
     // Drawing + Updating Circles: O(n)
-    for (let dot of dots) quad.add(dot.show());
+    for (dot of dots) quad.add(pool, dot.show());
 
     // Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
-    for (let p of dots)                   // for all dots
-      for (let q of quad.ask(p.position)) // find neighbors : dist(p, q) <= R
+    for (p of dots)                   // for all dots
+      for (q of quad.ask(p.position)) // find neighbors : dist(p, q) <= R
         if (q.z > p.position.z)           // with index later than my own
           line(p.position, q);            // draw a line between them
+
+    // Re-hydrate the pool with quad nodes for next render frame
+    quad.recycle(pool)
 
     // redo the animation rendering
     w.requestAnimationFrame(draw);
