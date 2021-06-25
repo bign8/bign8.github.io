@@ -155,6 +155,13 @@ customElements.define('n8-blog-calendar', class extends HTMLElement {
 	}
 });
 
+customElements.define('n8-year', class extends HTMLElement {
+	constructor() {
+		super()
+		this.innerText = new Date().getFullYear()
+	}
+});
+
 function resize(event) {
 	let height = window.innerHeight, width = window.innerWidth
 	canvas.style.height = height+'px'

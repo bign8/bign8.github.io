@@ -30,12 +30,12 @@
 			{{ content }}
 		</main>
 		<footer>
-			<p>&copy; <script>document.write(new Date().getFullYear())</script> <a href="/#contact">{{site.name}}</a></p>
+			<p>&copy; <n8-year></n8-year> <a href="/#contact">{{site.name}}</a></p>
 		</footer>
 		<!-- Dots Elements -->
 		<canvas class="animation"></canvas>
 		<a class="kill-animation" href="#kill-animation" title="Stop background animation">×</a>
-		{% if page.js.size %}<script src="{{ page.js }}.js"></script>{% endif %}
+		{% if page.js.size %}<script src="{{ page.js }}.js"></script>{% endif -%}
 		<script src="/calendar.js"></script>
 	</body>
 </html>
