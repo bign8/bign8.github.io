@@ -24,7 +24,7 @@ Feel free to reach out and say "Hey".  I seem to always have things going on, so
 ## Interests
 
 - Robotics
-- Artificial Intelligence
+- Machine Learning
 - Augmented Reality
 - Software Engineering
 - Algorithm Design

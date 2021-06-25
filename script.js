@@ -180,15 +180,15 @@ customElements.define('n8-animation', class extends HTMLCanvasElement {
 		this.style.width = innerWidth + 'px'
 		return {
 			type: type,
-			height: innerHeight * devicePixelRatio,
-			width: innerWidth * devicePixelRatio
+			height: innerHeight * 2, //devicePixelRatio, (forcing to 2, gets to noisy on old screens)
+			width: innerWidth * 2 //devicePixelRatio
 		}
 	}
 	click(event) {
 		this.worker.postMessage({
 			type: 'click',
-			x: event.clientX * devicePixelRatio,
-			y: event.clientY * devicePixelRatio
+			x: event.clientX * 2, //devicePixelRatio,
+			y: event.clientY * 2 //devicePixelRatio
 		})
 	}
 	resize() {
