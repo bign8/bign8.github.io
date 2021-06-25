@@ -289,6 +289,13 @@ a.thumbnail { text-decoration: none }
 }
 
 /* For background animator close button */
+canvas.animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -1;
+}
 a.kill-animation {
 	position: absolute;
 	right: 5px;

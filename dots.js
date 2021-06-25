@@ -172,29 +172,21 @@
 
   function setup() {
     // Build and size canvas
-    canvas = d.createElement('canvas');
-    canvas.style.position = 'fixed';
-    canvas.style.top = 0;
-    canvas.style.left = 0;
-    canvas.style.overflow = 'hidden';
-    canvas.style.zIndex = -1;
-    d.body.appendChild(canvas);
+    canvas = d.querySelector('.animation')
     ctx = canvas.getContext('2d');
     resize();
     ctx.lineWidth = 0.5; // for lines
 
     // Add Close Button
-    dead = false;
-    kill = d.createElement('a');
-    kill.className = 'kill-animation';
-    kill.text = '×';
-    kill.title = 'Stop background animation';
+    kill = d.querySelector('.kill-animation')
     kill.addEventListener('click', function() {
+      localStorage.setItem('no-dots', 'true');
+      canvas.remove();
+      kill.remove();
+      w.removeEventListener('resize', resize);
       dead = true;
       return false;
     })
-    kill.href = '#kill-animation';
-    d.body.appendChild(kill);
 
     // Event listeners
     w.addEventListener('resize', resize);
@@ -209,11 +201,7 @@
 
     // if we have died, clean up after ourselves
     if (dead) {
-      localStorage.setItem('no-dots', 'true');
-      canvas.remove();
-      kill.remove();
       dots = null;
-      w.removeEventListener('resize', resize);
       return;
     }
 
