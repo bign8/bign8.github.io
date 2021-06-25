@@ -7,6 +7,7 @@
   const CAP = 4,  // max number of points per node
     PHI = 2*M.PI, // physicists rejoyce!
     R = 150,      // radius of interacting lines
+    RR = R*R,     // R squared (easier hypot calculations)
     G = 150,      // the darkest shade of gray
     GS = `rgb(${G}, ${G}, ${G})`; // gray of a dot
 
@@ -17,7 +18,10 @@
   dead = localStorage.getItem('no-dots') == 'true'; // can only check once
 
   // Map converts n on the scale [a, b) to the scale [c, d).
-  var map = (n, a, b, c, d) => ((n-a)/(b-a))*(d-c)+c;
+  const map = (n, a, b, c, d) => ((n-a)/(b-a))*(d-c)+c;
+
+  // M.hypot, but wihout the square root (Math.hypot leaks memory)
+  const hypot = (a, b) => a * a + b * b
 
   // Buffer allows some pre-allocation of an array that can grow, but maintains array over time
   class Buffer {
@@ -95,7 +99,7 @@
     intersects(c) { return this.x - this.w <= c.x + R && this.x + this.w >= c.x - R && this.y - this.h <= c.y + R && this.y + this.h >= c.y - R; }
 
     // Does a circle contain a point. Args: center vector, point vector.
-    near(c, p) { return M.hypot(c.x - p.x, c.y - p.y) <= R; }
+    near(c, p) { return hypot(c.x - p.x, c.y - p.y) <= RR; }
 
     // Insert point into quadtree
     add(pt) {
@@ -234,10 +238,10 @@
   for (i = 0; i < 100; i++) GRAYS.push(`rgba(${G}, ${G}, ${G}, ${i/100})`)
 
   function line(a, b) {
-    e = M.hypot(b.x-a.x, b.y-a.y);
-    e = map(e, 0, R, GRAYS.length, 0);
+    e = hypot(b.x-a.x, b.y-a.y);
+    e = map(e, 0, RR, GRAYS.length, 0);
     if (e < 5) return; // skip nearly transparent lines
-    ctx.strokeStyle = GRAYS[Math.trunc(e)]
+    ctx.strokeStyle = GRAYS[M.trunc(e)]
     ctx.beginPath();
     ctx.moveTo(a.x, a.y);
     ctx.lineTo(b.x, b.y);
