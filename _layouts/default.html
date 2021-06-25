@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="/style.css">
 		{% if page.css.size %}<link rel='stylesheet' type='text/css' href='{{ page.css }}.css' />{% endif %}
 		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="preload" href="/site.json" as="fetch" crossorigin>
 	</head>
 	<body>
 		<header>
@@ -35,6 +36,6 @@
 		<canvas is="n8-animation"></canvas>
 		<a is="n8-cleanup" href="#stop-animation" title="Stop background animation">×</a>
 		{% if page.js.size %}<script src="{{ page.js }}.js"></script>{% endif -%}
-		<script src="/calendar.js"></script>
+		<script src="/script.js"></script>
 	</body>
 </html>
