@@ -154,3 +154,46 @@ customElements.define('n8-blog-calendar', class extends HTMLElement {
 			this.ul.innerHTML += `<li><a href="${item.url}">${item.title}</a></li>`;
 	}
 });
+
+function resize(event) {
+	let height = window.innerHeight, width = window.innerWidth
+	canvas.style.height = height+'px'
+	canvas.style.width = width+'px'
+	let message = {
+		type: 'init',
+		height: height * devicePixelRatio,
+		width: width * devicePixelRatio,
+	}
+	if (!event) return message
+	message.type = 'resize'
+	worker.postMessage(message)
+}
+
+function click(event) {
+	worker.postMessage({
+		type: 'click',
+		x: event.clientX * devicePixelRatio,
+		y: event.clientY * devicePixelRatio
+	})
+}
+
+function stop(event) {
+	event?.preventDefault()
+	localStorage.setItem('no-dots', 'true')
+	canvas.remove()
+	kill.remove()
+	window.removeEventListener('resize', resize)
+	window.removeEventListener('click', click)
+	worker.postMessage({type: 'stop'})
+}
+
+const kill = document.querySelector('.kill-animation')
+const worker = new Worker('/dots.js')
+const canvas = document.querySelector('.animation')
+const message = resize()
+message.canvas = canvas.transferControlToOffscreen()
+message.stop = localStorage.getItem('no-dots') == 'true'
+worker.postMessage(message, [message.canvas])
+window.addEventListener('resize', resize)
+window.addEventListener('click', click)
+kill.addEventListener('click', stop)

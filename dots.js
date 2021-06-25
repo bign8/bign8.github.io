@@ -2,11 +2,32 @@
 // Based on: http://github.com/VincentGarreau/particles.js
 // Quad-Trees: https://en.wikipedia.org/wiki/Quadtree
 
-(function(d, w, M) {
-  "use strict";
-  const CAP = 4,  // max number of points per node
-    PHI = 2*M.PI, // physicists rejoyce!
-    R = 150,      // radius of interacting lines
+"use strict";
+
+self.onmessage = message => {
+  console.debug('worker got', message.data)
+  switch (message.data.type) {
+    case 'init':
+      init(message.data.canvas)
+      dead = message.data.stop
+      // fallthrough (init passes resize data)
+    case 'resize':
+      resize(message.data.height, message.data.width)
+      break
+    case 'click':
+      spawn(message.data.x, message.data.y)
+      break
+    case 'stop':
+      dead = true
+      break
+    default:
+      console.warn('Worker received unknown message', message.data)
+  }
+}
+
+  const CAP = 4,  // max number of points per node (TODO: Math.log(nodes) or similar)
+    PHI = 2*Math.PI, // physicists rejoyce!
+    R = 75,       // radius of interacting lines
     RR = R*R,     // R squared (easier hypot calculations)
     G = 150,      // the darkest shade of gray
     GS = `rgb(${G}, ${G}, ${G})`; // gray of a dot
@@ -15,12 +36,10 @@
     ctx, canvas, // html5 canvas and 2d drawing context
     kill, dead;  // dom button and boolean toggle for killing script.
 
-  dead = localStorage.getItem('no-dots') == 'true'; // can only check once
-
   // Map converts n on the scale [a, b) to the scale [c, d).
   const map = (n, a, b, c, d) => ((n-a)/(b-a))*(d-c)+c;
 
-  // M.hypot, but wihout the square root (Math.hypot leaks memory)
+  // Math.hypot, but wihout the square root (Math.hypot leaks memory)
   const hypot = (a, b) => a * a + b * b
 
   // Buffer allows some pre-allocation of an array that can grow, but maintains array over time
@@ -31,7 +50,7 @@
       // if we don't have space, double the underlying buffer (base2 growth)
       if (this.length >= this.arr.length) {
         this.arr = this.arr.concat(new Array(this.arr.length))
-        console.warn('Growing Buffer', this.name, this.arr.length)
+        console.debug('Growing Buffer', this.name, this.arr.length)
       }
       this.arr[this.length] = o
       this.length++
@@ -49,8 +68,8 @@
     add(v) { this.x += v.x || 0, this.y += v.y || 0, this.z += v.z || 0; }
     mult(n) { this.x *= n || 0, this.y *= n || 0, this.z *= n || 0; }
     static random2D() {
-      let angle = M.random()*PHI;
-      return new Vector(M.cos(angle), M.sin(angle), 0);
+      let angle = Math.random()*PHI;
+      return new Vector(Math.cos(angle), Math.sin(angle), 0);
     }
   }
 
@@ -125,19 +144,19 @@
   // The Z of the position vector is the index/identifier within the dots array.
   class Dot {
     constructor(idx) {
-      this.position = new Vector(M.random()*canvas.width, M.random()*canvas.height, idx);
+      this.position = new Vector(Math.random()*canvas.width, Math.random()*canvas.height, idx);
       this.velocity = Vector.random2D();
-      this.velocity.mult(M.random());
-      this.size = M.random()+1;
+      this.velocity.mult(Math.random());
+      this.size = Math.random()+1;
     }
     show() {
       this.position.add(this.velocity);
 
       // Absolute values allow for resizes, pushing particles back into view
-      if      (this.position.x <= this.size) this.velocity.x = M.abs(this.velocity.x);
-      else if (this.position.y <= this.size) this.velocity.y = M.abs(this.velocity.y);
-      else if (this.position.x >= canvas.width-this.size) this.velocity.x = -M.abs(this.velocity.x);
-      else if (this.position.y > canvas.height-this.size) this.velocity.y = -M.abs(this.velocity.y);
+      if      (this.position.x <= this.size) this.velocity.x = Math.abs(this.velocity.x);
+      else if (this.position.y <= this.size) this.velocity.y = Math.abs(this.velocity.y);
+      else if (this.position.x >= canvas.width-this.size) this.velocity.x = -Math.abs(this.velocity.x);
+      else if (this.position.y > canvas.height-this.size) this.velocity.y = -Math.abs(this.velocity.y);
 
       // Draw Circle
       ctx.beginPath();
@@ -147,66 +166,46 @@
     }
   }
 
-  function resize() {
-    var height = w.innerHeight || d.documentElement && d.documentElement.clientHeight || d.body && d.body.clientHeight || 0,
-        width = w.innerWidth || d.documentElement && d.documentElement.clientWidth || d.body && d.body.clientWidth || 0;
-    canvas.height = height*2;
-    canvas.width = width*2;
-    canvas.style.height = height+'px';
-    canvas.style.width = width+'px';
+  function resize(height, width) {
+    canvas.height = height;
+    canvas.width = width;
 
     // TODO: deal with resize of dots
     if (dots.length > 0) return;
-    var density = M.floor(height * width / 5e3);
+    var density = Math.floor(height * width / 1e4);
     for (var i = 0; i < density; i++) dots.push(new Dot(dots.length));
   }
 
   // Instead of flooding dot creation, this just re-positions 4 dots to the cursor postion
-  function spawn(e) {
+  function spawn(x, y) {
     for (var i = 0; i < 4; i++) {
-      let dot = dots[M.trunc(M.random() * dots.length)]
-      dot.position.x = e.clientX*2
-      dot.position.y = e.clientY*2
+      let dot = dots[Math.trunc(Math.random() * dots.length)]
+      dot.position.x = x
+      dot.position.y = y
     }
   }
 
-  function setup() {
-    // Build and size canvas
-    canvas = d.querySelector('.animation')
+  function init(c) {
+    canvas = c
     ctx = canvas.getContext('2d');
-    resize();
     ctx.lineWidth = 0.5; // for lines
-
-    // Add Close Button
-    kill = d.querySelector('.kill-animation')
-    kill.addEventListener('click', function() {
-      localStorage.setItem('no-dots', 'true');
-      canvas.remove();
-      kill.remove();
-      w.removeEventListener('resize', resize);
-      dead = true;
-      return false;
-    })
-
-    // Event listeners
-    w.addEventListener('resize', resize);
-    d.addEventListener('click', spawn)
-    w.requestAnimationFrame(draw);
+    requestAnimationFrame(draw);
   }
 
   // vars used in draw every time
   var w2, h2, quad, p, q, e, i, buffer = new Buffer('Query', 32);
 
   function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // if we have died, clean up after ourselves
     if (dead) {
       dots = null;
+      close()
       return;
     }
 
     // Regular render loop
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = GS;
     w2 = canvas.width/2
     h2 = canvas.height/2
@@ -229,7 +228,7 @@
     quad.recycle()
 
     // redo the animation rendering
-    w.requestAnimationFrame(draw);
+    requestAnimationFrame(draw);
   }
 
   // Precompute some gray strings (Question: do we need 100 grays?)
@@ -240,13 +239,9 @@
     e = hypot(b.x-a.x, b.y-a.y);
     e = map(e, 0, RR, GRAYS.length, 0);
     if (e < 5) return; // skip nearly transparent lines
-    ctx.strokeStyle = GRAYS[M.trunc(e)]
+    ctx.strokeStyle = GRAYS[Math.trunc(e)]
     ctx.beginPath();
     ctx.moveTo(a.x, a.y);
     ctx.lineTo(b.x, b.y);
     ctx.stroke();
   }
-
-  // Startup
-  d.readyState === 'complete' ? setup() : w.addEventListener('load', setup, false);
-})(document, window, Math);
