@@ -24,7 +24,7 @@
 					<li{% if page.url contains "/blog/" %} class="active"{% endif %}><a href="/blog/">Blog</a></li>
 				</ul>
 			</nav>
-			<n8-blog-calendar source="/site.json"></n8-blog-calendar>
+			<n8-calendar source="/site.json"></n8-calendar>
 		</header>
 		<main>
 			{{ content }}
@@ -32,9 +32,8 @@
 		<footer>
 			<p>&copy; <n8-year></n8-year> <a href="/#contact">{{site.name}}</a></p>
 		</footer>
-		<!-- Dots Elements -->
-		<canvas class="animation"></canvas>
-		<a class="kill-animation" href="#kill-animation" title="Stop background animation">×</a>
+		<canvas is="n8-animation"></canvas>
+		<a is="n8-cleanup" href="#stop-animation" title="Stop background animation">×</a>
 		{% if page.js.size %}<script src="{{ page.js }}.js"></script>{% endif -%}
 		<script src="/calendar.js"></script>
 	</body>

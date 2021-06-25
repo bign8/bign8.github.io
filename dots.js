@@ -5,11 +5,9 @@
 "use strict";
 
 self.onmessage = message => {
-	console.debug('worker got', message.data)
 	switch (message.data.type) {
 		case 'init':
 			init(message.data.canvas)
-			dead = message.data.stop
 			// fallthrough (init passes resize data)
 		case 'resize':
 			resize(message.data.height, message.data.width)
@@ -50,7 +48,7 @@ class Buffer {
 		// if we don't have space, double the underlying buffer (base2 growth)
 		if (this.length >= this.arr.length) {
 			this.arr = this.arr.concat(new Array(this.arr.length))
-			console.debug('Growing Buffer', this.name, this.arr.length)
+			console.debug('Growing', this.name, 'Buffer', this.arr.length)
 		}
 		this.arr[this.length] = o
 		this.length++

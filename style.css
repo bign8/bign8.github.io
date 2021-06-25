@@ -109,7 +109,7 @@ footer {
     margin-left: 0;
     padding-top: 40px;
   }
-  n8-blog-calendar { display: none }
+  n8-calendar { display: none }
   .profile figure { display: none }
   header .contacts { display: none }
   .profile h1 {
@@ -289,14 +289,14 @@ a.thumbnail { text-decoration: none }
 }
 
 /* For background animator close button */
-canvas.animation {
+canvas[is=n8-animation] {
   position: fixed;
   top: 0;
   left: 0;
   overflow: hidden;
   z-index: -1;
 }
-a.kill-animation {
+a[is=n8-cleanup] {
 	position: absolute;
 	right: 5px;
 	top: 5px;
