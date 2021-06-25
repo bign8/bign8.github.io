@@ -25,13 +25,13 @@
 
   // Buffer allows some pre-allocation of an array that can grow, but maintains array over time
   class Buffer {
-    constructor(n) { this.arr=new Array(n), this.length=0 }
+    constructor(name, n) { this.name = name, this.arr=new Array(n), this.length=0 }
     reset() { this.length=0; return this }
     push(o) {
+      // if we don't have space, double the underlying buffer (base2 growth)
       if (this.length >= this.arr.length) {
-        console.log('Extending buffer!!!')
-        this.length++
-        return this.arr.push(o) // growing underlying buffer
+        this.arr = this.arr.concat(new Array(this.arr.length))
+        console.warn('Growing Buffer', this.name, this.arr.length)
       }
       this.arr[this.length] = o
       this.length++
@@ -56,7 +56,7 @@
 
   // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
   class QuadTree {
-    static pool = new Buffer(32) // buffer of objects to construct from
+    static pool = new Buffer('QuadTree', 32) // buffer of objects to construct from
     constructor(x, y, w, h) { this.points=new Array(CAP), this.reset(x, y, w, h) }
     reset(x, y, w, h) { this.x=x, this.y=y, this.w=w, this.h=h, this.idx=0; return this }
     subdivide() {
@@ -161,6 +161,15 @@
     for (var i = 0; i < density; i++) dots.push(new Dot(dots.length));
   }
 
+  // Instead of flooding dot creation, this just re-positions 4 dots to the cursor postion
+  function spawn(e) {
+    for (var i = 0; i < 4; i++) {
+      let dot = dots[M.trunc(M.random() * dots.length)]
+      dot.position.x = e.clientX*2
+      dot.position.y = e.clientY*2
+    }
+  }
+
   function setup() {
     // Build and size canvas
     canvas = d.createElement('canvas');
@@ -189,11 +198,12 @@
 
     // Event listeners
     w.addEventListener('resize', resize);
+    d.addEventListener('click', spawn)
     w.requestAnimationFrame(draw);
   }
 
   // vars used in draw every time
-  var w2, h2, quad, p, q, e, i, buffer = new Buffer(32);
+  var w2, h2, quad, p, q, e, i, buffer = new Buffer('Query', 32);
 
   function draw() {
 
