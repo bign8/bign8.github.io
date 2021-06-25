@@ -41,9 +41,6 @@
       this.length--
       return this.arr[this.length]
     }
-    *[Symbol.iterator]() {
-      for (i = 0; i < this.length; i++) yield this.arr[i]
-    }
   }
 
   // Vector is a 2-3 dimensional point class.
@@ -221,10 +218,14 @@
     for (p of dots) quad.add(p.show());
 
     // Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
-    for (p of dots)                   // for all dots
-      for (q of quad.ask(p.position, buffer.reset())) // find neighbors : dist(p, q) <= R
-        if (q.z > p.position.z)           // with index later than my own
-          line(p.position, q);            // draw a line between them
+    for (p of dots) {                       // for all dots
+      quad.ask(p.position, buffer.reset())  // ask for peers within blast radius
+      for (i = 0; i < buffer.length; i++) { // find neighbors : dist(p, q) <= R
+        q = buffer.arr[i]                   // store peer as q
+        if (q.z > p.position.z)             // with index later than my own
+          line(p.position, q);              // draw a line between them
+      }
+    }
 
     // Re-hydrate the pool with quad nodes for next render frame
     quad.recycle()
