@@ -38,7 +38,7 @@
       return this.arr[this.length]
     }
     *[Symbol.iterator]() {
-      for (let i = 0; i < this.length; i++) yield this.arr[i]
+      for (i = 0; i < this.length; i++) yield this.arr[i]
     }
   }
 
@@ -56,7 +56,7 @@
   // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
   class QuadTree {
     static pool = new Buffer(32) // buffer of objects to construct from
-    constructor(x, y, w, h) { this.points=new Buffer(CAP), this.reset(x, y, w, h) }
+    constructor(x, y, w, h) { this.points=new Array(CAP), this.reset(x, y, w, h) }
     reset(x, y, w, h) { this.x=x, this.y=y, this.w=w, this.h=h, this.idx=0; return this }
     subdivide() {
       w2 = this.w/2, h2 = this.h/2;
@@ -112,7 +112,7 @@
     // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
     ask(c, list) {
       if (this.intersects(c)) {         // if we are worried about this point
-        for (let i = 0; i < this.idx; i++) // iterate over the points we have and...
+        for (i = 0; i < this.idx; i++) // iterate over the points we have and...
           if (this.near(c, this.points[i])) list.push(this.points[i]); // check if it's near
         if (this.nw) list = this.se.ask(c, this.sw.ask(c, this.ne.ask(c, this.nw.ask(c, list)))); // or if kids have it
       }
@@ -192,7 +192,7 @@
   }
 
   // vars used in draw every time
-  var w2, h2, quad, dot, p, q, buffer = new Buffer(32);
+  var w2, h2, quad, p, q, e, i, buffer = new Buffer(32);
 
   function draw() {
 
@@ -214,7 +214,7 @@
     quad = QuadTree.make(w2, h2, w2, h2) // center point and half width/height
 
     // Drawing + Updating Circles: O(n)
-    for (dot of dots) quad.add(dot.show());
+    for (p of dots) quad.add(p.show());
 
     // Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
     for (p of dots)                   // for all dots
@@ -229,11 +229,15 @@
     w.requestAnimationFrame(draw);
   }
 
+  // Precompute some gray strings (Question: do we need 100 grays?)
+  var GRAYS = [];
+  for (i = 0; i < 100; i++) GRAYS.push(`rgba(${G}, ${G}, ${G}, ${i/100})`)
+
   function line(a, b) {
-    var d = M.hypot(b.x-a.x, b.y-a.y);
-    d = map(d, 0, R, 1, 0);
-    if (d < 0.05) return; // skip nearly transparent lines
-    ctx.strokeStyle = `rgba(${G}, ${G}, ${G}, ${d.toFixed(2)})`;
+    e = M.hypot(b.x-a.x, b.y-a.y);
+    e = map(e, 0, R, GRAYS.length, 0);
+    if (e < 5) return; // skip nearly transparent lines
+    ctx.strokeStyle = GRAYS[Math.trunc(e)]
     ctx.beginPath();
     ctx.moveTo(a.x, a.y);
     ctx.lineTo(b.x, b.y);
