@@ -57,7 +57,7 @@ customElements.define('n8-calendar', class extends HTMLElement {
 
 		// Trigger async load of blog post data + render!!!
 		this.load(this.getAttribute('source'));
-		this.render();
+		requestAnimationFrame(this.render.bind(this))
 	}
 	shift(offset) {
 		let month = parseInt(this.getAttribute('month')) + offset;

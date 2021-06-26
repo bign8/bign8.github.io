@@ -73,6 +73,7 @@ class Vector {
 
 // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
 class QuadTree {
+	static debug = false // can be modified by the dev console
 	static pool = new Buffer('QuadTree', 32) // buffer of objects to construct from
 	constructor(x, y, w, h) { this.points=new Array(CAP), this.reset(x, y, w, h) }
 	reset(x, y, w, h) { this.x=x, this.y=y, this.w=w, this.h=h, this.idx=0; return this }
@@ -135,6 +136,20 @@ class QuadTree {
 			if (this.nw) list = this.se.ask(c, this.sw.ask(c, this.ne.ask(c, this.nw.ask(c, list)))); // or if kids have it
 		}
 		return list;
+	}
+
+	// visualize what is going on with the quads
+	render() {
+		if (!QuadTree.debug) return
+		if (this.nw) {
+			this.nw.render()
+			this.sw.render()
+			this.ne.render()
+			this.se.render()
+			return
+		}
+		ctx.strokeStyle = 'rgba(255,0,0,0.25)'
+		ctx.strokeRect(this.x-this.w, this.y-this.h, this.w*2, this.h*2)
 	}
 }
 
@@ -224,6 +239,7 @@ function draw() {
 	}
 
 	// Re-hydrate the pool with quad nodes for next render frame
+	quad.render()
 	quad.recycle()
 
 	// redo the animation rendering
