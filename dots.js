@@ -144,7 +144,7 @@ class Dot {
 	constructor(idx) {
 		this.position = new Vector(Math.random()*canvas.width, Math.random()*canvas.height, idx);
 		this.velocity = Vector.random2D();
-		this.velocity.mult(Math.random());
+		this.velocity.mult(Math.random()+0.2);
 		this.size = Math.random()+1;
 	}
 	show() {
