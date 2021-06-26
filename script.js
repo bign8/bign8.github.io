@@ -168,6 +168,12 @@ customElements.define('n8-animation', class extends HTMLCanvasElement {
 	constructor() {
 		super()
 		if (localStorage.getItem(ANIM_KEY) == 'true') return this.remove()
+		if (typeof this.transferControlToOffscreen !== "function") {
+			console.warn('Offscreen Canvas not supported by your browser 😢')
+			this.remove()
+			document.querySelector('a[is=n8-cleanup]')?.remove()
+			return
+		}
 		this.worker = new Worker('/dots.js')
 		const message = this.createMessage('init')
 		message.canvas = this.transferControlToOffscreen()
