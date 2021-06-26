@@ -23,14 +23,14 @@ self.onmessage = message => {
 	}
 }
 
-const CAP = 4,       // max number of points per node (TODO: Math.log(nodes) or similar)
-	PHI = 2*Math.PI, // physicists rejoyce!
-	R = 75,          // radius of interacting lines
+const R = 75,        // radius of interacting lines
 	RR = R*R,        // R squared (easier hypot calculations)
+	PHI = 2*Math.PI, // physicists rejoyce!
 	G = 150,         // the darkest shade of gray
 	GS = `rgb(${G}, ${G}, ${G})`; // gray of a dot
 
-var dots = [],   // Each point that is rendered
+var CAP = 4,     // max number of points per node (resize can adjust this)
+	dots = [],   // Each point that is rendered
 	ctx, canvas, // html5 canvas and 2d drawing context
 	kill, dead;  // dom button and boolean toggle for killing script.
 
@@ -168,10 +168,11 @@ function resize(height, width) {
 	canvas.height = height;
 	canvas.width = width;
 
-	// TODO: deal with resize of dots
-	if (dots.length > 0) return;
-	var density = Math.floor(height * width / 1e4);
-	for (var i = 0; i < density; i++) dots.push(new Dot(dots.length));
+	// Grow the number of dots if size permits
+	let density = Math.floor(height * width / 1e4)
+	if (density < dots.length) return;
+	for (var i = dots.length; i < density; i++) dots.push(new Dot(dots.length));
+	CAP = Math.ceil(Math.max(4, Math.log(density))) // danymically size nodes to keep semi-consistent depth of tree
 }
 
 // Instead of flooding dot creation, this just re-positions 4 dots to the cursor postion
