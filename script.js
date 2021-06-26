@@ -158,6 +158,9 @@ customElements.define('n8-calendar', class extends HTMLElement {
 customElements.define('n8-year', class extends HTMLElement {
 	constructor() {
 		super()
+		requestAnimationFrame(this.render.bind(this)) // lazy init as to not cause reflow during first paint
+	}
+	render() {
 		this.innerText = new Date().getFullYear()
 	}
 })
