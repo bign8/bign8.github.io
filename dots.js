@@ -1,192 +1,262 @@
 // Author: Nate Woods
-// Inspired by: http://netengine.com.au/blog/deploying-your-static-site-with-travis-ci/
-// Based on: http://vincentgarreau.com/particles.js - http://github.com/VincentGarreau/particles.js
-// Augmented using quad-trees: https://en.wikipedia.org/wiki/Quadtree
-// Dependencies:
-//  Math: random, hypot, abs, cos, sin, floor, PI
-//  Document: readyState, createElement
-//  Window: requestAnimationFrame, addEventListener
-//  canvas: height, width, style, getContext, classList
-//  ctx: clearRect, lineWidth, strokeStyle, beginPath, moveTo, lineTo, stroke, arc, fill
+// Based on: http://github.com/VincentGarreau/particles.js
+// Quad-Trees: https://en.wikipedia.org/wiki/Quadtree
 
-(function(d, w, M) {
-  "use strict";
-  var dots = [], // Each point that is rendered
-    R = 150,     // Radius of interacting lines
-    G = 150,     // The exact color of gray
-    ctx, canvas, // html5 canvas and 2d drawing context
-    kill, dead;  // dom button and boolean toggle for killing script.
+"use strict";
 
-  // Map converts n on the scale [a, b) to the scale [c, d).
-  var map = (n, a, b, c, d) => ((n-a)/(b-a))*(d-c)+c;
+self.onmessage = message => {
+	switch (message.data.type) {
+		case 'init':
+			init(message.data.canvas)
+			// fallthrough (init passes resize data)
+		case 'resize':
+			resize(message.data.height, message.data.width)
+			break
+		case 'click':
+			spawn(message.data.x, message.data.y)
+			break
+		case 'stop':
+			dead = true
+			break
+		default:
+			console.warn('Worker received unknown message', message.data)
+	}
+}
 
-  // Vector is a 2-3 dimensional point class.
-  class Vector {
-    constructor(x, y, z) { this.x = x, this.y = y, this.z = z; }
-    add(v) { this.x += v.x || 0, this.y += v.y || 0, this.z += v.z || 0; }
-    mult(n) { this.x *= n || 0, this.y *= n || 0, this.z *= n || 0; }
-    static random2D() {
-      let angle = M.random()*M.PI*2;
-      return new Vector(M.cos(angle), M.sin(angle), 0);
-    }
-  }
+const R = 75,        // radius of interacting lines
+	RR = R*R,        // R squared (easier hypot calculations)
+	PHI = 2*Math.PI, // physicists rejoyce!
+	G = 150,         // the darkest shade of gray
+	GS = `rgb(${G}, ${G}, ${G})`; // gray of a dot
 
-  // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
-  class QuadTree {
-    constructor(x, y, w, h, cap) { this.x=x, this.y=y, this.w=w, this.h=h, this.cap=cap, this.points=[]; }
-    subdivide() {
-      var w2 = this.w/2, h2 = this.h/2;
-      this.nw = new QuadTree(this.x-w2, this.y-h2, w2, h2, this.cap);
-      this.ne = new QuadTree(this.x-w2, this.y+h2, w2, h2, this.cap);
-      this.sw = new QuadTree(this.x+w2, this.y-h2, w2, h2, this.cap);
-      this.se = new QuadTree(this.x+w2, this.y+h2, w2, h2, this.cap);
-    }
+var CAP = 4,     // max number of points per node (resize can adjust this)
+	dots = [],   // Each point that is rendered
+	ctx, canvas, // html5 canvas and 2d drawing context
+	kill, dead;  // dom button and boolean toggle for killing script.
 
-    // Does this rectangle contain a given point. Arg: point vector.
-    contains(pt) { return this.x - this.w <= pt.x && this.x + this.w >= pt.x && this.y - this.h <= pt.y && this.y + this.h >= pt.y; }
+// Map converts n on the scale [a, b) to the scale [c, d).
+const map = (n, a, b, c, d) => ((n-a)/(b-a))*(d-c)+c;
 
-    // Does a circle intersect with this Rectangle? Arg: center vector.
-    intersects(c) { return this.x - this.w <= c.x + R && this.x + this.w >= c.x - R && this.y - this.h <= c.y + R && this.y + this.h >= c.y - R; }
+// Math.hypot, but wihout the square root (Math.hypot leaks memory)
+const hypot = (a, b) => a * a + b * b
 
-    // Does a circle contain a point. Args: center vector, point vector.
-    near(c, p) { return M.hypot(c.x - p.x, c.y - p.y) <= R; }
+// Buffer allows some pre-allocation of an array that can grow, but maintains array over time
+class Buffer {
+	constructor(name, n) { this.name = name, this.arr=new Array(n), this.length=0 }
+	reset() { this.length=0; return this }
+	push(o) {
+		// if we don't have space, double the underlying buffer (base2 growth)
+		if (this.length >= this.arr.length) {
+			this.arr = this.arr.concat(new Array(this.arr.length))
+			console.debug('Growing', this.name, 'Buffer', this.arr.length)
+		}
+		this.arr[this.length] = o
+		this.length++
+	}
+	pop() {
+		if (!this.length) return undefined
+		this.length--
+		return this.arr[this.length]
+	}
+}
 
-    // Insert point into quadtree
-    add(pt) {
-      if (!this.contains(pt)) return false; // not my problem
-      if (this.points.length < this.cap) {  // if we have room
-        this.points.push(pt);               // add to ourselves
-        return true;                        // exit insertion stack
-      }                                     // otherwise
-      if (!this.nw) this.subdivide();       // initialze sub-components
-      return this.nw.add(pt) || this.ne.add(pt) || this.sw.add(pt) || this.se.add(pt); // defer to children
-    }
+// Vector is a 2-3 dimensional point class.
+class Vector {
+	constructor(x, y, z) { this.x = x, this.y = y, this.z = z; }
+	add(v) { this.x += v.x || 0, this.y += v.y || 0, this.z += v.z || 0; }
+	mult(n) { this.x *= n || 0, this.y *= n || 0, this.z *= n || 0; }
+	static random2D() {
+		let angle = Math.random()*PHI;
+		return new Vector(Math.cos(angle), Math.sin(angle), 0);
+	}
+}
 
-    // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
-    ask(c, list) {
-      if (list == undefined) list = []; // init list if it wasn't previously
-      if (this.intersects(c)) {         // if we are worried about this point
-        for (let p of this.points) if (this.near(c, p)) list.push(p); // check if it's near
-        if (this.nw) list = this.se.ask(c, this.sw.ask(c, this.ne.ask(c, this.nw.ask(c, list)))); // or if kids have it
-      }
-      return list;
-    }
-  }
+// QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
+class QuadTree {
+	static debug = false // can be modified by the dev console
+	static pool = new Buffer('QuadTree', 32) // buffer of objects to construct from
+	constructor(x, y, w, h) { this.points=new Array(CAP), this.reset(x, y, w, h) }
+	reset(x, y, w, h) { this.x=x, this.y=y, this.w=w, this.h=h, this.idx=0; return this }
+	subdivide() {
+		w2 = this.w/2, h2 = this.h/2;
+		this.nw = QuadTree.make(this.x-w2, this.y-h2, w2, h2);
+		this.ne = QuadTree.make(this.x-w2, this.y+h2, w2, h2);
+		this.sw = QuadTree.make(this.x+w2, this.y-h2, w2, h2);
+		this.se = QuadTree.make(this.x+w2, this.y+h2, w2, h2);
+	}
 
-  // Dot is a visible point with velocity and position vectors.
-  // The Z of the position vector is the index/identifier within the dots array.
-  class Dot {
-    constructor(idx) {
-      this.position = new Vector(M.random()*canvas.width, M.random()*canvas.height, idx);
-      this.velocity = Vector.random2D();
-      this.velocity.mult(M.random());
-      this.size = M.random()+1;
-    }
-    show() {
-      this.position.add(this.velocity);
+	// make a new QuadTree node (use pool to recycle if possible)
+	static make(x, y, w, h) {
+		if (QuadTree.pool.length) return QuadTree.pool.pop().reset(x, y, w, h)
+		return new QuadTree(x, y, w, h)
+	}
 
-      // Absolute values allow for resizes, pushing particles back into view
-      if      (this.position.x <= this.size) this.velocity.x = M.abs(this.velocity.x);
-      else if (this.position.y <= this.size) this.velocity.y = M.abs(this.velocity.y);
-      else if (this.position.x >= canvas.width-this.size) this.velocity.x = -M.abs(this.velocity.x);
-      else if (this.position.y > canvas.height-this.size) this.velocity.y = -M.abs(this.velocity.y);
+	// recycle deconstructs the QuadTree into a pool for re-use
+	recycle() {
+		QuadTree.pool.push(this)
+		this.idx = 0 // array stays allocated, but points inside it are ignored
+		if (this.nw) {
+			this.nw.recycle()
+			this.ne.recycle()
+			this.sw.recycle()
+			this.se.recycle()
+			this.nw = null
+			this.ne = null
+			this.sw = null
+			this.se = null
+		}
+	}
 
-      // Draw Circle
-      ctx.beginPath();
-      ctx.arc(this.position.x, this.position.y, this.size, 0, 2*M.PI);
-      ctx.fill();
-      return this.position;
-    }
-  }
+	// Does this rectangle contain a given point. Arg: point vector.
+	contains(pt) { return this.x - this.w <= pt.x && this.x + this.w >= pt.x && this.y - this.h <= pt.y && this.y + this.h >= pt.y; }
 
-  function resize() {
-    var height = w.innerHeight || d.documentElement && d.documentElement.clientHeight || d.body && d.body.clientHeight || 0,
-        width = w.innerWidth || d.documentElement && d.documentElement.clientWidth || d.body && d.body.clientWidth || 0;
-    canvas.height = height*2;
-    canvas.width = width*2;
-    canvas.style.height = height+'px';
-    canvas.style.width = width+'px';
+	// Does a circle intersect with this Rectangle? Arg: center vector.
+	intersects(c) { return this.x - this.w <= c.x + R && this.x + this.w >= c.x - R && this.y - this.h <= c.y + R && this.y + this.h >= c.y - R; }
 
-    // TODO: deal with resize of dots
-    if (dots.length > 0) return;
-    var density = M.floor(height * width / 5e3);
-    for (var i = 0; i < density; i++) dots.push(new Dot(dots.length));
-  }
+	// Does a circle contain a point. Args: center vector, point vector.
+	near(c, p) { return hypot(c.x - p.x, c.y - p.y) <= RR; }
 
-  function setup() {
-    // Build and size canvas
-    canvas = d.createElement('canvas');
-    canvas.style.position = 'fixed';
-    canvas.style.top = 0;
-    canvas.style.left = 0;
-    canvas.style.overflow = 'hidden';
-    canvas.style.zIndex = -1;
-    d.body.appendChild(canvas);
-    ctx = canvas.getContext('2d');
-    resize();
-    ctx.lineWidth = 0.5; // for lines
+	// Insert point into quadtree
+	add(pt) {
+		if (!this.contains(pt)) return false; // not my problem
+		if (this.idx < CAP) {           // if we have room
+			this.points[this.idx] = pt  // add to ourselves
+			this.idx++                  // increment idx cursor
+			return true                 // exit insertion stack
+		}                               // otherwise
+		if (!this.nw) this.subdivide(); // initialze sub-components
+		return this.nw.add(pt) || this.ne.add(pt) || this.sw.add(pt) || this.se.add(pt); // defer to children
+	}
 
-    // Add Close Button
-    dead = false;
-    kill = d.createElement('a');
-    kill.className = 'kill-animation';
-    kill.text = '×';
-    kill.title = 'Stop background animation';
-    kill.addEventListener('click', function() {
-      dead = true;
-      return false;
-    })
-    kill.href = '#kill-animation';
-    d.body.appendChild(kill);
+	// QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
+	ask(c, list) {
+		if (this.intersects(c)) {          // if we are worried about this point
+			for (i = 0; i < this.idx; i++) // iterate over the points we have and...
+				if (this.near(c, this.points[i])) list.push(this.points[i]); // check if it's near
+			if (this.nw) list = this.se.ask(c, this.sw.ask(c, this.ne.ask(c, this.nw.ask(c, list)))); // or if kids have it
+		}
+		return list;
+	}
 
-    // Event listeners
-    w.addEventListener('resize', resize);
-    w.requestAnimationFrame(draw);
-  }
+	// visualize what is going on with the quads
+	render() {
+		if (!QuadTree.debug) return
+		if (this.nw) {
+			this.nw.render()
+			this.sw.render()
+			this.ne.render()
+			this.se.render()
+			return
+		}
+		ctx.strokeStyle = 'rgba(255,0,0,0.25)'
+		ctx.strokeRect(this.x-this.w, this.y-this.h, this.w*2, this.h*2)
+	}
+}
 
-  function draw() {
+// Dot is a visible point with velocity and position vectors.
+// The Z of the position vector is the index/identifier within the dots array.
+class Dot {
+	constructor(idx) {
+		this.position = new Vector(Math.random()*canvas.width, Math.random()*canvas.height, idx);
+		this.velocity = Vector.random2D();
+		this.velocity.mult(Math.random()+0.2);
+		this.size = Math.random()+1;
+	}
+	show() {
+		this.position.add(this.velocity);
 
-    // if we have died, clean up after ourselves
-    if (dead || localStorage.getItem('no-dots') == 'true') {
-      localStorage.setItem('no-dots', 'true');
-      canvas.remove();
-      kill.remove();
-      dots = null;
-      w.removeEventListener('resize', resize);
-      return;
-    }
+		// Absolute values allow for resizes, pushing particles back into view
+		if      (this.position.x <= this.size) this.velocity.x = Math.abs(this.velocity.x);
+		else if (this.position.y <= this.size) this.velocity.y = Math.abs(this.velocity.y);
+		else if (this.position.x >= canvas.width-this.size) this.velocity.x = -Math.abs(this.velocity.x);
+		else if (this.position.y > canvas.height-this.size) this.velocity.y = -Math.abs(this.velocity.y);
 
-    // Regular render loop
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = `rgb(${G}, ${G}, ${G})`;
+		// Draw Circle
+		ctx.beginPath();
+		ctx.arc(this.position.x, this.position.y, this.size, 0, PHI);
+		ctx.fill();
+		return this.position;
+	}
+}
 
-    var w2 = canvas.width/2, h2 = canvas.height/2,
-      quad = new QuadTree(w2, h2, w2, h2, 4); // center point and half width/height
+function resize(height, width) {
+	canvas.height = height;
+	canvas.width = width;
 
-    // Drawing + Updating Circles: O(n)
-    for (let dot of dots) quad.add(dot.show());
+	// Grow the number of dots if size permits
+	let density = Math.floor(height * width / 1e4)
+	if (density < dots.length) return;
+	for (var i = dots.length; i < density; i++) dots.push(new Dot(dots.length));
+	CAP = Math.ceil(Math.max(4, Math.log(density))) // danymically size nodes to keep semi-consistent depth of tree
+}
 
-    // Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
-    for (let p of dots)                   // for all dots
-      for (let q of quad.ask(p.position)) // find neighbors : dist(p, q) <= R
-        if (q.z > p.position.z)           // with index later than my own
-          line(p.position, q);            // draw a line between them
+// Instead of flooding dot creation, this just re-positions 4 dots to the cursor postion
+function spawn(x, y) {
+	for (var i = 0; i < 4; i++) {
+		let dot = dots[Math.trunc(Math.random() * dots.length)]
+		dot.position.x = x
+		dot.position.y = y
+	}
+}
 
-    // redo the animation rendering
-    w.requestAnimationFrame(draw);
-  }
+function init(c) {
+	canvas = c
+	ctx = canvas.getContext('2d');
+	ctx.lineWidth = 0.5; // for lines
+	requestAnimationFrame(draw);
+}
 
-  function line(a, b) {
-    var d = M.hypot(b.x-a.x, b.y-a.y);
-    d = map(d, 0, R, 1, 0);
-    if (d < 0.05) return; // skip nearly transparent lines
-    ctx.strokeStyle = `rgba(${G}, ${G}, ${G}, ${d.toFixed(2)})`;
-    ctx.beginPath();
-    ctx.moveTo(a.x, a.y);
-    ctx.lineTo(b.x, b.y);
-    ctx.stroke();
-  }
+// vars used in draw every time
+var w2, h2, quad, p, q, e, i, buffer = new Buffer('Query', 32);
 
-  // Startup
-  d.readyState === 'complete' ? setup() : w.addEventListener('load', setup , false);
-})(document, window, Math);
+function draw() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	// if we have died, clean up after ourselves
+	if (dead) {
+		dots = null;
+		close()
+		return;
+	}
+
+	// Regular render loop
+	ctx.fillStyle = GS;
+	w2 = canvas.width/2
+	h2 = canvas.height/2
+	quad = QuadTree.make(w2, h2, w2, h2) // center point and half width/height
+
+	// Drawing + Updating Circles: O(n)
+	for (p of dots) quad.add(p.show());
+
+	// Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
+	for (p of dots) {                         // for all dots
+		quad.ask(p.position, buffer.reset())  // ask for peers within blast radius
+		for (i = 0; i < buffer.length; i++) { // find neighbors : dist(p, q) <= R
+			q = buffer.arr[i]                 // store peer as q
+			if (q.z > p.position.z)           // with index later than my own
+				line(p.position, q);          // draw a line between them
+		}
+	}
+
+	// Re-hydrate the pool with quad nodes for next render frame
+	quad.render()
+	quad.recycle()
+
+	// redo the animation rendering
+	requestAnimationFrame(draw);
+}
+
+// Precompute some gray strings (Question: do we need 100 grays?)
+var GRAYS = [];
+for (i = 0; i < 100; i++) GRAYS.push(`rgba(${G}, ${G}, ${G}, ${i/100})`)
+
+function line(a, b) {
+	e = hypot(b.x-a.x, b.y-a.y);
+	e = map(e, 0, RR, GRAYS.length, 0);
+	if (e < 5) return; // skip nearly transparent lines
+	ctx.strokeStyle = GRAYS[Math.trunc(e)]
+	ctx.beginPath();
+	ctx.moveTo(a.x, a.y);
+	ctx.lineTo(b.x, b.y);
+	ctx.stroke();
+}

@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="/style.css">
 		{% if page.css.size %}<link rel='stylesheet' type='text/css' href='{{ page.css }}.css' />{% endif %}
 		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="preload" href="/site.json" as="fetch" crossorigin>
 	</head>
 	<body>
 		<header>
@@ -24,16 +25,17 @@
 					<li{% if page.url contains "/blog/" %} class="active"{% endif %}><a href="/blog/">Blog</a></li>
 				</ul>
 			</nav>
-			<n8-blog-calendar source="/site.json"></n8-blog-calendar>
+			<n8-calendar source="/site.json"></n8-calendar>
 		</header>
 		<main>
 			{{ content }}
 		</main>
 		<footer>
-			<p>&copy; <script>document.write(new Date().getFullYear())</script> <a href="/#contact">{{site.name}}</a></p>
+			<p>&copy; <n8-year></n8-year> <a href="/#contact">{{site.name}}</a></p>
 		</footer>
-		{% if page.js.size %}<script src="{{ page.js }}.js"></script>{% endif %}
-		<script src="/dots.js"></script>
-		<script src="/calendar.js"></script>
+		<canvas is="n8-animation"></canvas>
+		<a is="n8-cleanup" href="#stop-animation" title="Stop background animation">×</a>
+		{% if page.js.size %}<script src="{{ page.js }}.js"></script>{% endif -%}
+		<script src="/script.js"></script>
 	</body>
 </html>

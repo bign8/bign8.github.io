@@ -14,7 +14,7 @@ header {
   padding: 20px;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: #f5f5f5;
+  background-color: rgba(245, 245, 245, 0.4);
   border-right: 1px solid #eee;
   width: 200px;
 }
@@ -109,7 +109,7 @@ footer {
     margin-left: 0;
     padding-top: 40px;
   }
-  n8-blog-calendar { display: none }
+  n8-calendar { display: none }
   .profile figure { display: none }
   header .contacts { display: none }
   .profile h1 {
@@ -289,7 +289,14 @@ a.thumbnail { text-decoration: none }
 }
 
 /* For background animator close button */
-a.kill-animation {
+canvas[is=n8-animation] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+a[is=n8-cleanup] {
 	position: absolute;
 	right: 5px;
 	top: 5px;
@@ -468,7 +475,7 @@ a.kill-animation {
 }
 .contacts .icon:hover,
 .contacts .icon:focus {
-  filter: blur(1px) opacity(60%) invert(1);
+  filter: blur(1px) opacity(60%);
   color: transparent;
 }
 .contacts .icon.facebook{background-image:url('data:image/svg+xml;base64,\
@@ -538,12 +545,12 @@ Yy40MjUgMCAuOC4xNjIgMS4wNjkuNDMyLjI3LjI2OC40MzEuNjQzLjQzMSAxLjA2OHoiLz48L3N\
 /*****************************************************************************/
 @media (prefers-color-scheme: dark) {
   body{background-color:#000;color:#CCC}
-  header{background-color:#0B0B0B;border-color:#111}
+  header{background-color:rgba(11,11,11,0.7);border-color:#111}
   pre,.contacts .icon{filter:invert(1)}
   .post::before{color:#111}
   nav li a,.profile h1{color:#CCC}
   nav li a:hover{background-color:#111}
-  .contacts li img:hover{filter:blur(1px) opacity(60%) invert(1)}
+  .contacts .icon:hover, .contacts .icon:focus { filter: blur(1px) opacity(60%) invert(1) }
   .highlight{background:transparent}
   code{background-color:transparent}
   .thumbnail{color:#CCC}

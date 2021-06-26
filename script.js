@@ -1,4 +1,4 @@
-customElements.define('n8-blog-calendar', class extends HTMLElement {
+customElements.define('n8-calendar', class extends HTMLElement {
 	constructor() {
 		super();
 		this.init = new Date();
@@ -57,7 +57,7 @@ customElements.define('n8-blog-calendar', class extends HTMLElement {
 
 		// Trigger async load of blog post data + render!!!
 		this.load(this.getAttribute('source'));
-		this.render();
+		requestAnimationFrame(this.render.bind(this))
 	}
 	shift(offset) {
 		let month = parseInt(this.getAttribute('month')) + offset;
@@ -153,4 +153,76 @@ customElements.define('n8-blog-calendar', class extends HTMLElement {
 		for (const item of items)
 			this.ul.innerHTML += `<li><a href="${item.url}">${item.title}</a></li>`;
 	}
-});
+})
+
+customElements.define('n8-year', class extends HTMLElement {
+	constructor() {
+		super()
+		requestAnimationFrame(this.render.bind(this)) // lazy init as to not cause reflow during first paint
+	}
+	render() {
+		this.innerText = new Date().getFullYear()
+	}
+})
+
+const ANIM_KEY = 'no-dots'
+
+customElements.define('n8-animation', class extends HTMLCanvasElement {
+	constructor() {
+		super()
+		if (localStorage.getItem(ANIM_KEY) == 'true') return this.remove()
+		if (typeof this.transferControlToOffscreen !== "function") {
+			console.warn('Offscreen Canvas not supported by your browser 😢')
+			this.remove()
+			document.querySelector('a[is=n8-cleanup]')?.remove()
+			return
+		}
+		this.worker = new Worker('/dots.js')
+		const message = this.createMessage('init')
+		message.canvas = this.transferControlToOffscreen()
+		this.worker.postMessage(message, [message.canvas])
+		window.addEventListener('click', this.click.bind(this))
+		window.addEventListener('resize', this.resize.bind(this))
+	}
+	createMessage(type) {
+		this.style.height = innerHeight + 'px'
+		this.style.width = innerWidth + 'px'
+		return {
+			type: type,
+			height: innerHeight * 2, //devicePixelRatio, (forcing to 2, gets to noisy on old screens)
+			width: innerWidth * 2 //devicePixelRatio
+		}
+	}
+	click(event) {
+		this.worker.postMessage({
+			type: 'click',
+			x: event.clientX * 2, //devicePixelRatio,
+			y: event.clientY * 2 //devicePixelRatio
+		})
+	}
+	resize() {
+		this.worker.postMessage(this.createMessage('resize'))
+	}
+	disconnectedCallback(event) {
+		localStorage.setItem(ANIM_KEY, 'true')
+		this.worker.postMessage({type: 'stop'})
+		window.removeEventListener('click', this.click.bind(this))
+		window.removeEventListener('resize', this.resize.bind(this))
+	}
+}, {extends: 'canvas'})
+
+customElements.define('n8-cleanup', class extends HTMLAnchorElement {
+	constructor() {
+		super()
+		if (localStorage.getItem(ANIM_KEY) == 'true') return this.remove()
+		this.addEventListener('click', this.click.bind(this))
+	}
+	click(event) {
+		event.preventDefault()
+		this.remove()
+		document.querySelector('canvas[is=n8-animation]')?.remove()
+	}
+	disconnectedCallback(event) {
+		this.removeEventListener('click', this.click.bind(this))
+	}
+}, {extends: 'a'})
