@@ -74,7 +74,7 @@ class Vector {
 }
 
 // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
-// Data: x, y, w, h, List<*Points>[NODE_LIMIT]
+// Data: x, y, w, h, List<*Points>[NODE_LIMIT], parent-pointer
 class QuadTree {
 	static debug = false // can be modified by the dev console
 	static pool = new Buffer('QuadTree', 32) // buffer of objects to construct from
@@ -86,6 +86,10 @@ class QuadTree {
 		this.ne = QuadTree.make(this.x-w2, this.y+h2, w2, h2);
 		this.sw = QuadTree.make(this.x+w2, this.y-h2, w2, h2);
 		this.se = QuadTree.make(this.x+w2, this.y+h2, w2, h2);
+		this.nw.parent = this
+		this.ne.parent = this
+		this.sw.parent = this
+		this.se.parent = this
 	}
 
 	// make a new QuadTree node (use pool to recycle if possible)
@@ -98,16 +102,17 @@ class QuadTree {
 	recycle() {
 		QuadTree.pool.push(this)
 		this.idx = 0 // array stays allocated, but points inside it are ignored
-		if (this.nw) {
-			this.nw.recycle()
-			this.ne.recycle()
-			this.sw.recycle()
-			this.se.recycle()
-			this.nw = null
-			this.ne = null
-			this.sw = null
-			this.se = null
-		}
+		if (this.nw) this._recycle()
+	}
+	_recycle() {
+		this.nw.recycle()
+		this.ne.recycle()
+		this.sw.recycle()
+		this.se.recycle()
+		this.nw = null
+		this.ne = null
+		this.sw = null
+		this.se = null
 	}
 
 	// Does this rectangle contain a given point. Arg: point vector.
@@ -120,22 +125,68 @@ class QuadTree {
 	near(c, p) { return hypot(c.x - p.x, c.y - p.y) <= RR; }
 
 	// Insert point into quadtree
-	add(pt) {
-		if (!this.contains(pt)) return false; // not my problem
-		if (this.idx < CAP) {           // if we have room
-			this.points[this.idx] = pt  // add to ourselves
-			this.idx++                  // increment idx cursor
-			return true                 // exit insertion stack
-		}                               // otherwise
+	add(p) {
+		if (!this.contains(p.position)) return false // not my problem
+		if (this.idx < CAP) return this._add(p) // add the node to ourselves
 		if (!this.nw) this.subdivide(); // initialze sub-components
-		return this.nw.add(pt) || this.ne.add(pt) || this.sw.add(pt) || this.se.add(pt); // defer to children
+		return this.nw.add(p) || this.ne.add(p) || this.sw.add(p) || this.se.add(p) // defer to children
+	}
+	_add(p) {
+		this.points[this.idx] = p
+		this.idx++
+		p.quad = this // link the quad to the point (for direct updating)
+		return true
+	}
+
+	// Update a node within a given quad tree
+	update(p) {
+		if (this.contains(p.position)) return // still here
+
+		// Remove the node from myself by shifting trailing nodes in-place
+		// this.points = this.points.filter(o => o.position.z != p.position.z) // logically what the below code would be doing if we didn't have buffers
+		e = p.position.z
+		var found = false
+		for (i = 0; i < this.idx; i++) {
+			if (this.points[i].z == e) {
+				found = true
+				continue
+			}
+			if (found) this.points[i-1] = this.points[i]
+		}
+		this.points[this.idx] = null // not needed, but useful for debugging
+		this.idx--
+
+		// Re-insert p from the root, should be the same big-O time scale, but might not "technically" be optimal
+		quad.add(p)
+		if (this.idx != 0) return // there are still peers on this node, exit normally
+		this.points[0] = null // we wern't able to reset the points array properly above (Again, not needed, but nice for debugging)
+
+		// Middle node in the tree has emptied, can try and notify children to merge up? (see how often this occurs and maybe implement)
+		if (this.nw) {
+			console.debug('middle node: attempt a merge?')
+			return // not quite sure what to do here....
+		}
+		this.parent._update()
+	}
+	_update() {
+		let count = this.idx + this.nw.idx + this.ne.idx + this.se.idx + this.sw.idx
+		if (count > CAP) return // too large to merge into one node
+
+		// pull all child pointers onto myself
+		for (i = 0; i < this.ne.idx; i++) this._add(this.ne.points[i])
+		for (i = 0; i < this.nw.idx; i++) this._add(this.nw.points[i])
+		for (i = 0; i < this.se.idx; i++) this._add(this.se.points[i])
+		for (i = 0; i < this.sw.idx; i++) this._add(this.sw.points[i])
+
+		// relieve children of their burden
+		this._recycle()
 	}
 
 	// QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
 	ask(c, list) {
 		if (this.intersects(c)) {          // if we are worried about this point
 			for (i = 0; i < this.idx; i++) // iterate over the points we have and...
-				if (this.near(c, this.points[i])) list.push(this.points[i]); // check if it's near
+				if (this.near(c, this.points[i].position)) list.push(this.points[i].position) // check if it's near
 			if (this.nw) list = this.se.ask(c, this.sw.ask(c, this.ne.ask(c, this.nw.ask(c, list)))); // or if kids have it
 		}
 		return list;
@@ -158,7 +209,7 @@ class QuadTree {
 
 // Dot is a visible point with velocity and position vectors.
 // The Z of the position vector is the index/identifier within the dots array.
-// Data: X, Y, VX, VY, IDX, SIZE
+// Data: X, Y, VX, VY, IDX, SIZE, quad-pointer
 class Dot {
 	constructor(idx) {
 		this.position = new Vector(Math.random()*canvas.width, Math.random()*canvas.height, idx);
@@ -179,7 +230,9 @@ class Dot {
 		ctx.beginPath();
 		ctx.arc(this.position.x, this.position.y, this.size, 0, PHI);
 		ctx.fill();
-		return this.position;
+
+		// tell the quad-tree to update my position in it
+		this.quad.update(this)
 	}
 }
 
@@ -189,9 +242,14 @@ function resize(height, width) {
 
 	// Grow the number of dots if size permits
 	let density = Math.floor(height * width / 1e4)
-	if (density < dots.length) return;
 	for (var i = dots.length; i < density; i++) dots.push(new Dot(dots.length));
 	CAP = Math.ceil(Math.max(4, Math.log(density))) // danymically size nodes to keep semi-consistent depth of tree
+
+	// rebuild quad tree from scratch
+	if (quad) quad.recycle()
+	quad = QuadTree.make(width/2, height/2, width/2, height/2) // center point and half width/height
+	quad.parent = quad // fun null-pointer work-around
+	for (p of dots) quad.add(p)
 }
 
 // Instead of flooding dot creation, this just re-positions 4 dots to the cursor postion
@@ -215,7 +273,7 @@ var w2, h2, quad, p, q, e, i, buffer = new Buffer('Query', 32);
 
 function draw_dots() {
 	// Drawing + Updating Circles: O(n)
-	for (p of dots) quad.add(p.show());
+	for (p of dots) p.show()
 }
 
 function draw_lines() {
@@ -232,6 +290,7 @@ function draw_lines() {
 
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = GS
 
 	// if we have died, clean up after ourselves
 	if (dead) {
@@ -240,19 +299,10 @@ function draw() {
 		return;
 	}
 
-	// Regular render loop
-	ctx.fillStyle = GS;
-	w2 = canvas.width/2
-	h2 = canvas.height/2
-	quad = QuadTree.make(w2, h2, w2, h2) // center point and half width/height
-
 	// Drawing with functions to show up in profileers
 	draw_dots()
 	draw_lines()
-
-	// Re-hydrate the pool with quad nodes for next render frame
 	quad.render()
-	quad.recycle()
 
 	// redo the animation rendering
 	requestAnimationFrame(draw);
