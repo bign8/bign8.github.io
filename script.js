@@ -177,7 +177,7 @@ customElements.define('n8-animation', class extends HTMLCanvasElement {
 			document.querySelector('a[is=n8-cleanup]')?.remove()
 			return
 		}
-		this.worker = new Worker('/dots.js')
+		this.worker = new Worker('/dots.js', {name: 'dots'})
 		const message = this.createMessage('init')
 		message.canvas = this.transferControlToOffscreen()
 		this.worker.postMessage(message, [message.canvas])

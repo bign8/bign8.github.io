@@ -41,6 +41,7 @@ const map = (n, a, b, c, d) => ((n-a)/(b-a))*(d-c)+c;
 const hypot = (a, b) => a * a + b * b
 
 // Buffer allows some pre-allocation of an array that can grow, but maintains array over time
+// Data: name, array, length
 class Buffer {
 	constructor(name, n) { this.name = name, this.arr=new Array(n), this.length=0 }
 	reset() { this.length=0; return this }
@@ -61,6 +62,7 @@ class Buffer {
 }
 
 // Vector is a 2-3 dimensional point class.
+// Data: x, y, z
 class Vector {
 	constructor(x, y, z) { this.x = x, this.y = y, this.z = z; }
 	add(v) { this.x += v.x || 0, this.y += v.y || 0, this.z += v.z || 0; }
@@ -72,6 +74,7 @@ class Vector {
 }
 
 // QuadTree based on psuedocode from https://en.wikipedia.org/wiki/Quadtree
+// Data: x, y, w, h, List<*Points>[NODE_LIMIT]
 class QuadTree {
 	static debug = false // can be modified by the dev console
 	static pool = new Buffer('QuadTree', 32) // buffer of objects to construct from
@@ -155,6 +158,7 @@ class QuadTree {
 
 // Dot is a visible point with velocity and position vectors.
 // The Z of the position vector is the index/identifier within the dots array.
+// Data: X, Y, VX, VY, IDX, SIZE
 class Dot {
 	constructor(idx) {
 		this.position = new Vector(Math.random()*canvas.width, Math.random()*canvas.height, idx);
@@ -209,6 +213,23 @@ function init(c) {
 // vars used in draw every time
 var w2, h2, quad, p, q, e, i, buffer = new Buffer('Query', 32);
 
+function draw_dots() {
+	// Drawing + Updating Circles: O(n)
+	for (p of dots) quad.add(p.show());
+}
+
+function draw_lines() {
+	// Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
+	for (p of dots) {                         // for all dots
+		quad.ask(p.position, buffer.reset())  // ask for peers within blast radius
+		for (i = 0; i < buffer.length; i++) { // find neighbors : dist(p, q) <= R
+			q = buffer.arr[i]                 // store peer as q
+			if (q.z > p.position.z)           // with index later than my own
+				line(p.position, q);          // draw a line between them
+		}
+	}
+}
+
 function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -225,18 +246,9 @@ function draw() {
 	h2 = canvas.height/2
 	quad = QuadTree.make(w2, h2, w2, h2) // center point and half width/height
 
-	// Drawing + Updating Circles: O(n)
-	for (p of dots) quad.add(p.show());
-
-	// Drawing Lines: Worst = O(n*n), Average = O(n*log(n)), Best = O(n)
-	for (p of dots) {                         // for all dots
-		quad.ask(p.position, buffer.reset())  // ask for peers within blast radius
-		for (i = 0; i < buffer.length; i++) { // find neighbors : dist(p, q) <= R
-			q = buffer.arr[i]                 // store peer as q
-			if (q.z > p.position.z)           // with index later than my own
-				line(p.position, q);          // draw a line between them
-		}
-	}
+	// Drawing with functions to show up in profileers
+	draw_dots()
+	draw_lines()
 
 	// Re-hydrate the pool with quad nodes for next render frame
 	quad.render()
