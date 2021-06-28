@@ -553,5 +553,5 @@ Yy40MjUgMCAuOC4xNjIgMS4wNjkuNDMyLjI3LjI2OC40MzEuNjQzLjQzMSAxLjA2OHoiLz48L3N\
   code{background-color:transparent}
   .thumbnail{color:#CCC}
   table, th, td { border-color: #ccc }
-  thead, th, .has { background-color: rgba(255, 255, 255, 0.1) }
+  thead td, th, .has { background-color: rgba(255, 255, 255, 0.2) }
 }

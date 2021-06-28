@@ -99,13 +99,13 @@ Bachelor of Arts in Physics (Minor)
 .inline li {display:inline-block;float:left;margin:0}
 .inline li:not(:last-child):after{content:'\00b7';font-weight:bold;margin:.3em}
 .inline ul {padding:0;margin:0}
-table.table.inline {border-style:hidden;border-collapse:collapse}
+table.table.inline {border-style:hidden;border-collapse:collapse;width:100%}
 table.table.inline td, table.table.inline th {border:1px solid white;padding:5px 10px}
 </style>
 <table class="table inline">
 	<thead>
 		<tr>
-			<td></td>
+			<td style="background-color:transparent"></td>
 			<th style="text-align: center" title="Prolonged Exposure">Working knowledge</th>
 			<th style="text-align: center" title="Minimal Exposure">Basic knowledge</th>
 		</tr>
