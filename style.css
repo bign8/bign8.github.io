@@ -227,14 +227,12 @@ hr {
   border: 0;
   border-top: 1px solid #eee;
 }
-table {
-  width: 100%;
-  margin-bottom: 10px;
-}
+table { margin: 0 auto 10px; text-align: center }
+th, thead td, .has { font-weight:800; background-color: rgba(0, 0, 0, 0.1) }
 table, th, td { border: 1px solid black }
-table.table,
-table.table th,
-table.table td { border: none }
+th, td { width: 1px; white-space: nowrap }
+.post th, .post td { padding: 0 1em }
+.btn {cursor:pointer}
 ul { padding-left: 40px }
 pre code {
   padding: 0;
@@ -554,4 +552,6 @@ Yy40MjUgMCAuOC4xNjIgMS4wNjkuNDMyLjI3LjI2OC40MzEuNjQzLjQzMSAxLjA2OHoiLz48L3N\
   .highlight{background:transparent}
   code{background-color:transparent}
   .thumbnail{color:#CCC}
+  table, th, td { border-color: #ccc }
+  thead, th, .has { background-color: rgba(255, 255, 255, 0.1) }
 }

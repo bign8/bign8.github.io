@@ -9,15 +9,6 @@ customElements.define('n8-calendar', class extends HTMLElement {
 		if (this.getAttribute('month') === null) this.setAttribute('month', this.init.getMonth());
 		if (this.getAttribute('year') === null) this.setAttribute('year', this.init.getFullYear());
 
-		// Setup shadow dom (styles, non-chaning elements, etc)
-		const style = document.createElement('style');
-		style.textContent = 'table{text-align:center}';
-		style.textContent += 'table,th,td{border:1px solid rgba(0,0,0,.1)}';
-		style.textContent += 'thead,.post{font-weight:800;background-color:rgba(0,0,0,.05)}';
-		style.textContent += '.btn{cursor:pointer}';
-		style.textContent += '.btn:hover,.post:hover{background-color:rgba(0,0,0,.2)}';
-		style.textContent += 'ul{list-style-position:inside;padding:0}';
-
 		// Create base table!
 		this.table = document.createElement('table');
 		let thead = this.table.createTHead();
@@ -51,9 +42,8 @@ customElements.define('n8-calendar', class extends HTMLElement {
 		this.ul = document.createElement('ul');
 		this.p = document.createElement('p');
 
-		// Attach elements to shadow dom
-		this.attachShadow({mode: 'open'});
-		this.shadowRoot.append(style, this.table, this.p, this.ul);
+		// Attach elements to dom
+		this.append(this.table, this.p, this.ul);
 
 		// Trigger async load of blog post data + render!!!
 		this.load(this.getAttribute('source'));
@@ -121,7 +111,7 @@ customElements.define('n8-calendar', class extends HTMLElement {
 			if (this.data.has(index)) {
 				let events = this.data.get(index);
 				cell.title = `${events.length} Post${events.length != 1?'s':''}`
-				cell.classList.add('btn', 'post');
+				cell.classList.add('btn', 'has');
 				cell.addEventListener('click', e => this.show(index));
 			}
 			if ( (day+startingDayOfWeek)%7 == 0 && day != daysInMonth ) row = this.table.insertRow(-1);
