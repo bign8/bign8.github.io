@@ -29,6 +29,7 @@ Also, I touch on "Big-O" notation here, if your a little rusty on that, checkout
 * [Rendering in a Worker](#rendering-in-a-worker)
 * [Updating instead of Rebuild](#updating-instead-of-rebuild)
 * [Future Work](#future-work)
+* [Conclusion](#conclusion)
 
 ### Initial Design
 
@@ -247,3 +248,17 @@ I always am on the lookout for more fun things to try and experiment with on pro
 * GPU performance improvements.  IDK what to do here really, but when the node count gets high, the GPU rendering time gets really high, see if we can fix that!
 * Real time velocity calculations.  Right now, each frame is adding a constant vx and vy to each dots position, to be "real time correct" this should be scaled by the difference in actual time between the frames.
 * Middle node attempt merge, (for a non-leaf node, see if we can attempt a recursive merge... very rare [see debug logs], but is possible)
+
+
+### Conclusion
+
+So, in the end, what does all this mean?
+Well, that is the age old question.
+In this case, it means I can take an idea, rough something out to demonstrate value quickly, then iterate on a solution until it can work at scale.
+If that sounds interesting to your organization, let's chat!
+
+{% include contacts.html %}
+
+Oh, and for your viewing pleasure, here is a full page block for your background viewing pleasure.
+
+<div style="height:100vh"></div>
