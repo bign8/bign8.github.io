@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Array JavaScript random
+title: Javascript Array Random
 categories:
 - JavaScript
 - Snippets

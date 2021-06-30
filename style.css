@@ -547,7 +547,8 @@ Yy40MjUgMCAuOC4xNjIgMS4wNjkuNDMyLjI3LjI2OC40MzEuNjQzLjQzMSAxLjA2OHoiLz48L3N\
   pre,.contacts .icon{filter:invert(1)}
   .post::before{color:#111}
   nav li a,.profile h1{color:#CCC}
-  nav li a:hover{background-color:#111}
+  nav li a:hover{color:#fff;background-color:#428bca}
+  nav .active a { background-color: #111}
   .contacts .icon:hover, .contacts .icon:focus { filter: blur(1px) opacity(60%) invert(1) }
   .highlight{background:transparent}
   code{background-color:transparent}

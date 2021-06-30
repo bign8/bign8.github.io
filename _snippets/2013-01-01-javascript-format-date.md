@@ -6,8 +6,6 @@ tags: []
 ---
 [Humminbird](http://hummingbirdstats.com/) and their [helpers.js](https://github.com/mnutt/hummingbird/blob/master/public/js/helpers.js) file, where they add a simple time formatting function to their Date object.
 
-<!--more-->
-
 ```js
 Date.prototype.formattedTime = function() {
   var formattedDate = this.getHours();
@@ -29,6 +27,8 @@ Date.prototype.formattedTime = function() {
   return formattedDate;
 };
 ```
+
+<!--more-->
 
 Now this is nice for simply formatting time, but I was looking for something a little more elegant; closer to [PhP's date formatting](http://php.net/manual/en/function.date.php).
 I've looked around a few places and [jQuery UI has a nice option](http://api.jqueryui.com/datepicker/#utility-functions) along with [this guy's nice encapsulated design](http://blog.stevenlevithan.com/archives/date-time-format), but I'm looking for something sleeker and a little slimmer.

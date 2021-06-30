@@ -10,3 +10,13 @@ exclude:
     - main.go
     - go.mod
     - ship.sh
+collections:
+    snippets:
+        output: true
+        permalink: /snippets/:title.html
+# defaults:
+#     - scope:
+#         path: ""
+#         type: "snippets"
+#       values:
+#         layout: "post"

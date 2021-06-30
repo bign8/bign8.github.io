@@ -253,7 +253,7 @@ Fall 2010 - Dec 2013
 - Dealt with corporate environment problems such as communication issues
 - Tech: Smarty, CSS, jQuery, MySQL, PHP, Flex and related
 
-### [REU Student](http://digital.cs.usu.edu/~xqi/Teaching/REU10/Website/Nathan/nwoods.html "Research Experience for Undergraduates Student") @ [Utah State University](http://cs.usu.edu/)
+### [REU Student](https://cs.usu.edu/people/XiaojunQi/Teaching/REU10/Website/Nathan/nwoods.html "Research Experience for Undergraduates Student") @ [Utah State University](http://cs.usu.edu/)
 Summer 2010
 
 - Researched license place recognition, focus: license plate localization
