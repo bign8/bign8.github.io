@@ -147,7 +147,7 @@ class QuadTree {
 		e = p.position.z
 		var found = false
 		for (i = 0; i < this.idx; i++) {
-			if (this.points[i].z == e) {
+			if (this.points[i].position.z == e) {
 				found = true
 				continue
 			}
