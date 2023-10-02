@@ -23,7 +23,7 @@ For smaller/simpler commands, it is possible to simply create an alias. Using th
 > alias newCommandName='complicated | command < code >> here.sh'
 ```
 
-For example, a command I like to use often is a [Load Average](https://en.wikipedia.org/wiki/Load_(computing\) "Wikipedia's thoughts on Load Average") command. This command shows processor usage for the past 1 minute, 5 minutes, and 15 minutes.
+For example, a command I like to use often is a [Load Average](https://en.wikipedia.org/wiki/Load_(computing) "Wikipedia's thoughts on Load Average") command. This command shows processor usage for the past 1 minute, 5 minutes, and 15 minutes.
 
 ```sh
 > cat /proc/loadavg | cut -d" " -f1-3
