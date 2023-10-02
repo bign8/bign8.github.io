@@ -130,7 +130,7 @@ cat /dev/ttyUSB0 | fakegps
 ```
 
 ### Fixing date
-To start things out, I grabbed a few lines of content from `/dev/ttyUSB0` so I wasn't continually re-opening the device and had consistent data to read against.  Then, after looking through it, it turned out the `GPRMC` line needed to have it's date field modified.  I was able to verify that by using the [decoder from freenema.net](http://freenmea.net/decoder) to verify the date was incorrect, and after poking around the numbers, found that modifying the [9th CSV field (Date of fix)](http://aprs.gids.nl/nmea/#rmc) to fix the problem.
+To start things out, I grabbed a few lines of content from `/dev/ttyUSB0` so I wasn't continually re-opening the device and had consistent data to read against.  Then, after looking through it, it turned out the `GPRMC` line needed to have it's date field modified.  I was able to verify that by using the ~~decoder from freenema.net~~ *[updated tool link](https://swairlearn.bluecover.pt/nmea_analyser)* to verify the date was incorrect, and after poking around the numbers, found that modifying the [9th CSV field (Date of fix)](http://aprs.gids.nl/nmea/#rmc) to fix the problem.
 
 ```py
 import datetime
