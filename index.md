@@ -48,7 +48,7 @@ Commutative Replicated Data Types (CRDTs) are an emerging tool for real-time col
 
 ## Projects
 
-All of my open source projects can be found on [GitHub](https://github.com/bign8) or on my [self hosted git server](https://gogs.bign8.info/bign8).  These projects are personal discovery efforts or work that I have retrieved approval from employers to share with the world under my name.  But this is only what I am allowed to show or what I can do on my free time.  Just imagine how I can help your teams out if I was on your payroll, eh?
+All of my open source projects can be found on [GitHub](https://github.com/bign8).  These projects are personal discovery efforts or work that I have retrieved approval from employers to share with the world under my name.  But this is only what I am allowed to show or what I can do on my free time.  Just imagine how I can help your teams out if I was on your payroll, eh?
 
 --------
 
@@ -120,7 +120,7 @@ table.table.inline td, table.table.inline th {border:1px solid white;padding:5px
 					<li><a href="http://en.wikipedia.org/wiki/Html" target="\_blank">HTML</a></li>
 					<li><a href="http://www.java.com/" target="\_blank">Java</a></li>
 					<li><a href="http://en.wikipedia.org/wiki/JavaScript" target="\_blank">JavaScript</a></li>
-					<li><a href="http://www.php.net/" target="\_blank">PHP</a></li>
+					<li><a href="https://www.php.net/" target="\_blank">PHP</a></li>
 					<li><a href="http://www.python.org/" target="\_blank">Python</a></li>
 					<li><a href="https://golang.org/" target="\_blank">Go</a></li>
 				</ul>
@@ -233,7 +233,7 @@ July 2014 - Present
 - Developed on the full stack with emphasis in server processes + algorithms
 - Tech: Python, Go, Flex, PDF and NATS
 
-### Adjunct Professor @ [University of Montana - Helena](http://umhelena.edu/)
+### Adjunct Professor @ [University of Montana - Helena](https://helenacollege.edu/)
 Spring 2014
 
 - Teaching CSCI 100 - Intro to Programming
