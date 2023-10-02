@@ -223,7 +223,7 @@ table.table.inline td, table.table.inline th {border:1px solid white;padding:5px
 
 ## Experience
 
-### Senior Software Engineer @ [Workiva](https://www.workiva.com/)
+### Principal Software Engineer @ [Workiva](https://www.workiva.com/)
 July 2014 - Present
 
 - Advocated for developer efficiency and worked to accelerate other developers velocity
