@@ -20,7 +20,7 @@ Ads and that stupid 'Are you still listening' button are constant annoyances whi
 </div>
 
 ## Removing Ads
-This process works for all advertisements including YouTube's  not just Pandora's, which, if I am not mistaken, makes browsing the web a better experience.  This task is simply accomplished by installing an ad-blocker plugin for Chrome.  My ad-blocker of choice is [Simple Adblock](https://chrome.google.com/webstore/detail/nhfjefnfnmmnkcckbjjcganphignempo) which is developed by [wips.com](http://www.wips.com).  Simply add the extension to Chrome and reload the browser.  This single plugin has successfully improved my browsing experience by a bazillion, no big deal.
+This process works for all advertisements including YouTube's  not just Pandora's, which, if I am not mistaken, makes browsing the web a better experience.  This task is simply accomplished by installing an ad-blocker plugin for Chrome.  My ad-blocker of choice is **Simple Adblock** which was developed by [wips.com](http://www.wips.com).  Simply add the extension to Chrome and reload the browser.  This single plugin has successfully improved my browsing experience by a bazillion, no big deal.
 
 *Note: Occasionally, when an audio ad is blocked, Pandora likes to play silence for the duration of the would-be ad.  Still better than an annoying voice trying to sell you something in my book.*
 
