@@ -13,5 +13,5 @@ tags:
 
 Designed and built a search engine with a web crawler and way of ranking popular pages
 
-* [Building a Search Engine](http://www.udacity.com/overview/Course/cs101/ "Building a Search Engine")
+* [Building a Search Engine](https://www.udacity.com/course/introduction-to-python--ud1110/ "Building a Search Engine")
 * [UDACITY-101: Intro to CS](/blog/2012/udacity-101-intro-to-cs.pdf)

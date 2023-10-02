@@ -102,7 +102,7 @@ remote           refid      st t when poll reach   delay   offset  jitter
 *SHM(0)          .GPS.            0 l   15   16  377    0.000  -17.136  19.555
 ```
 
-Things to note in the above output, first, the 127.127.X.Y server in NTP is a "shortcut" address that instructs NTP to look for different types of date providers as defined by the number in X, and Y defines some additional parameters based on the type.  28 stands for a shared memory driver, which can be seen by `ipcs -m`, and the Y of 0 or 1 means to create it with 600 permissions, while 2 and 3 create the shared memory object with 666 permissions.  The [Shared Memory Driver documentation](http://doc.ntp.org/4.2.8/drivers/driver28.html) was helpful while debugging some content later on.
+Things to note in the above output, first, the 127.127.X.Y server in NTP is a "shortcut" address that instructs NTP to look for different types of date providers as defined by the number in X, and Y defines some additional parameters based on the type.  28 stands for a shared memory driver, which can be seen by `ipcs -m`, and the Y of 0 or 1 means to create it with 600 permissions, while 2 and 3 create the shared memory object with 666 permissions.  The [Shared Memory Driver documentation](https://www.ntp.org/documentation/drivers/driver28/) was helpful while debugging some content later on.
 
 Finally, the keen eyed among you may have noticed, it was showing a date 19.6 years in the past (2001 != 2020).  What the heck is up with that!  Well, turns out, my GPS receiver was manufactured in the last decade, and there is a field in the GPS data stream coming from satellites, denoting the "week".  Unfortunately, the week field is a 10 bit integer for some implementations of GPS receivers, and rolls over every 1024 weeks, or approximately 19.6 years.  Newer GPSs account for this sometimes, but mine... does not 😢.  GPSD claims it uses the system date to accommodate for this by looking at the decade that the current clock is set, but for some reason, that didn't work for me, so... some hackery ensued.
 
@@ -130,7 +130,7 @@ cat /dev/ttyUSB0 | fakegps
 ```
 
 ### Fixing date
-To start things out, I grabbed a few lines of content from `/dev/ttyUSB0` so I wasn't continually re-opening the device and had consistent data to read against.  Then, after looking through it, it turned out the `GPRMC` line needed to have it's date field modified.  I was able to verify that by using the [decoder from freenema.net](http://freenmea.net/decoder) to verify the date was incorrect, and after poking around the numbers, found that modifying the [9th CSV field (Date of fix)](http://aprs.gids.nl/nmea/#rmc) to fix the problem.
+To start things out, I grabbed a few lines of content from `/dev/ttyUSB0` so I wasn't continually re-opening the device and had consistent data to read against.  Then, after looking through it, it turned out the `GPRMC` line needed to have it's date field modified.  I was able to verify that by using the ~~decoder from freenema.net~~ *[updated tool link](https://swairlearn.bluecover.pt/nmea_analyser)* to verify the date was incorrect, and after poking around the numbers, found that modifying the [9th CSV field (Date of fix)](http://aprs.gids.nl/nmea/#rmc) to fix the problem.
 
 ```py
 import datetime

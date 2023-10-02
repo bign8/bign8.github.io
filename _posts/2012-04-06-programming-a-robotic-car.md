@@ -13,5 +13,5 @@ tags:
 
 Applied basic methods in Artificial Intelligence to a 'virtual' self driving vehicle
 
-* [Programming a Robotic Car](http://www.udacity.com/overview/Course/cs373/ "Programming a Robotic Car")
+* [Programming a Robotic Car](https://www.udacity.com/course/artificial-intelligence-for-robotics--cs373 "Programming a Robotic Car")
 * [UDACITY-373: Programming a Robotic Car](/blog/2012/udacity-373-programming-a-robotic-car.pdf)

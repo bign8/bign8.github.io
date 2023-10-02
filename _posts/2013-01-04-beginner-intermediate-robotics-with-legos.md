@@ -9,7 +9,7 @@ tags:
 - MATLAB
 - Robotics
 ---
-<a title="&quot;Robotics&quot; by Wikipedia" href="http://en.wikipedia.org/wiki/Robotics" target="\_blank">Robotics</a> is the branch of technology that deals with the design, construction, operation and application of robots and computer systems for their control, sensory feedback, and information processing.  Using this amazing field of study, <a title="Carroll's Physics major" href="http://www.carroll.edu/academics/majors/physics/" target="\_blank">Carroll College's new Physics degree</a> has chosen to offer an introductory course entitled "Introduction to Robots &amp; Experimental Physics".
+<a title="&quot;Robotics&quot; by Wikipedia" href="http://en.wikipedia.org/wiki/Robotics" target="\_blank">Robotics</a> is the branch of technology that deals with the design, construction, operation and application of robots and computer systems for their control, sensory feedback, and information processing.  Using this amazing field of study, <a title="Carroll's Physics major" href="https://www.carroll.edu/academics/program-finder/physics" target="\_blank">Carroll College's new Physics degree</a> has chosen to offer an introductory course entitled "Introduction to Robots &amp; Experimental Physics".
 
 <!--more-->
 

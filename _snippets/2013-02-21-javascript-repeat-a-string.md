@@ -18,4 +18,4 @@ String.prototype.repeat = function(n) {
 
 Sample usage: `alert("ha".repeat(5)); // hahahahaha`
 
-[[Source](http://rosettacode.org/wiki/Repeat_a_string#JavaScript "Rosetta Code")]
+[[Source](https://www.rosettacode.org/wiki/Repeat_a_string#JavaScript "Rosetta Code")]

@@ -19,7 +19,7 @@ During my time at [Carroll College](http://www.carroll.edu/ "Carroll College"), 
 
 ![IntelliBrain-Bot Deluxe](IntelliBrainBotDeluxe.jpg "IntelliBrain-Bot Deluxe")
 
-The robots we borrowed, several [Ridgesoft's IntelliBrain<sup>TM</sup>-Bot](http://www.ridgesoft.com/intellibrainbot/intellibrainbot.htm "The IntelliBrain Bot!") amongst a few others, were great, educational, [Java](http://en.wikipedia.org/wiki/Java_(programming_language\) "Another educational link!") based robots.  Along with being great hardware to work with, Ridgesoft's website provided many [tutorials](http://www.ridgesoft.com/tutorials.htm "Some good stuff here!") and [texts](http://www.ridgesoft.com/articles/education/ExploringRobotics.htm "The book link is on the picture of the book (don't ask!)") that eased the learning curve of basic robotics.
+The robots we borrowed, several [Ridgesoft's IntelliBrain<sup>TM</sup>-Bot](http://www.ridgesoft.com/intellibrainbot/intellibrainbot.htm "The IntelliBrain Bot!") amongst a few others, were great, educational, [Java](http://en.wikipedia.org/wiki/Java_(programming_language) "Another educational link!") based robots.  Along with being great hardware to work with, Ridgesoft's website provided many [tutorials](http://www.ridgesoft.com/tutorials.htm "Some good stuff here!") and [texts](http://www.ridgesoft.com/articles/education/ExploringRobotics.htm "The book link is on the picture of the book (don't ask!)") that eased the learning curve of basic robotics.
 
 As I was combing through and testing sample code, I found their line following script to be simple and compact yet amazingly robust.  After reverse-engineering their code, I realized that the robot was a finite-state machine!  After that I spent quite a bit of time attempting to completely understand the inter-workings of the code.  After fully understanding the code myself, I found the Ridgesoft IntelliBrain Education text online and saw that the greater half of Chapter 6 was dedicated to the very subject of understanding that exact code.  Anyway, the following will hopefully clear things up as well as shed a new light on coding a Finite-state machine.
 
@@ -55,7 +55,7 @@ As you can see, this code is very compact and is very clean.  Initially, we beg
 
 Now to clarify a few things in the above code.  First the idea of `state`, then `NEXT_STATE` and `index`  should follow, ending with `MOTOR_POWER`.
 
-In a [Finite-state machine](http://en.wikipedia.org/wiki/Finite_state_machine "So much knowledge to drink up!"), a [state](http://en.wikipedia.org/wiki/State_(computer_science\) "MORE EDUCATION!") is a way of defining the status of a widget.  Here we designate this line follower's 6 states and their actions.
+In a [Finite-state machine](http://en.wikipedia.org/wiki/Finite_state_machine "So much knowledge to drink up!"), a [state](http://en.wikipedia.org/wiki/State_(computer_science) "MORE EDUCATION!") is a way of defining the status of a widget.  Here we designate this line follower's 6 states and their actions.
 
 | State # | Description                    | Action     |
 |:-------:|:------------------------------ |:----------:|
