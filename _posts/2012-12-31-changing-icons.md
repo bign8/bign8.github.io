@@ -13,4 +13,4 @@ Need to change the icons windows hyperlinks? Give this a try.
 3. Change the 'look for icons in this file:' to map to "C:/WINDOWS/system32/shell32.dll"
 4. Choose your desired icon and click okay through the dialogs
 
-For some other ideas see [HowToGeek](https://www.howtogeek.com/howto/windows/customizing-your-icons-in-windows-xp/).
+For some other ideas see [HowToGeek](https://www.howtogeek.com/1087/customizing-your-icons-in-windows-xp/).
