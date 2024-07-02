@@ -1,8 +1,12 @@
 ---
 layout: post
 title: JavaScript format date
-categories: []
-tags: []
+categories:
+- javascript
+- snippets
+tags:
+- javascript
+- date
 ---
 [Humminbird](http://hummingbirdstats.com/) and their [helpers.js](https://github.com/mnutt/hummingbird/blob/master/public/js/helpers.js) file, where they add a simple time formatting function to their Date object.
 

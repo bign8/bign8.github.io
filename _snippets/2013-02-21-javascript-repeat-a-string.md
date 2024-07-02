@@ -4,7 +4,9 @@ title: JavaScript Repeat a string
 categories:
 - JavaScript
 - Snippets
-tags: []
+tags:
+- javascript
+- string
 ---
 After writing writing my fair share of for-loops, I decided there must be a better way to repeat a string.  Personally, I found this solution to be very elegant and hopefully will help you as much as it helped me.
 

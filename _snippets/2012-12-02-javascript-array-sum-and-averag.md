@@ -5,10 +5,8 @@ categories:
 - javascript
 - snippets
 tags:
+- javascript
 - array
-- average
-- mean
-- sum
 ---
 I can't take credit from this one, but I think the guys at [Hummingbird](http://hummingbirdstats.com/ "Hummingbird") had something right with their recursive sum function for arrays.  This function simply sums the numbers in an array.
 

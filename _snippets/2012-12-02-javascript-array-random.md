@@ -5,8 +5,8 @@ categories:
 - JavaScript
 - Snippets
 tags:
+- javascript
 - array
-- random
 ---
 Another worthy one for the notebooks, the random entry of an array!
 

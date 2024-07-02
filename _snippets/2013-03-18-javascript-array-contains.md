@@ -4,8 +4,8 @@ title: JavaScript Array Contains
 categories:
 - JavaScript
 tags:
+- javascript
 - array
-- contains
 ---
 Here is a quick one for you today.  Ever just want a simple way to see if there is an item in an array?  Well fear not, this little snippet is to the rescue!
 

@@ -5,8 +5,8 @@ categories:
 - JavaScript
 - Snippets
 tags:
+- javascript
 - array
-- remove
 ---
 A common problem I run into when coding is dealing with the limited object types of a particular language.  Hopefully a yearly compilation of all these snippets can provide a script that expands languages to what they should have had in the first place.
 
