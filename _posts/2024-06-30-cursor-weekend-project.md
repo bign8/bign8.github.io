@@ -8,8 +8,6 @@ tags:
     - canvas
 ---
 
-<script src="teacher.js" async=""></script>
-
 Recently, I was [nerd sniped](https://xkcd.com/356/) by a [YouTube short](https://youtube.com/shorts/6alhK0cDdHs) about a [Reddit post](https://www.reddit.com/r/badUIbattles/comments/vuxwoh/cursor_that_actually_points_to_the_direction_you/) that showed a rotating cursor.
 I thought it was a neat idea and wanted to see if I could implement it myself.
 So, I spent a weekend creating a cursor that points to the direction your mouse is moving.
@@ -20,6 +18,8 @@ Hopefully, you will find this project interesting and maybe even learn something
 <!-- ffmpeg -i cursor-demo.mkv cursor-demo.gif -->
 
 <!--more-->
+
+<script src="teacher.js" async=""></script>
 
 Over a long weekend, I was doom-scrolling and stumbled upon the following Reddit post:
 

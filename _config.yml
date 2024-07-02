@@ -10,6 +10,7 @@ exclude:
     - main.go
     - go.mod
     - ship.sh
+    - blog/2024/cursor-demo.mkv
 collections:
     snippets:
         output: true

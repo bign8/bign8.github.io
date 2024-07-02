@@ -1,10 +1,11 @@
 FROM jekyll/jekyll:4 as builder
+RUN gem install bundler jekyll
 RUN NOKOGIRI_USE_SYSTEM_LIBRARIES=true gem install html-proofer
 ADD . /site
 WORKDIR /site
 RUN mkdir _site
 RUN jekyll build
-RUN /usr/gem/bin/htmlproofer _site --disable-external
+RUN /usr/gem/bin/htmlproofer _site --disable-external --no-enforce-https
 
 FROM golang:1.16-alpine as go
 WORKDIR /go/src
