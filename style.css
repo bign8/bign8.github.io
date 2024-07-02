@@ -168,7 +168,7 @@ a:focus, a:hover {
   color: #23527c;
   text-decoration: underline;
 }
-p { margin: 0 0 10px }
+p { margin: 10px 0 }
 center { margin-bottom: 10px }
 .lead {
   font-size: 21px;
@@ -238,7 +238,7 @@ pre code {
   padding: 0;
   font-size: inherit;
   color: inherit;
-  white-space: pre-wrap;
+  /* white-space: pre-wrap; */
   background-color: transparent;
   border-radius: 0;
 }
@@ -309,7 +309,7 @@ a[is=n8-cleanup] {
 }
 
 /* Syntax highlighting */
-.highlight  { background: #ffffff; }
+.highlight  { background: #ffffff; overflow: scroll }
 .highlight .c { color: #999988; font-style: italic } /* Comment */
 .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 .highlight .k { font-weight: bold } /* Keyword */

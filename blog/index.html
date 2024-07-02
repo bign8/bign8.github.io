@@ -15,8 +15,10 @@ title: Blog
 			{% if post.draft %}<small>DRAFT</small>{% endif %}
 		</h2>
 		{{ post.excerpt }}
-		Published: <time class="text-muted" itemprop="datePublished" content="{{ post.date }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-		<a class="pull-right" href="{{ post.url }}">continue reading »</a>
+		<p>
+			Published: <time class="text-muted" itemprop="datePublished" content="{{ post.date }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+			<a class="pull-right" href="{{ post.url }}">continue reading »</a>
+		</p>
 	</article>
 	<hr/>{% endfor %}
 </section>
