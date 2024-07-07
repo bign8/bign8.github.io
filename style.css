@@ -211,6 +211,8 @@ pre {
   background-color: #f5f5f5;
   border: 1px solid #ccc;
   border-radius: 4px;
+  tab-size: 4;
+  text-align: left;
 }
 code {
   padding: 2px 4px;
