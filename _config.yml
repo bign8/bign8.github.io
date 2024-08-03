@@ -3,6 +3,7 @@ markdown: kramdown
 highlighter: rouge
 excerpt_separator: <!--more-->
 permalink: /blog/:year/:title.html
+future: true
 exclude:
     - Dockerfile
     - README.md

@@ -134,3 +134,10 @@ func TestLoadCollection(t *testing.T) {
 }
 
 ```
+
+Obviously, there are quite a few things missing from this example, like timeouts, tracing, logging, decoding errors, rate-limiting, etc.
+But, it's enough to show an example usage of the `LoadCollection` function.
+
+Hopefully, some functions like this will make client libraries easier to write (or generate).
+
+This is a simple example, but it demonstrates how you can use the new `iter` package in go 1.23 to create custom iterators for paginated collections.
